@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently -k \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
@@ -16,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/CS290-Final-Project-Team-24/TinderForMoviesV2/issues"
   },
-  "homepage": "https://github.com/CS290-Final-Project-Team-24/TinderForMoviesV2#readme"
+  "homepage": "https://github.com/CS290-Final-Project-Team-24/TinderForMoviesV2#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "concurrently": "^7.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  }
 }
