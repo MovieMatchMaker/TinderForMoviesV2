@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/heading-has-content */
-import './styles/App.css';
+import '../styles/Cards.css'
 import React from 'react';
 import {useEffect, useState, useRef, useMemo} from 'react';
 import TinderCard from 'react-tinder-card'
 
 
 
-function App() {
+function Cards() {
 
   const [moviePosters, setMoviePosters] = useState([])
 
@@ -134,4 +134,4 @@ function App() {
   );
 }
 
-export default App;
+export default Cards;
