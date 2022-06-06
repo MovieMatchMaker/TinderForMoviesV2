@@ -26,6 +26,16 @@ app.get('/api', (req, res) => {
             });
 });
 
+app.get('/api/matches', (req, res) => {
+      axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1&origin_country=US`)
+            .then(response => {
+                  res.send(response.data);
+            }).catch(err => {
+                  res.send(err);
+            });
+});
+
+
 
 if (process.env.NODE_ENV === 'production') {
       app.use(express.static('client/public'));

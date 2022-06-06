@@ -2,7 +2,11 @@ h3 {
       color: blue;
 }
 
-h2 {
-      color: black;
-}
 
+
+#welcome-header {
+      position: absolute;
+      font-size: 2.5rem;
+      font-weight: bold;
+      top: 0;
+}

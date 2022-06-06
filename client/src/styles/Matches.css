@@ -5,3 +5,41 @@ h3 {
 h2 {
       color: black;
 }
+
+ul {
+      list-style-type: none;
+      margin: 8px;
+      padding: 0;
+      overflow: hidden;
+}
+
+.match-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      transform: translateX(calc(50% - 50vw));
+}
+
+#match  {
+      position: relative;
+}
+
+#match-img {
+      display: flex;
+      position: relative;
+      height: 160px;
+      width: 130px;
+      border-radius: 10px;
+}
+
+#match-title{
+      top: 103px;
+      left: 116px;
+      position: absolute;
+}
+
+#match-release {
+      top: 90px;
+      position: absolute;
+}
