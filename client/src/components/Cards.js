@@ -73,12 +73,7 @@ function Cards() {
     updateCurrentIndex(newIndex)
     await childRefs[newIndex].current.restoreCard()
   }
-  const [hello, setHello] = useState('Hello');
-  const getHello = async () => {
-    const response = await fetch('/api');
-    const body = await response.text();
-    setHello(body);
-  };
+ 
 
   useEffect(() => {
     getPopularMovies();
