@@ -1,31 +1,128 @@
-#match {
-  margin: 20px;
+.list {
+  display: flex;
+  padding: 20px;
+  overflow-x: scroll;
 }
- 
-ul {
-  list-style-type: none;
+
+.item {
+  height: 224px;
+  width: 125px;
+  flex-shrink: 0;
+}
+
+.item:not(:last-child) {
+  margin-right: 10px;
+}
+
+/* 
+  The styling below is only for the decoration of this demo, 
+  it has no impact on scrolling or scroll behavior
+*/
+.list {
+  list-style: none;
+  border: 5px solid #fff;
+  background-color: #181818;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 32px;
+  text-shadow: 0 2px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 1);
+}
+
+
+.item:not(:last-child) {
+  margin-right: 10px;
+}
+
+.viewport {
+  max-width: calc(100vw - 40px);
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+
+
+/* Card carosuel */
+.matches-container {
+  position: relative;
+  display: flex;
+
+}
+
+.container {
+  position: relative;
+}
+
+.image {
+  display: inline-block;
   width: 500px;
+  height: 500px
 }
- 
-h3 {
-  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #00000097
 }
- 
-li img {
-  float: left;
-  margin: 0 15px 0 0;
+
+.container:hover .overlay {
+  transition: .5s ease;
+  opacity: 1;
 }
- 
-li p {
-  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+
+.container:hover .image {
+  transition: .5 ease;
+  filter: blur(6px);;
 }
- 
-li {
-  padding: 10px;
-  overflow: auto;
+
+.text-title {
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  color: white;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
- 
-li:hover {
-  background: #eee;
-  cursor: pointer;
+
+.text-overview {
+  padding-top: 5%;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 90%;
+  font-size: 1.2em;
+}
+
+.text-release {
+  padding-top: 10px;
+  color: white;
+  font-weight: bold;
+  transform: translateX(-25%);
 }
