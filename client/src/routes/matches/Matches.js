@@ -27,9 +27,9 @@ function Matches() {
                               <div id='match' key={index}>
                                     <ul>
                                           <li>
+                                                <img id="match-img" src={`https://image.tmdb.org/t/p/w200${match.poster_path}`} alt=""/>
                                                 <h3 id='match-title'>{match.title}</h3> 
-                                                <h3 id="match-release">{new Date(match.release_date).toLocaleDateString("en-US",{year: "numeric", month: "long", day: "numeric"})}</h3>
-                                                <img id="match-img" src={`https://image.tmdb.org/t/p/w200${match.poster_path}`} alt=""/>                                    
+                                                <h3 id="match-release">{new Date(match.release_date).toLocaleDateString("en-US",{year: "numeric", month: "long", day: "numeric"})}</h3>                                
                                           </li>
                                     </ul>
                               </div>
