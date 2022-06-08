@@ -65,7 +65,7 @@
 
 .image {
   display: inline-block;
-  width: 500px;
+  width: 400px;
   height: 500px
 }
 
@@ -89,7 +89,7 @@
 
 .container:hover .image {
   transition: .5 ease;
-  filter: blur(6px);;
+  filter: blur(6px);
 }
 
 .text-title {

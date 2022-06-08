@@ -12,7 +12,7 @@ function Matches() {
   const [matches, setMatches] = useState([]);
 
   const getMatches = async () => {
-    const response = await fetch("/api/matchesl");
+    const response = await fetch("/api/matches");
     const data = await response.json();
     console.log(data.results);
     setMatches(data.results);

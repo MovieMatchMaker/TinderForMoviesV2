@@ -4,7 +4,8 @@
 
 #welcome-header {
       position: absolute;
-      font-size: 2.5rem;
+      font-size: 8.5rem;
       font-weight: bold;
       top: 0;
+      font-family: Campton-Bold, sans-serif;
 }
