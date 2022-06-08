@@ -1,15 +1,22 @@
-const fs = require('fs')
+// Author: Danny Zahariev
+// Date Created: 7 June 2022
+// Date Modified: 7 June 2022
+
+const account_file_path = './accounts/'
+
+import * as fs from 'fs';
 
 /* 
  * username: username,
  * password: password,
- * movies: {
- *      current_movie: null,
- *      movies_swiped: [],
+ * recommendation_data: {
+ *      current: null,
+ *      swiped: [],
  *      queue: [],
- *      backup_queue: []
+ *      backup_queue: [],
+ *      matches: [],
+ *      current_page_popular: 1
  * },
- * current_page_popular: 1
  * 
  */ 
 
@@ -21,28 +28,27 @@ const fs = require('fs')
  * (if successful) js object with user info
  * (if account already exists) null
  */ 
-function account_create(username, password){
-    if(fs.existsSync('./accounts/' + username + '.json')){
+export default function create(username, password){
+    if(fs.existsSync(account_file_path + username + '.json')){
         return null
     }
     
     let user ={
         username: username,
         password: password,
-        movies: {
-            current_movie: null,
-            movies_swiped: [],
+        recommendation_data: {
+            current: null,
+            swiped: [],
             queue: [],
-            backup_queue: []
+            backup_queue: [],
+            matches: [],
+            current_page_popular: 1
         },
-        current_page_popular: 1
+        
     }
 
     let file_data = JSON.stringify(user)
-    fs.writeFileSync('./accounts/' + username + '.json', file_data)
-
-    
-    //TO DO: UPDATE CURRENT MOVIE
+    fs.writeFileSync(account_file_path + username + '.json', file_data)
 
     return user
 }
@@ -55,27 +61,38 @@ function account_create(username, password){
  * (if successful) js object with user info
  * (if username or password is incorrect) null
  */ 
-function account_access(username, password){
-    if(!fs.existsSync('./accounts/' + username + '.json')){
-        return null
+export default function access(username, password){
+    if(fs.existsSync(account_file_path + username + '.json')){
+        let file_data = fs.readFileSync(account_file_path + username + '.json')
+        let user = JSON.parse(file_data)
+        if(user.password === password){
+        return user
+        }
     }
+    
+    return null
 }
 
 /* saves account to database
  * inputs:
- * username - string
+ * user_info - js user object (presumed correct)
  * returns:
- * (if successful) js object with user info
- * (if username does not exist) null
+ * (bool) success state
  */ 
-function account_save(username, user_info){
-    return "test"
+export default function save(user_info){
+    let file_data = JSON.stringify(user_info)
+    fs.writeFileSync(account_file_path + user_info.username + '.json', file_data)
+    return true
 }
-
 
 
 
 
 
 // test script
-console.log(account_create("d", "z"))
+console.log("create new account: " + create("testaccount", "z"))
+console.log("access with wrong password: " + access("testaccount",  "poop"))
+let test_user = access("testaccount", "z")
+console.log("access with correct password " + test_user)
+test_user.current_page_popular++;
+console.log(save(test_user))
