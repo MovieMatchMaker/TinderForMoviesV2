@@ -1,3 +1,5 @@
+
+
 .list {
   display: flex;
   padding: 20px;
@@ -20,8 +22,8 @@
 */
 .list {
   list-style: none;
-  border: 5px solid #fff;
-  background-color: #181818;
+  border: 5px solid rgb(170, 226, 135);
+  background-color: #8782c9;
   padding: 20px;
   border-radius: 12px;
 }
@@ -95,7 +97,7 @@
 .text-title {
   width: 100%;
   font-family: 'Roboto', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: white;
   position: absolute;
   top: 15%;
@@ -124,7 +126,6 @@
   padding-top: 10px;
   color: white;
   font-weight: bold;
-  transform: translateX(-25%);
 }
 
 

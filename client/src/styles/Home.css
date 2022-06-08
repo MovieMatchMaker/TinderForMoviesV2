@@ -1,11 +1,83 @@
-
-
-
-
 #welcome-header {
       position: absolute;
       font-size: 8.5rem;
       font-weight: bold;
       top: 0;
       font-family: Campton-Bold, sans-serif;
+}
+
+button {
+      width: 260px;
+      height: 75px;
+}
+
+.text {
+      font-size: 2.0rem;
+      font-family: Campton-Bold, sans-serif;
+      white-space: nowrap;
+      position: relative;
+      right: 30px;
+}
+
+.title-emoji {
+        font-size: 52px;
+        line-height: 72px;
+}
+
+.bn29 {
+      text-align: center;
+      border: none;
+      padding: 0.8em 2.5em;
+      outline: none;
+      color: white;
+      font-style: normal;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      background: none;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.45);
+
+}
+
+.bn29:before,
+.bn29:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 10em;
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+      width: 105%;
+      height: 105%;
+      content: "";
+      z-index: -2;
+      background-size: 400% 400%;
+      background: linear-gradient(265deg,
+                  #FF0080,
+                  #FF8C00,
+                  #40E0D0);
+}
+
+.bn29:before {
+      -webkit-filter: blur(7px);
+      filter: blur(7px);
+      -webkit-transition: all 0.25s ease;
+      transition: all 0.25s ease;
+      -webkit-animation: pulse 10s infinite ease;
+      animation: pulse 10s infinite ease;
+}
+
+.bn29:after {
+      -webkit-filter: blur(0.3px);
+      filter: blur(0.3px);
+}
+
+.bn29:hover:before {
+      width: 115%;
+      height: 115%;
+}
+
+.bn29:hover{
+      transform: scale(1.1);
+      transition: all .5 ease;
 }

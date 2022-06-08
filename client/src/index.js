@@ -10,6 +10,8 @@ import {
   Route,
   Routes
 } from 'react-router-dom'
+import Navbar from './components/Navbar';
+
 
 function TinderMovies() {
     return (
@@ -17,9 +19,9 @@ function TinderMovies() {
         <Routes>
           <Route path="/" element={<><Home/></>}/>
           <Route path="/home" element={<><Home/></>}/>
-          <Route path="/swiping" element={<><Swiping/></>}/>
+          <Route path="/swiping" element={<><Swiping/><Navbar/></>}/>
           <Route path="/login" element={<><Login/></>}/>
-          <Route path="/matches" element={<><Matches/></>}/>
+          <Route path="/matches" element={<><Matches/><Navbar/></>}/>
           {/* <Route path="/404" element={<><FourOhFour></>}/> */}
         </Routes>
       </BrowserRouter>

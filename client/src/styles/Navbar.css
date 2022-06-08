@@ -1,0 +1,45 @@
+
+nav {
+      padding-left: 30px;
+      padding-right: 30px;
+      position: absolute;
+      top: 30px;
+      display: flex;
+      flex-direction: row;
+      gap: 50px;
+      font-size: 1.5rem;
+      font-family: Campton-Bold,  sans-serif !important;
+      border: 3px solid rgba(255, 255, 255, 0.497);
+      border-radius: 10px;
+      line-height: 0.5;
+      transition: all .5s ease;
+      
+}
+
+
+
+.nav:hover {
+      cursor: pointer;
+      transform: scale(1.15);
+      transition: all .5s ease;
+}
+
+.nav.swiping {
+          transition: all .5s ease;
+
+}
+
+.nav.matches {
+          transition: all .5s ease;
+
+}
+
+.nav.home {
+          transition: all .5s ease;
+
+}
+
+.nav.logout {
+          transition: all .5s ease;
+
+}

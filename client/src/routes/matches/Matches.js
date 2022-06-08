@@ -1,8 +1,9 @@
 import React from "react";
 import "../../styles/Matches.css";
 import { useEffect, useState } from "react";
-
+import "../../styles/loading.css";
 function Matches() {
+
   var options = {
         weekday: 'long',
         year: 'numeric',
@@ -20,7 +21,9 @@ function Matches() {
 
   const mapMatches = matches.map((match) => {
     return (
+      
       <div className="container">
+        
               <img
                 className="image"
                 src={`https://image.tmdb.org/t/p/w500${match.poster_path}`}
@@ -33,10 +36,12 @@ function Matches() {
               <h2 className="text-title">{match.title}</h2>
               <p className="text-overview">{match.overview}</p>
           </div>
+          
       </div>
   );});
 
   const noMatches = () => {
+
     return (
       <div className="no-matches">
         <h1>No matches found!</h1>
@@ -46,13 +51,18 @@ function Matches() {
     );
   }
 
- 
   useEffect(() => {
     getMatches();
   }, []);
 
   return (
     <div>
+      <br>
+      </br>
+      <br>
+      </br>
+      <br>
+      </br>
       <h1>Matches ({matches.length})</h1>
       <div className="viewport">
         <ul className="list">
@@ -62,4 +72,5 @@ function Matches() {
     </div>
   );
 }
+
 export default Matches;
