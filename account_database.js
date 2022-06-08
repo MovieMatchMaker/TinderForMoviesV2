@@ -28,7 +28,7 @@ import * as fs from 'fs';
  * (if successful) js object with user info
  * (if account already exists) null
  */ 
-export default function create(username, password){
+export function create(username, password){
     if(fs.existsSync(account_file_path + username + '.json')){
         return null
     }
@@ -61,7 +61,7 @@ export default function create(username, password){
  * (if successful) js object with user info
  * (if username or password is incorrect) null
  */ 
-export default function access(username, password){
+export function access(username, password){
     if(fs.existsSync(account_file_path + username + '.json')){
         let file_data = fs.readFileSync(account_file_path + username + '.json')
         let user = JSON.parse(file_data)
@@ -79,7 +79,7 @@ export default function access(username, password){
  * returns:
  * (bool) success state
  */ 
-export default function save(user_info){
+export function save(user_info){
     let file_data = JSON.stringify(user_info)
     fs.writeFileSync(account_file_path + user_info.username + '.json', file_data)
     return true
@@ -90,9 +90,9 @@ export default function save(user_info){
 
 
 // test script
-console.log("create new account: " + create("testaccount", "z"))
-console.log("access with wrong password: " + access("testaccount",  "poop"))
-let test_user = access("testaccount", "z")
-console.log("access with correct password " + test_user)
-test_user.current_page_popular++;
-console.log(save(test_user))
+// console.log("create new account: " + create("testaccount", "z"))
+// console.log("access with wrong password: " + access("testaccount",  "poop"))
+// let test_user = access("testaccount", "z")
+// console.log("access with correct password " + test_user)
+// test_user.current_page_popular++;
+// console.log(save(test_user))

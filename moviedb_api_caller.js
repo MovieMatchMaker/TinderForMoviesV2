@@ -12,7 +12,7 @@ import fetch from 'node-fetch';
  * returns:
  * array of movie objects
  */ 
-export default function get_popular(current_page){
+export function get_popular(current_page){
     fetch('https://api.themoviedb.org/3/movie/popular?api_key='
         + api_key
         + '&language=en-US&page='
@@ -31,7 +31,7 @@ export default function get_popular(current_page){
  * returns:
  * array of movie objects
  */ 
-export default function get_recommendations(movie_id, page){
+export function get_recommendations(movie_id, page){
      fetch('https://api.themoviedb.org/3/movie/'
         + current_movie.id 
         + '/recommendations?api_key=' 
@@ -44,11 +44,15 @@ export default function get_recommendations(movie_id, page){
     })
 }
 
-export default function get_watch_providers(movie_id){
+export function get_watch_providers(movie_id){
     fetch('https://api.themoviedb.org/3/movie/'
         + movie_id
         + '/watch/providers?api_key=' 
         + api_key)
+    .then(res = res.json())
+    .then(res_json => {
+        return res_json.results
+    })
 }
 
 
