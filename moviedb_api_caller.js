@@ -12,16 +12,15 @@ import fetch from 'node-fetch';
  * returns:
  * array of movie objects
  */ 
-function get_popular(current_page){
-
+export default function get_popular(current_page){
     fetch('https://api.themoviedb.org/3/movie/popular?api_key='
-    + api_key
-    + '&language=en-US&page='
-    + current_page)
+        + api_key
+        + '&language=en-US&page='
+        + current_page)
     .then(res => res.json())
     .then(res_json => {
         console.log(res_json)
-        return res_json
+        return res_json.results
     })
 }
 
@@ -32,20 +31,24 @@ function get_popular(current_page){
  * returns:
  * array of movie objects
  */ 
-function get_recommendations(movie_id, page){
-    //  fetch('https://api.themoviedb.org/3/movie/'
-    // + current_movie.id 
-    // + '/recommendations?api_key=' 
-    // + 'b9964db6966369e1b45cdd3f27968309'
-    // + '&language=en-US&page=1')
-    // .then(res => res.json())
-    // .then(res_json => {
-    //     for(let i = 0; i < 5; i++){
-    //         if(!movies_swiped.includes(res_json.results[i].id)){
-    //             queue.push(res_json.results[i])
-    //         }
-    //     }
-    // })
+export default function get_recommendations(movie_id, page){
+     fetch('https://api.themoviedb.org/3/movie/'
+        + current_movie.id 
+        + '/recommendations?api_key=' 
+        + api_key 
+        + '&language=en-US&page='
+        + page)
+    .then(res => res.json())
+    .then(res_json => {
+        return res_json.results
+    })
+}
+
+export default function get_watch_providers(movie_id){
+    fetch('https://api.themoviedb.org/3/movie/'
+        + movie_id
+        + '/watch/providers?api_key=' 
+        + api_key)
 }
 
 

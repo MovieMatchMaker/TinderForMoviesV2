@@ -36,7 +36,7 @@ export default function create(username, password){
     let user ={
         username: username,
         password: password,
-        recommendation_data: {
+        data: {
             current: null,
             swiped: [],
             queue: [],

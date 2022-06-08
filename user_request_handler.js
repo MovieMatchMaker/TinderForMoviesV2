@@ -6,7 +6,7 @@
 // const api_caller = require(('./account_database.js'))
 
 
-import create from './account_database.js';
+import {create, access} from './account_database.js';
 
 var current_users = []
 
@@ -17,12 +17,12 @@ var current_users = []
  * array of movie objects
  */ 
 function create_account(username, password){
-
+    create(username, password)
 }
 
 // returns login_token or null
 function login(username, password){
-
+    access()
 }
 
 // returns array of previous matches 
