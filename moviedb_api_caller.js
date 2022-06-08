@@ -4,7 +4,7 @@
 
 const api_key = 'b9964db6966369e1b45cdd3f27968309'
 
-import fetch from 'node-fetch';
+import fetch from 'node-fetch'
 
 /* gets list of popular pages
  * inputs:
@@ -13,15 +13,25 @@ import fetch from 'node-fetch';
  * array of movie objects
  */ 
 export function get_popular(current_page){
+    let out
+    console.log("get_popular(" + current_page + ")")
+
     fetch('https://api.themoviedb.org/3/movie/popular?api_key='
         + api_key
         + '&language=en-US&page='
         + current_page)
+    .then( res=> {
+        console.log("hello")
+    })
     .then(res => res.json())
     .then(res_json => {
         console.log(res_json)
-        return res_json.results
+        out = res_json.results
+    }).catch(err =>{
+        throw(err)
     })
+    console.log("before return")
+    return out
 }
 
 /* gets list of recommendations based off the previous movie
@@ -32,7 +42,7 @@ export function get_popular(current_page){
  * array of movie objects
  */ 
 export function get_recommendations(movie_id, page){
-     fetch('https://api.themoviedb.org/3/movie/'
+    fetch('https://api.themoviedb.org/3/movie/'
         + current_movie.id 
         + '/recommendations?api_key=' 
         + api_key 
@@ -58,3 +68,16 @@ export function get_watch_providers(movie_id){
 
 // test code
 console.log(get_popular(1))
+fetch('https://api.themoviedb.org/3/movie/popular?api_key=b9964db6966369e1b45cdd3f27968309&language=en-US&page=1')
+.then(res => {
+    console.log("response")
+    console.log(res)
+})
+
+
+fetch('https://api.themoviedb.org/3/movie/300?api_key=b9964db6966369e1b45cdd3f27968309&language=en-US')
+.then(res=>{
+    console.log(res)
+})
+
+// console.log(get_recommendations(300), 1)

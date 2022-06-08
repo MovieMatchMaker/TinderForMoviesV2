@@ -148,3 +148,15 @@ function close_login_token(login_token){
     }
 
 }
+
+
+var test_token = create_account("danny", "shhh, password")
+
+if(!test_token){
+    test_token = login("danny", "shhh, password")
+}
+
+console.log(test_token)
+
+var test_current_movie = get_current_movie(test_token)
+console.log(test_current_movie)

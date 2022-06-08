@@ -2,7 +2,7 @@
 // Date Created: 7 June 2022
 // Date Modified: 7 June 2022
 
-import {get_popular, get_recommendations} from './moviedb_api_caller.js';
+import {get_popular, get_recommendations, get_watch_providers} from './moviedb_api_caller.js';
 
 export function rec_get_current_movie(user){
     if(user.data.current === null){
@@ -44,7 +44,7 @@ export function rec_match(user){
 
 // private
 function fill_current(user){
-    if(queue.length !== 0){
+    if(user.data.queue.length !== 0){
         user.data.current = user.data.queue.shift();
     } else {
         // fills current backup_queue if necessary
