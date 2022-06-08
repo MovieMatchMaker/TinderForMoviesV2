@@ -12,7 +12,7 @@ function Matches() {
   const [matches, setMatches] = useState([]);
 
   const getMatches = async () => {
-    const response = await fetch("/api/matches");
+    const response = await fetch("/api/matchesl");
     const data = await response.json();
     console.log(data.results);
     setMatches(data.results);
@@ -39,7 +39,9 @@ function Matches() {
   const noMatches = () => {
     return (
       <div className="no-matches">
-        <h1>No matches found</h1>
+        <h1>No matches found!</h1>
+        <br></br>
+        <h1> Head back over to the matchmaking page <span id="no-matches-here"onClick={() => window.location.href = "/swiping"}>here,</span> to get your first matches!</h1>
       </div>
     );
   }

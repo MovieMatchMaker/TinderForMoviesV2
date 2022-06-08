@@ -126,3 +126,13 @@
   font-weight: bold;
   transform: translateX(-25%);
 }
+
+
+#no-matches-here {
+  color: rgb(179, 69, 69);
+  cursor: pointer;
+}
+
+#no-matches-here:hover  {
+  text-decoration: underline;
+}
