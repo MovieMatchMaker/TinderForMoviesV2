@@ -5,6 +5,8 @@
 import {get_popular, get_recommendations, get_watch_providers} from './moviedb_api_caller.js';
 
 export async function rec_get_current_movie(user){
+
+
     if(user.data.current === null){
         await fill_current(user)
     }
@@ -17,14 +19,15 @@ export async function rec_swipe_right(user){
     // adds to queue with recommendations based on this movie
     let recommendations = await get_recommendations(user.data.current.id, 1)
     let i = 0
-    while (i < 5){
+    while (i < 10){
         if(i === recommendations.length){
             break
         }
         if(!user.data.swiped.includes(recommendations[i].id)){
             user.data.queue.push(recommendations[i])
-            i++
         }
+        i++
+        console.log("loop: " + i)
     }
     user.data.current = null
 
@@ -37,11 +40,15 @@ export function rec_swipe_left(user){
 }
 
 // returns provider data
-export function rec_match(user){
+export async function rec_match(user){
     user.data.swiped.push(user.data.current.id)
     user.data.matches.push(user.data.current)
 
+    let out = await get_watch_providers(user.data.current.id)
+
     user.data.current = null
+
+    return out
 }
 
 // private
