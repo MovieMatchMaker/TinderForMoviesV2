@@ -31,7 +31,6 @@ export async function get_popular(current_page){
  * array of movie objects
  */ 
 export async function get_recommendations(movie_id, page){
-    console.log("in the recommendations function")
     const response = await fetch('https://api.themoviedb.org/3/movie/'
         + movie_id 
         + '/recommendations?api_key=' 

@@ -1,10 +1,12 @@
 // Author: Danny Zahariev
 // Date Created: 7 June 2022
-// Date Modified: 7 June 2022
+// Date Modified: 8 June 2022
 
 import {get_popular, get_recommendations, get_watch_providers} from './moviedb_api_caller.js';
 
 export async function rec_get_current_movie(user){
+    console.log("\n in rec get current")
+    console.log(user)
     if(user.data.current === null){
         await fill_current(user)
     }
@@ -22,10 +24,14 @@ export async function rec_swipe_right(user){
             break
         }
         if(!user.data.swiped.includes(recommendations[i].id)){
-            user.data.backup_queue.push(recommendations[i])
+            user.data.queue.push(recommendations[i])
+            i++
         }
     }
     user.data.current = null
+
+    console.log("user after rec_swipe_right")
+    console.log(user)
 }
 
 export function rec_swipe_left(user){
