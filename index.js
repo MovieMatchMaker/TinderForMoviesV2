@@ -117,27 +117,25 @@ app.post("/api/matching/match", (req, res) => {
 });
 
 // tells the server that the user would like to see the next movie
-app.get("/api/matching/get_current", async (req, res) => {
-      
-      let login_token = req.body.token;
+
+app.post("/api/matching/get_current", async (req, res) => {
+
+      let login_token = req.body.token
+      login_token = parseInt(login_token)
       // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
-      // var next_movie_to_view = await get_current_movie(login_token);
-
-      // if (!next_movie_to_view) {
-      //       res.send({
-      //             message: `You have been logged out.`,
-      //             status: 0,
-      //       }).status(401);
-      // } else {
-      //       res.send({
-      //             message: `Grabbing next movie....`,
-      //             status: 1,
-      //             current_movie: next_movie_to_view
-      //       }).status(200);
-      // }
-
-
-
+      let next_movie_to_view = await get_current_movie(login_token)
+      if (!next_movie_to_view) {
+            res.send({
+                  message: `You have been logged out.`,
+                  status: 0,
+            }).status(401);
+      } else {
+            res.send({
+                  message: `Grabbing next movie....`,
+                  status: 1,
+                  current_movie: next_movie_to_view
+            }).status(200);
+      }
 });
 
 
