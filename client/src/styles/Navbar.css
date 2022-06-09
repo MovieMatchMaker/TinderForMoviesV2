@@ -17,14 +17,14 @@ nav {
 }
 
 
-
 .nav:hover {
       cursor: pointer;
       transform: scale(1.15);
       transition: all .5s ease;
 }
 
-.nav.swiping {
+.nav.swipe {
+
           transition: all .5s ease;
 
 }

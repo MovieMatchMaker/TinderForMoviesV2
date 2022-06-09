@@ -71,6 +71,7 @@ h6 span {
 .section {
       position: relative;
       width: 100%;
+      transform: translateY(-10%);
       display: block;
 }
 
@@ -147,6 +148,7 @@ h6 span {
 
 .card-front,
 .card-back {
+      transform: translateY(-15%);
       width: 100%;
       height: 120%;
       background: linear-gradient(to bottom, #b39bec 0%, #D76E7E 100%);
@@ -172,6 +174,8 @@ h6 span {
 .checkbox:checked~.card-3d-wrap .card-3d-wrapper {
       transform: rotateY(180deg);
 }
+
+
 
 .center-wrap {
       position: absolute;
@@ -283,7 +287,7 @@ h6 span {
 }
 
 .btn {
-      transform: translateY(5px);
+      transform: translateY(25px);
       border-radius: 4px;
       width: 75px;
       height: 50px;
@@ -344,4 +348,27 @@ a {
       height: 26px;
       width: auto;
       display: block;
+}
+
+
+.login-status {
+      position: absolute;
+      width: 95%;
+      text-align: center;
+      bottom: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: lightgreen;
+}
+
+.signup-status {  
+      position: absolute;
+      width: 95%;
+      text-align: center;
+      bottom: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: lightgreen;
 }

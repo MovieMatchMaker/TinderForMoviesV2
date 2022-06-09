@@ -1,31 +1,27 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
-import { animations } from 'react-animation'
-import 'react-animation/dist/keyframes.css';
 
+function Navbar({ animationSetting }) {
+	return (
+		<nav style={{ animation: animationSetting, animationDuration: "0.5s" }}>
+			<Link to='/home'>
+				<h1 className='nav home'>Home</h1>
+			</Link>
 
-function Navbar() {
-  return (
-    <nav style={{animation: animations.slideIn}} >
-      <Link to="/home">
-            <h1 class="nav home">Home</h1>
-      </Link>
+			<Link to='/swipe'>
+				<h1 className='nav swipe'>Swipe</h1>
+			</Link>
 
-      <Link to="/swiping">
-            <h1 class="nav swiping">Swiping</h1>
-      </Link>
+			<Link to='/matches'>
+				<h1 className='nav matches'>Matches</h1>
+			</Link>
 
-      <Link to="/matches">
-            <h1  class="nav matches">Matches</h1>
-      </Link>
-
-      <Link to="/logout">
-            <h1 class="nav logout">Logout</h1>
-      </Link>
-    </nav>
-  )
-
+			<Link to='/logout'>
+				<h1 className='nav logout'>Logout</h1>
+			</Link>
+		</nav>
+	);
 }
 
-export default Navbar
+export default Navbar;

@@ -1,1 +1,12 @@
-{"username":"danny","password":"shhh, password","data":{"current":null,"swiped":[],"queue":[],"backup_queue":[],"matches":[],"current_page_popular":1}}
+{
+    "username": "danny",
+    "password": "shhh, password",
+    "data": {
+        "current": null,
+        "swiped": [],
+        "queue": [],
+        "backup_queue": [],
+        "matches": [],
+        "current_page_popular": 1
+    }
+}

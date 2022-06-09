@@ -6,6 +6,22 @@
       font-family: Campton-Bold, sans-serif;
 }
 
+#logo {
+      position: absolute;
+      top: 10px;
+      left: 40px;
+}
+
+#logo:hover h1{
+      cursor: pointer;
+}
+
+
+
+.ms {
+      color: rgba(0, 0, 0, 0.657);
+}
+
 button {
       width: 260px;
       height: 75px;
@@ -17,11 +33,14 @@ button {
       white-space: nowrap;
       position: relative;
       right: 30px;
+
 }
 
-.title-emoji {
-        font-size: 52px;
-        line-height: 72px;
+#button-container {
+      position: relative;
+      top: 160px;
+      height:120px;
+
 }
 
 .bn29 {
@@ -29,13 +48,13 @@ button {
       border: none;
       padding: 0.8em 2.5em;
       outline: none;
-      color: white;
+      color: black;
       font-style: normal;
       position: relative;
       z-index: 1;
       cursor: pointer;
+      font-family: Campton-Bold, sans-serif;
       background: none;
-      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.45);
 
 }
 
@@ -52,10 +71,7 @@ button {
       content: "";
       z-index: -2;
       background-size: 400% 400%;
-      background: linear-gradient(265deg,
-                  #FF0080,
-                  #FF8C00,
-                  #40E0D0);
+      background: #ffeba7;
 }
 
 .bn29:before {

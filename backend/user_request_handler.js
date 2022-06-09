@@ -28,7 +28,7 @@ function create_account(username, password){
 }
 
 // returns login_token or null if username/password is incorrent
-function login(username, password){
+export function login(username, password){
     let user = access(username, password)
 
     if(!user){
@@ -151,32 +151,38 @@ function close_login_token(login_token){
 
 }
 
-console.log("<===Test Script for Backend===>")
+// console.log("<===Test Script for Backend===>")
 
-console.log("\nlogging in/creating account...")
-var test_token = create_account("danny", "shhh, password")
-if(!test_token){
-    test_token = login("danny", "shhh, password")
-}
-console.log("Login Token (expect 0):")
-console.log(test_token)
+// console.log("\nlogging in/creating account...")
+// var test_token = create_account("danny", "shhh, password")
+// if(!test_token){
+//     test_token = login("danny", "shhh, password")
+// }
+// console.log("Login Token (expect 0):")
+// console.log(test_token)
 
-console.log("\n attempting to resolve login token...")
-var test_user = resolve_login_token(test_token)
-var test_failed_user = resolve_login_token(1)
-console.log("resolved user details: ")
-console.log(test_user)
-console.log("false login token(expect null): ")
-console.log(test_failed_user)
+// console.log("\n attempting to resolve login token...")
+// var test_user = resolve_login_token(test_token)
+// var test_failed_user = resolve_login_token(1)
+// console.log("resolved user details: ")
+// console.log(test_user)
+// console.log("false login token(expect null): ")
+// console.log(test_failed_user)
 
-console.log("\n grabbing first film...")
-var test_current_movie_1 = await get_current_movie(test_token)
-console.log("first movie: ")
-console.log(test_current_movie_1.title)
+// console.log("\n grabbing first film...")
+// var test_current_movie_1 = await get_current_movie(test_token)
+// console.log("first movie: ")
+// console.log(test_current_movie_1.title)
 
+<<<<<<< HEAD:backend/user_request_handler.js
+// console.log("swiping right")
+// var wrong_film = test_user.data.backup_queue[0]
+// var next_film = await swipe_right(test_token)
+=======
 console.log("\nswiping right")
 var test_wrong_film = test_user.data.backup_queue[0]
 var test_current_movie_2 = await swipe_right(test_token)
+>>>>>>> main:user_request_handler.js
 
 console.log("\nnext movie after that: ")
 console.log(test_current_movie_2.title)

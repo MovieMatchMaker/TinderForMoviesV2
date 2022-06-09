@@ -1,1 +1,12 @@
-{"username":"dad","password":" das","recommendation_data":{"current":null,"swiped":[],"queue":[],"backup_queue":[],"matches":[],"current_page_popular":1}}
+{
+    "username": "dad",
+    "password": " das",
+    "recommendation_data": {
+        "current": null,
+        "swiped": [],
+        "queue": [],
+        "backup_queue": [],
+        "matches": [],
+        "current_page_popular": 1
+    }
+}

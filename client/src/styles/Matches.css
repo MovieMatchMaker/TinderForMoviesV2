@@ -22,8 +22,8 @@
 */
 .list {
   list-style: none;
-  border: 5px solid rgb(170, 226, 135);
-  background-color: #8782c9;
+  border: 5px solid rgba(60, 210, 100, 0.616);
+  background-color: #00000050;
   padding: 20px;
   border-radius: 12px;
 }
