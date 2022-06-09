@@ -3,7 +3,8 @@ import '../styles/Cards.css'
 import React from 'react';
 import {useEffect, useState, useRef, useMemo} from 'react';
 import TinderCard from 'react-tinder-card'
-
+import { animations } from 'react-animation'
+import 'react-animation/dist/keyframes.css';
 
 
 function Cards() {
@@ -81,15 +82,9 @@ function Cards() {
 
   return (
     <div>
-      <link
-        href='https://fonts.googleapis.com/css?family=Damion&display=swap'
-        rel='stylesheet'
-      />
-      <link
-        href='https://fonts.googleapis.com/css?family=Alatsi&display=swap'
-        rel='stylesheet'
-      />
-      <h1>Movie Tinder</h1>
+      <br>
+      </br>
+      <br></br>
       <div className='cardContainer'>
       
 
@@ -102,8 +97,7 @@ function Cards() {
             onCardLeftScreen={() => outOfFrame(movie.title, index)}
           >
             <div
-              // The backgrojund image is the movie database poster
-              style={{ backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")` }}
+              style={{ backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")` , animation: animations.bounceIn}}
               className='card'
             >
               <h3>{movie.title}</h3>

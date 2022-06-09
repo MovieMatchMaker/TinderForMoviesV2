@@ -1,31 +1,45 @@
 import React from 'react'
 import '../../styles/Home.css';
 import {Link} from 'react-router-dom';
+import { animations, AnimateOnChange } from 'react-animation'
+import 'react-animation/dist/keyframes.css';
+import { useState,  useEffect } from 'react';
 
 function Home() {
+
+  const emojis = ['👌', '🎉', '😋', '🤩', '😻', '✨', '😍', '👍', '💥']
+  const getRandomFrom = array => array[Math.floor(Math.random() * array.length)]
+  const [randomEmoji, setRandomEmoji] = useState(getRandomFrom(emojis));
+
+  useEffect(() => {
+    // Every five seconds change the emoji
+    const interval = setInterval(() => {
+      setRandomEmoji(getRandomFrom(emojis))
+    }
+    , 1300);
+    return () => clearInterval(interval);
+
+  });
+
   return (
     <div>
-          <h1 id="welcome-header">Welcome to  our App!</h1>
+          <h1 style={{animation: animations.fadeInUp}} id="welcome-header">TinderForMovies</h1>
 
           <div id="welcome-text">
-
-            <p>
-              TinderForMovies is a web application that allows you to swipe right or left on movies to see if you like them.
-            </p>
-
-            <p>
-              You can also see the movies you have swiped on and the movies you have swiped left on.
-            </p>
-
-            <p>
-              Swipe left on a movie if you don't like it, and swipe right if you do.
-            </p>
 
           </div>
 
 
+
+
           <Link to="/swiping">
-            <button>Start Swiping!</button>
+            <div style={{animation: animations.fadeInUp}} id="button-container">
+              < a href = "/" > < button class = "bn29" > < span className = 'text' > Start Swiping! &nbsp;
+              <AnimateOnChange>
+              {randomEmoji}
+            </AnimateOnChange>
+              </span></button></a>
+            </div>
           </Link>
     </div>
   )
