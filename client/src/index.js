@@ -1,28 +1,34 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './styles/index.css';
-import Login from './routes/login/Login';
-import Home from "./routes/home/Home";
-import Matches from './routes/matches/Matches';
-import Swiping from "./routes/swiping/Swiping";
 import {
   BrowserRouter,
   Route,
   Routes
-} from 'react-router-dom'
+} from "react-router-dom";
+import ReactDOM from 'react-dom/client';
+import './styles/index.css';
+import Login from './routes/login/Login';
+import Home from "./routes/home/Home";
 import Navbar from './components/Navbar';
+import FourOhFour from './routes/404/FourOhFour';
+import {animations} from 'react-animation'
+import Signup from './routes/signup/Signup';
+import Logout from './routes/logout/Logout';
+import Matches from './routes/matches/Matches';
+import Swipe from './routes/swipe/Swipe';
 
 
 function TinderMovies() {
     return (
       <BrowserRouter>
         <Routes>
+          <Route path="*" element={<><FourOhFour/><Navbar animationSetting={animations.bounceIn}/></>} />
           <Route path="/" element={<><Home/></>}/>
           <Route path="/home" element={<><Home/></>}/>
-          <Route path="/swiping" element={<><Swiping/><Navbar/></>}/>
+          <Route path="/swipe" element={<><Swipe/><Navbar animationSetting={animations.popIn}/></>}/>
           <Route path="/login" element={<><Login/></>}/>
-          <Route path="/matches" element={<><Matches/><Navbar/></>}/>
-          {/* <Route path="/404" element={<><FourOhFour></>}/> */}
+          <Route path="/signup" element={<><Signup/></>}/>
+          <Route path="/matches" element={<><Matches/><Navbar animationSetting={animations.bounceIn}/></>}/>
+          <Route path='/logout' element={<><Logout/></>}/>
         </Routes>
       </BrowserRouter>
     )
@@ -32,7 +38,7 @@ function TinderMovies() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <TinderMovies/>
+    <TinderMovies />
   </React.StrictMode>
 );
 

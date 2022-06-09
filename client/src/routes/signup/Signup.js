@@ -1,49 +1,42 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
-import React, { useState } from "react";
+import React from "react";
 import "../../../src/styles/login.css";
+import { useState } from "react";
 import { animations } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import { Link } from "react-router-dom";
-
 import { useNavigate } from "react-router-dom";
-
-const Login = () => {
+function Signup() {
   const navigate = useNavigate();
 
-  const [username, setUsernameL] = useState("");
-  const [password, setPasswordL] = useState("");
-  const [userL, setUserL] = useState({
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
     username: "",
     password: "",
   });
-
   const [message, setMessage] = useState("");
 
   const handleChangeU = (e) => {
-    setUsernameL(e.target.value);
-    setUserL({
-      ...userL,
+    setUsername(e.target.value);
+    setUser({
+      ...user,
       username: e.target.value,
     });
   };
 
   const handleChangeP = (e) => {
-    setPasswordL(e.target.value);
-    setUserL({
-      ...userL,
+    setPassword(e.target.value);
+    setUser({
+      ...user,
       password: e.target.value,
     });
   };
 
-  const handleLogin = () => {
-    const { username, password } = userL;
+  const handleSignup = () => {
+    const { username, password } = user;
     console.log(username, password);
-    if (username === "" || password === "" || password.length < 2) {
-      setMessage("Fill out both fields before submitting!");
-      return;
-    }
-    fetch(`/api/login`, {
+    fetch(`/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,17 +48,18 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-		
-        if (data.message === "Account not Found!") {
-          setMessage(data.message);
-          return;
-        } else {
+        if (data.message === `${user.username} Signed up!`) {
           setTimeout(() => {
-            navigate("/swipe");
+            navigate("/login");
           }, 2000);
           setMessage(data.message);
+        } else {
+          setMessage(data.message);
+          return;
         }
-      });
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -79,15 +73,15 @@ const Login = () => {
           <span className="ms">M</span>aker
         </h1>
       </a>
-
-      <Link to="/signup">
+      <Link to="/login">
         <div
           style={{ animation: animations.bounceIn, bottom: "50px" }}
           className="bn29 signup"
         >
-          Sign Up
+          Log In
         </div>
       </Link>
+
       <div
         style={{ animation: animations.bounceIn, animationDuration: "0.7s" }}
         className="section"
@@ -98,40 +92,38 @@ const Login = () => {
             <div className="card-front">
               <div className="center-wrap">
                 <div className="section text-center">
-                  <h4 className="mb-4 pb-3">Log In</h4>
-                  <div className="form-group">
-                    <form>
+                  <form action="#" autoComplete="off">
+                    <h4 className="mb-4 pb-3">Sign Up</h4>
+                    <div className="form-group mt-2">
                       <input
                         type="text"
                         username="logemail"
                         className="form-style"
-                        placeholder="Username"
                         defaultValue={username}
                         onChange={handleChangeU}
-                        id="logemail"
+                        placeholder="New Username"
+                        id="logemail2"
                         autoComplete="off"
                       ></input>
-                    </form>
-                    <i className="input-icon uil uil-at"></i>
-                  </div>
-                  <div className="form-group mt-2">
-                    <form onSubmit={handleLogin}>
+                      <i className="signup-status">{message}</i>
+                    </div>
+                    <div className="form-group mt-2">
                       <input
                         type="password"
                         username="logpass"
                         className="form-style"
-                        placeholder="Password"
-                        id="logpass"
                         defaultValue={password}
                         onChange={handleChangeP}
+                        placeholder="New Password"
+                        id="logpass2"
                         autoComplete="off"
                       ></input>
-                    </form>
-                    <i className="login-status">{message}</i>
-                  </div>
-                  <a href="#" onClick={handleLogin} className="btn mt-4">
-                    submit
-                  </a>
+                      <i className="input-icon uil uil-lock-alt"></i>
+                    </div>
+                    <a onClick={handleSignup} href="#" className="btn mt-4">
+                      submit
+                    </a>
+                  </form>
                 </div>
               </div>
             </div>
@@ -140,6 +132,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Login;
+export default Signup;

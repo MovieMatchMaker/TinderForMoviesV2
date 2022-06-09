@@ -1,11 +1,10 @@
 import React from 'react'
 import Cards from '../../components/Cards'
 
-function Swiping() {
+function Swipe() {
   return (
     <Cards />
-    
   )
 }
 
-export default Swiping
+export default Swipe;
