@@ -3,15 +3,14 @@ import cors from "cors";
 import express from "express";
 import axios from "axios";
 import mongoose from "mongoose";
-import bodyParser from "body-parser";
 import * as urh from "./backend/user_request_handler.js";
 
 
 const app = express();
 
-app.use(cors());
-
 app.use(express.json());
+
+app.use(cors());
 
 dotenv.config();
 
