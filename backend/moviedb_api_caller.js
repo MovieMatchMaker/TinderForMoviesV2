@@ -11,16 +11,16 @@ import fetch from 'node-fetch'
  * current page- page of popular movies, int 1-1000
  * returns:
  * array of movie objects
- */ 
-export async function get_popular(current_page){
-    const response = await fetch('https://api.themoviedb.org/3/movie/popular?api_key='
-            + api_key
-            + '&language=en-US&page='
-            + current_page)
+ */
+export async function get_popular(current_page) {
+    const response = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=' +
+        api_key +
+        '&language=en-US&page=' +
+        current_page)
     const data = await response.json()
     var movies = JSON.parse(JSON.stringify(data));
     return movies.results
-    
+
 }
 
 /* gets list of recommendations based off the previous movie
@@ -29,25 +29,25 @@ export async function get_popular(current_page){
  * page - page of results, int 1-1000
  * returns:
  * array of movie objects
- */ 
-export async function get_recommendations(movie_id, page){
-    const response = await fetch('https://api.themoviedb.org/3/movie/'
-        + movie_id 
-        + '/recommendations?api_key=' 
-        + api_key 
-        + '&language=en-US&page='
-        + page)
+ */
+export async function get_recommendations(movie_id, page) {
+    const response = await fetch('https://api.themoviedb.org/3/movie/' +
+        movie_id +
+        '/recommendations?api_key=' +
+        api_key +
+        '&language=en-US&page=' +
+        page)
     const data = await response.json()
     var movies = JSON.parse(JSON.stringify(data));
     return movies.results
 
 }
 
-export async function get_watch_providers(movie_id){
-    const response = await fetch('https://api.themoviedb.org/3/movie/'
-        + movie_id
-        + '/watch/providers?api_key=' 
-        + api_key)
+export async function get_watch_providers(movie_id) {
+    const response = await fetch('https://api.themoviedb.org/3/movie/' +
+        movie_id +
+        '/watch/providers?api_key=' +
+        api_key)
     const data = await response.json()
     var movies = JSON.parse(JSON.stringify(data));
     return movies.results
