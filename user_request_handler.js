@@ -72,8 +72,8 @@ async function swipe_right(login_token){
 
     await rec_swipe_right(user)
 
-    let out = await get_current_movie(user)
-    console.log(out)
+    let out = await rec_get_current_movie(user)
+    
     return out
 }
 
@@ -114,7 +114,7 @@ function logout(login_token){
 }
 
 // private
-var login_token_count = 0
+var login_token_count = 1
 var current_users = []
 
 // returns new login token 
@@ -174,15 +174,20 @@ var test_current_movie_1 = await get_current_movie(test_token)
 console.log("first movie: ")
 console.log(test_current_movie_1.title)
 
-console.log("swiping right")
+console.log("\nswiping right")
 var test_wrong_film = test_user.data.backup_queue[0]
 var test_current_movie_2 = await swipe_right(test_token)
 
-console.log("next movie after that: ")
-console.log(test_current_movie_2)
+console.log("\nnext movie after that: ")
+console.log(test_current_movie_2.title)
 console.log("^^^ should not be the same as the following: ")
 console.log(test_wrong_film.title)
 
+console.log("swipeing left on 100 movies")
+for(let i = 0; i < 100; i++){
+    let test_next_movie = await swipe_left(test_token)
+    console.log(test_next_movie)
+}
 
 
 

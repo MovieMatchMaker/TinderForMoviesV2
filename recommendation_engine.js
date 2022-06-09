@@ -5,8 +5,6 @@
 import {get_popular, get_recommendations, get_watch_providers} from './moviedb_api_caller.js';
 
 export async function rec_get_current_movie(user){
-    console.log("\n in rec get current")
-    console.log(user)
     if(user.data.current === null){
         await fill_current(user)
     }
@@ -30,8 +28,6 @@ export async function rec_swipe_right(user){
     }
     user.data.current = null
 
-    console.log("user after rec_swipe_right")
-    console.log(user)
 }
 
 export function rec_swipe_left(user){
