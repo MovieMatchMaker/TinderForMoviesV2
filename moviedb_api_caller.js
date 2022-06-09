@@ -12,26 +12,15 @@ import fetch from 'node-fetch'
  * returns:
  * array of movie objects
  */ 
-export function get_popular(current_page){
-    let out
-    console.log("get_popular(" + current_page + ")")
-
-    fetch('https://api.themoviedb.org/3/movie/popular?api_key='
-        + api_key
-        + '&language=en-US&page='
-        + current_page)
-    .then( res=> {
-        console.log("hello")
-    })
-    .then(res => res.json())
-    .then(res_json => {
-        console.log(res_json)
-        out = res_json.results
-    }).catch(err =>{
-        throw(err)
-    })
-    console.log("before return")
-    return out
+export async function get_popular(current_page){
+    const response = await fetch('https://api.themoviedb.org/3/movie/popular?api_key='
+            + api_key
+            + '&language=en-US&page='
+            + current_page)
+    const data = await response.json()
+    var movies = JSON.parse(JSON.stringify(data));
+    return movies.results
+    
 }
 
 /* gets list of recommendations based off the previous movie
@@ -41,43 +30,35 @@ export function get_popular(current_page){
  * returns:
  * array of movie objects
  */ 
-export function get_recommendations(movie_id, page){
-    fetch('https://api.themoviedb.org/3/movie/'
-        + current_movie.id 
+export async function get_recommendations(movie_id, page){
+    console.log("in the recommendations function")
+    const response = await fetch('https://api.themoviedb.org/3/movie/'
+        + movie_id 
         + '/recommendations?api_key=' 
         + api_key 
         + '&language=en-US&page='
         + page)
-    .then(res => res.json())
-    .then(res_json => {
-        return res_json.results
-    })
+    const data = await response.json()
+    var movies = JSON.parse(JSON.stringify(data));
+    return movies.results
+
 }
 
-export function get_watch_providers(movie_id){
-    fetch('https://api.themoviedb.org/3/movie/'
+export async function get_watch_providers(movie_id){
+    const response = await fetch('https://api.themoviedb.org/3/movie/'
         + movie_id
         + '/watch/providers?api_key=' 
         + api_key)
-    .then(res = res.json())
-    .then(res_json => {
-        return res_json.results
-    })
+    const data = await response.json()
+    var movies = JSON.parse(JSON.stringify(data));
+    return movies.results
 }
 
 
 // test code
-console.log(get_popular(1))
-fetch('https://api.themoviedb.org/3/movie/popular?api_key=b9964db6966369e1b45cdd3f27968309&language=en-US&page=1')
-.then(res => {
-    console.log("response")
-    console.log(res)
-})
+// var test = await get_popular(1)
+// console.log(test[1])
 
-
-fetch('https://api.themoviedb.org/3/movie/300?api_key=b9964db6966369e1b45cdd3f27968309&language=en-US')
-.then(res=>{
-    console.log(res)
-})
-
-// console.log(get_recommendations(300), 1)
+// console.log("printing output from function")
+// console.log(test[1])
+// console.log(test)

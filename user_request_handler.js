@@ -51,25 +51,26 @@ function get_previous_matches(login_token){
 }
 
 // returns movie object of current 
-function get_current_movie(login_token){
+async function get_current_movie(login_token){
     let user = resolve_login_token(login_token)
 
     if(user === null){
         return null
     }
 
-    return rec_get_current_movie(user)
+    let out = await rec_get_current_movie(user)
+    return out
 }
 
 // returns next movie recommendation or null if login token invalid
-function swipe_right(login_token){
+async function swipe_right(login_token){
     let user = resolve_login_token(login_token)
 
     if(user === null){
         return null
     }
 
-    rec_swipe_right(user)
+    await rec_swipe_right(user)
 
     let out = get_current_movie(user)
     return out
@@ -149,14 +150,37 @@ function close_login_token(login_token){
 
 }
 
+console.log("<===Test Script for Backend===>")
 
+console.log("\nlogging in/creating account...")
 var test_token = create_account("danny", "shhh, password")
-
 if(!test_token){
     test_token = login("danny", "shhh, password")
 }
-
+console.log("Login Token (expect 0):")
 console.log(test_token)
 
-var test_current_movie = get_current_movie(test_token)
-console.log(test_current_movie)
+console.log("\n attempting to resolve login token...")
+var test_user = resolve_login_token(test_token)
+var test_failed_user = resolve_login_token(1)
+console.log("resolved user details: ")
+console.log(test_user)
+console.log("false login token(expect null): ")
+console.log(test_failed_user)
+
+console.log("\n grabbing first film...")
+var test_current_movie_1 = await get_current_movie(test_token)
+console.log("first movie: ")
+console.log(test_current_movie_1.title)
+
+console.log("swiping right")
+var wrong_film = test_user.data.backup_queue[0]
+var next_film = await swipe_right(test_token)
+
+
+
+
+
+
+// var test_current_movie = get_current_movie(test_token)
+// console.log(test_current_movie)

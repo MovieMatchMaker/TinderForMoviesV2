@@ -4,21 +4,21 @@
 
 import {get_popular, get_recommendations, get_watch_providers} from './moviedb_api_caller.js';
 
-export function rec_get_current_movie(user){
+export async function rec_get_current_movie(user){
     if(user.data.current === null){
-        fill_current(user)
+        await fill_current(user)
     }
     return user.data.current
 }
 
-export function rec_swipe_right(user){
+export async function rec_swipe_right(user){
     user.data.swiped.push(user.data.current.id)
 
     // adds to queue with recommendations based on this movie
-    let recommendations = get_recommendations(user.data.current.id, 1)
+    let recommendations = await get_recommendations(user.data.current.id, 1)
     let i = 0
     while (i < 5){
-        if(i === recommendations.lenght){
+        if(i === recommendations.length){
             break
         }
         if(!user.data.swiped.includes(recommendations[i].id)){
@@ -43,13 +43,13 @@ export function rec_match(user){
 }
 
 // private
-function fill_current(user){
+async function fill_current(user){
     if(user.data.queue.length !== 0){
         user.data.current = user.data.queue.shift();
     } else {
         // fills current backup_queue if necessary
         if(user.data.backup_queue.length === 0){
-            let recommendations = get_popular(user.data.current_page_popular)
+            const recommendations = await get_popular(user.data.current_page_popular)
             user.data.current_page_popular++
 
             // checks if movies have been swiped yet
@@ -59,7 +59,6 @@ function fill_current(user){
                 }
             }
         }
-
         user.data.current = user.data.backup_queue.shift()
     }
 }
