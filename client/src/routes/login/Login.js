@@ -1,12 +1,32 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../src/styles/login.css";
+import { stringify } from "nodemon/lib/utils";
+
 
 
 
 function Login() {
+
+	const [username, setUsername] = React.useState("");
+	const [loginToken, setLoginToken] = useState(null);
+
+	const getLoginToken = async () => {
+	  	const response = await fetch("/api/login");
+	  	const data = await response.text();
+	  	console.log(data);
+		setUsername(data.username);
+		setLoginToken(data.text);
+	};
+
+
+	useEffect(() => {
+		getLoginToken();
+	}, [])
+
+
 
   return  (
 
@@ -34,7 +54,7 @@ function Login() {
 												<i class="input-icon uil uil-lock-alt"></i>
 											</div>
 											<a href="#" class="btn mt-4">submit</a>
-                            				<p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                            				<p class="mb-0 mt-4 text-center"><a href="#0" class="link">{username? loginToken : username}</a></p>
 				      					</div>
 			      					</div>
 			      				</div>

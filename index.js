@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const express = require('express');
 const axios = require('axios');
+import user_request_handler from "./user_request_handler.js";
 
 const app = express();
 
@@ -33,6 +34,13 @@ app.get('/api/matches', (req, res) => {
                   res.send(err);
             });
 });
+
+app.get('/api/login', (req, res) => {
+
+      const {username, }
+      user_request_handler.login()
+
+})
 
 
 
