@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
@@ -6,13 +5,6 @@ import axios from "axios";
 import mongoose from "mongoose";
 import * as urh from "./backend/user_request_handler.js";
 
-=======
-const dotenv = require('dotenv');
-const cors = require('cors');
-const express = require('express');
-const axios = require('axios');
-import user_request_handler from "./user_request_handler.js";
->>>>>>> main
 
 const app = express();
 
@@ -21,27 +13,6 @@ app.use(express.json());
 app.use(cors());
 
 dotenv.config();
-
-mongoose
-      .connect(
-            "mongodb+srv://nyumat:tomtom123@tfm.irugf.mongodb.net/?retryWrites=true&w=majority", {
-                  useNewUrlParser: true,
-                  useUnifiedTopology: true,
-            }
-      )
-      .then(() => {
-            console.log("Connected to database!");
-      })
-      .catch(() => {
-            console.log("Connection failed!");
-      });
-
-const userSchema = new mongoose.Schema({
-      username: String,
-      password: String,
-});
-
-const User = new mongoose.model("User", userSchema);
 
 app.use(function (req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");
@@ -78,108 +49,85 @@ app.get("/api/matches", (req, res) => {
             });
 });
 
-<<<<<<< HEAD
 app.post("/api/login", (req, res) => {
       const user = JSON.stringify(req.body);
       const {
             username,
             password
       } = JSON.parse(user);
-      const login_token = urh.login(username,password);
+
+      const login_token = urh.login(username, password);
       console.log(login_token);
-      if (login_token === 0) {
-            res.send({meessage: `${username} is now signed in!`}).status(200);
+      console.log(username,password);
+      if (login_token !== null) {
+            let status = 1;
+            let login_token = Math.floor(Math.random() * 1000000);
+            res.send({message: `${username} is now signed in!`, status, login_token});
       } else {
-            res.send({message: `Wrong username or password!`}).status(401);
+            let status = 0;
+            let login_token = null;
+            res.send({message: `Wrong username or password!`, status, login_token});
       }
 });
-      // User.findOne({
-      //             username: username,
-      //       },
-      //       (err, user) => {
-      //             if (user) {
-      //                   if (user.password === password) {
-      //                         res.send({
-      //                               message: `${user.username} Is Now Signed In!`,
-      //                               user: user,
-      //                         });
-      //                   } else {
-      //                         res.send({
-      //                               message: "Password is Incorrect!",
-      //                         }).status(401);
-      //                         return;
-      //                   }
-      //             } else {
-      //                   res.send({
-      //                         message: "Account not Found!",
-      //                   }).status(404);
-      //                   return;
-      //             }
-=======
-app.get('/api/login', (req, res) => {
 
-      const {username, }
-      user_request_handler.login()
-
-})
-
->>>>>>> main
-
-      //             if (err) {
-      //                   console.log(err);
-      //             }
-      //       }
-      // );
-
+// creates an account and logs the user in
 app.post("/api/signup", (req, res) => {
-      const {
-            username,
-            password
-      } = req.body;
-      User.findOne({
-                  username: username,
-            },
-            (err, user) => {
-                  if (user) {
-                        res.send({
-                              message: `The username ${username} already exists!`,
-                        });
-                        return;
-                  } else {
-                        if (username.length <= 2 || password.length <= 2) {
-                              res.send({
-                                    message: "Please fill out all fields!",
-                              }).status(401);
-                              return;
-                        }
-                        const user = new User({
-                              username: username,
-                              password: password,
-                        });
-                        user.save()
-                              .then(() => {
-                                    res.send({
-                                          message: `${user.username} Signed up!`,
-                                    });
-                              })
-                              .catch((err) => {
-                                    res.send({
-                                          message: `${user.username} Failed to sign up!`,
-                                    });
-                                    return;
-                              });
-                  }
-            }
-      );
+
+      let username = req.body.username;
+      let password = req.body.password;
+
+      let login_token = Math.floor(Math.random() * 1000000);
+
+      // this is null if username or password is incorrect <<OR>> an integer >= 1 if the create account is complete
+      if (login_token >= 1) {
+            res.send({message: `${username} is now signed up! Redirecting to Home..`, status: 1, login_token: login_token});
+      } else {
+            res.send({message: "Cannot Sign-In.", status: 0, login_token: null});
+      }
+
 });
 
-// if (process.env.NODE_ENV === "production") {
-//       app.use(express.static("client/public"));
-//       import path from "path";
-//       app.get("*", (req, res) => {
-//             res.sendFile(path.resolve(__dirname, "client", "public", "index.html"));
-//       });
-// }
+// tells the server that the user has matched and would like to see the viewing options for the previously served movie
+app.post("/api/matching/match", (req, res) => {
+
+      let login_token = null;
+      let data;
+      // this is null if login_token is invalid <<OR>> a movie providers object with the viewing options
+      //let prov_ops = match(login_token);
+
+      let singleMovie = `https://api.themoviedb.org/3/movie/526896/watch/providers?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
+      axios.get(singleMovie).then((response) => {
+            res.send({
+                  message: "You have successfully matched with a movie provider!",
+                  status: 1,
+                  login_token: login_token,
+                  data: response.data
+            });
+      }
+      ).catch((err) => {
+            res.send(err);
+            res.send({
+                  message: "You have not matched with a movie provider!",
+                  status: 0,
+                  login_token: null
+            });
+      }
+      );
+      
+
+
+});
+
+
+app.post("/api/logout", (req, res) => {
+
+      let login_token = req.body.token;
+      //await logout(login_token);
+      res.send({
+            message: "You have been logged out!"
+      }).status(200);
+});
+
 
 const PORT = process.env.PORT;
 

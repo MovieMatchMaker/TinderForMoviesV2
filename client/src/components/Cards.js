@@ -5,14 +5,16 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import TinderCard from "react-tinder-card";
 import { animations } from "react-animation";
 import "react-animation/dist/keyframes.css";
+import { axios } from "axios";
 
-function Cards() {
+export default function Cards() {
 	const [moviePosters, setMoviePosters] = useState([]);
+	const [watchProviders, setWatchProviders] = useState([]);
+
 
 	const getPopularMovies = async () => {
 		const response = await fetch("/api");
 		const data = await response.json();
-		console.log(data);
 		if (data.Search) {
 			setMoviePosters(data);
 		} else {
@@ -39,7 +41,7 @@ function Cards() {
 		currentIndexRef.current = val;
 	};
 
-	const canGoBack = currentIndex < db.length - 1;
+	//const canGoBack = currentIndex < db.length - 1;
 
 	const canSwipe = currentIndex >= 0;
 
@@ -65,15 +67,34 @@ function Cards() {
 		if (canSwipe && currentIndex < db.length) {
 			await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
 		}
+
+		if (dir === "right") {
+			
+		}
+
+
 	};
 
-	// increase current index and show card
-	const goBack = async () => {
-		if (!canGoBack) return;
-		const newIndex = currentIndex + 1;
-		updateCurrentIndex(newIndex);
-		await childRefs[newIndex].current.restoreCard();
-	};
+
+	const matchHandle = async () => {
+		const response = await fetch("/api/matching/match", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				token: localStorage.getItem("login_token"),
+			}),
+		});
+
+		const data = await response.json();
+		console.log(data.data.results);
+		if (data.status === 1) {
+			const obj = JSON.parse(JSON.stringify(data.data.results));
+			setWatchProviders(data.data);
+		}
+
+	}
 
 
 
@@ -83,6 +104,7 @@ function Cards() {
 
 	return (
 		<div>
+
 			<br></br>
 			<br></br>
 			<div className='cardContainer'>
@@ -110,12 +132,11 @@ function Cards() {
 					style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
 					onClick={() => swipe("left")}>
 					Swipe left!
-        </button>
-        <button
-          style={{ backgroundColor: "red"}}
-          >
-            
-          
+	</button>
+	<button
+	style={{ backgroundColor: "blue"}}
+	onClick={() => matchHandle()}>
+	    Match!
         </button>
 				<button
 					style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
@@ -136,4 +157,4 @@ function Cards() {
 	);
 }
 
-export default Cards;
+

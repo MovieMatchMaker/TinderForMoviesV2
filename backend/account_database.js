@@ -1,8 +1,8 @@
 // Author: Danny Zahariev
 // Date Created: 7 June 2022
-// Date Modified: 7 June 2022
+// Date Modified: 8 June 2022
 
-const account_file_path = './accounts/'
+const account_file_path = '../accounts/'
 
 import * as fs from 'fs';
 
@@ -18,7 +18,7 @@ import * as fs from 'fs';
  *      current_page_popular: 1
  * },
  * 
- */ 
+ */
 
 /* creates account
  * inputs:
@@ -27,13 +27,13 @@ import * as fs from 'fs';
  * returns:
  * (if successful) js object with user info
  * (if account already exists) null
- */ 
-export function create(username, password){
-    if(fs.existsSync(account_file_path + username + '.json')){
+ */
+export function create(username, password) {
+    if (fs.existsSync(account_file_path + username + '.json')) {
         return null
     }
-    
-    let user ={
+
+    let user = {
         username: username,
         password: password,
         data: {
@@ -44,7 +44,7 @@ export function create(username, password){
             matches: [],
             current_page_popular: 1
         },
-        
+
     }
 
     let file_data = JSON.stringify(user)
@@ -60,16 +60,16 @@ export function create(username, password){
  * returns:
  * (if successful) js object with user info
  * (if username or password is incorrect) null
- */ 
-export function access(username, password){
-    if(fs.existsSync(account_file_path + username + '.json')){
+ */
+export function access(username, password) {
+    if (fs.existsSync(account_file_path + username + '.json')) {
         let file_data = fs.readFileSync(account_file_path + username + '.json')
         let user = JSON.parse(file_data)
-        if(user.password === password){
-        return user
+        if (user.password === password) {
+            return user
         }
     }
-    
+
     return null
 }
 
@@ -78,8 +78,8 @@ export function access(username, password){
  * user_info - js user object (presumed correct)
  * returns:
  * (bool) success state
- */ 
-export function save(user_info){
+ */
+export function save(user_info) {
     let file_data = JSON.stringify(user_info)
     fs.writeFileSync(account_file_path + user_info.username + '.json', file_data)
     return true

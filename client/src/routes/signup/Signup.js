@@ -6,7 +6,9 @@ import { animations } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-function Signup() {
+
+
+export default function Signup() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -35,31 +37,34 @@ function Signup() {
 
   const handleSignup = () => {
     const { username, password } = user;
-    console.log(username, password);
-    fetch(`/api/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message === `${user.username} Signed up!`) {
-          setTimeout(() => {
-            navigate("/login");
-          }, 2000);
-          setMessage(data.message);
-        } else {
-          setMessage(data.message);
-          return;
-        }
+    if (username === "" || password === "") {
+      setMessage("Please fill out all fields");
+    } else {
+      fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
       })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === 1) {
+            setMessage(data.message);
+            setTimeout(() => {
+              localStorage.removeItem("token");
+              localStorage.setItem("token", data.login_token);
+              navigate("/home");
+            }, 5000);
+          } else {
+            setMessage(data.message);
+          }
+        }
+        );
+      }
   };
 
   return (
@@ -134,4 +139,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+
