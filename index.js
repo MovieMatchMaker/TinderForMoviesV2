@@ -117,54 +117,27 @@ app.post("/api/matching/match", (req, res) => {
 });
 
 // tells the server that the user would like to see the next movie
-app.get("/api/matching/get_current", (req, res) => {
+app.get("/api/matching/get_current", async (req, res) => {
       
       let login_token = req.body.token;
-      var next_movie_to_view;
       // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
-      return new Promise((resolve, reject) => {
-            get_current_movie(login_token).then((response) => {
-                  console.log(response);
-                  resolve(response);
-            }
-            ).catch((err) => {
-                  reject(err);
-            }
-            );
-      }
-      ).then((response) => {
-            res.send({
-                  message: "You have successfully retrieved the next movie to be rated!",
-                  status: 1,
-                  login_token: login_token,
-                  data: response
-            });
-      }
-      ).catch((err) => {
-            res.send(err);
-            res.send({
-                  message: "You have not retrieved the next movie to be rated!",
-                  status: 0,
-                  login_token: null
-            });
-      }
-      );
+      // var next_movie_to_view = await get_current_movie(login_token);
+
+      // if (!next_movie_to_view) {
+      //       res.send({
+      //             message: `You have been logged out.`,
+      //             status: 0,
+      //       }).status(401);
+      // } else {
+      //       res.send({
+      //             message: `Grabbing next movie....`,
+      //             status: 1,
+      //             current_movie: next_movie_to_view
+      //       }).status(200);
+      // }
 
 
-                  // next_movie_to_view= await urh.get_current_movie(login_token);
-                  // console.log(next_movie_to_view);
-                  // if (!next_movie_to_view) {
-                  //       res.send({
-                  //             message: `You have been logged out.`,
-                  //             status: 0,
-                  //       }).status(401);
-                  // } else {
-                  //       res.send({
-                  //             message: `Grabbing next movie....`,
-                  //             status: 1,
-                  //             current_movie: next_movie_to_view
-                  //       }).status(200);
-                  // }
+
 });
 
 

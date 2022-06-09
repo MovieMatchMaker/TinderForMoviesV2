@@ -19,7 +19,6 @@ export default function Cards() {
 	const getPopularMovies = async () => {
 		const response = await fetch("/api/matching/get_current");
 		const data = await response.json();
-		console.log(data);
 		//setMovie(data.current_movie);
 		movies.push(data.current_movie);
 	};

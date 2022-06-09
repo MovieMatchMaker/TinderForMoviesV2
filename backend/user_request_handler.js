@@ -59,6 +59,8 @@ async function get_current_movie(login_token){
     }
 
     let out = await rec_get_current_movie(user);
+    console.log("In function");
+    console.log("Loggin out");
     console.log(out);
     return out;
 }
