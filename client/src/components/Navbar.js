@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
-import { useNavigate } from "react-router-dom";
 
 export default function Navbar({ animationSetting }) {
-	 const navigate = useNavigate();
 	  const handleLogout = () => {
 		  const token = localStorage.getItem("token");
       console.log(token);

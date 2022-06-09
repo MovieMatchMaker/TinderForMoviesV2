@@ -2,7 +2,7 @@
 // Date Created: 7 June 2022
 // Date Modified: 8 June 2022
 
-const account_file_path = '../accounts/'
+const account_file_path = './accounts/'
 
 import * as fs from 'fs';
 

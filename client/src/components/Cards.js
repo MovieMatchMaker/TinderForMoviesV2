@@ -11,15 +11,17 @@ export default function Cards() {
 	const [moviePosters, setMoviePosters] = useState([]);
 	const [watchProviders, setWatchProviders] = useState([]);
 
+	//const [movie, setMovie] = useState([]);
+	const movies = [];
+
+
 
 	const getPopularMovies = async () => {
-		const response = await fetch("/api");
+		const response = await fetch("/api/matching/get_current");
 		const data = await response.json();
-		if (data.Search) {
-			setMoviePosters(data);
-		} else {
-			setMoviePosters(data.results);
-		}
+		console.log(data);
+		//setMovie(data.current_movie);
+		movies.push(data.current_movie);
 	};
 
 	const db = moviePosters;
@@ -108,6 +110,8 @@ export default function Cards() {
 			<br></br>
 			<br></br>
 			<div className='cardContainer'>
+
+
 				{db.map((movie, index) => (
 					<TinderCard
 						ref={childRefs[index]}

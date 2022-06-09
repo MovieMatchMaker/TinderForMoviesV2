@@ -65,7 +65,7 @@ const Login = () => {
           setTimeout(() => {
             localStorage.setItem("token", data.login_token);
             navigate("/swipe");
-          }, 5000);
+          }, 2000);
         }
       });
     }

@@ -8,7 +8,7 @@
 
 import {create, access, save} from './account_database.js';
 import {rec_get_current_movie, rec_swipe_left, rec_swipe_right, rec_match} from './recommendation_engine.js';
-
+export {create_account, get_previous_matches, get_current_movie, swipe_right, swipe_left, match, logout}
 /* creates account in database
  * inputs:
  * current page- page of popular movies, int 1-1000
@@ -58,8 +58,9 @@ async function get_current_movie(login_token){
         return null
     }
 
-    let out = await rec_get_current_movie(user)
-    return out
+    let out = await rec_get_current_movie(user);
+    console.log(out);
+    return out;
 }
 
 // returns next movie recommendation or null if login token invalid

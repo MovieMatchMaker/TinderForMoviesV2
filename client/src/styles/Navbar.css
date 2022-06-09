@@ -6,7 +6,7 @@ nav {
       top: 30px;
       display: flex;
       flex-direction: row;
-      gap: 50px;
+      gap: 150px;
       font-size: 1.5rem;
       font-family: Campton-Bold,  sans-serif !important;
       border: 3px solid rgba(255, 255, 255, 0.497);

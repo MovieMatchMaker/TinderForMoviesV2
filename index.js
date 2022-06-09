@@ -4,7 +4,7 @@ import express from "express";
 import axios from "axios";
 import mongoose from "mongoose";
 import * as urh from "./backend/user_request_handler.js";
-
+import {create_account, get_current_movie} from "./backend/user_request_handler.js";
 
 const app = express();
 
@@ -61,11 +61,9 @@ app.post("/api/login", (req, res) => {
       console.log(username,password);
       if (login_token !== null) {
             let status = 1;
-            let login_token = Math.floor(Math.random() * 1000000);
             res.send({message: `${username} is now signed in!`, status, login_token});
       } else {
             let status = 0;
-            let login_token = null;
             res.send({message: `Wrong username or password!`, status, login_token});
       }
 });
@@ -76,13 +74,13 @@ app.post("/api/signup", (req, res) => {
       let username = req.body.username;
       let password = req.body.password;
 
-      let login_token = Math.floor(Math.random() * 1000000);
+      let login_token = urh.create_account(username, password);
 
       // this is null if username or password is incorrect <<OR>> an integer >= 1 if the create account is complete
-      if (login_token >= 1) {
+      if (login_token !== null) {
             res.send({message: `${username} is now signed up! Redirecting to Home..`, status: 1, login_token: login_token});
       } else {
-            res.send({message: "Cannot Sign-In.", status: 0, login_token: null});
+            res.send({message: "Cannot Sign-In. Username exist", status: 0, login_token: null});
       }
 
 });
@@ -116,6 +114,57 @@ app.post("/api/matching/match", (req, res) => {
       
 
 
+});
+
+// tells the server that the user would like to see the next movie
+app.get("/api/matching/get_current", (req, res) => {
+      
+      let login_token = req.body.token;
+      var next_movie_to_view;
+      // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
+      return new Promise((resolve, reject) => {
+            get_current_movie(login_token).then((response) => {
+                  console.log(response);
+                  resolve(response);
+            }
+            ).catch((err) => {
+                  reject(err);
+            }
+            );
+      }
+      ).then((response) => {
+            res.send({
+                  message: "You have successfully retrieved the next movie to be rated!",
+                  status: 1,
+                  login_token: login_token,
+                  data: response
+            });
+      }
+      ).catch((err) => {
+            res.send(err);
+            res.send({
+                  message: "You have not retrieved the next movie to be rated!",
+                  status: 0,
+                  login_token: null
+            });
+      }
+      );
+
+
+                  // next_movie_to_view= await urh.get_current_movie(login_token);
+                  // console.log(next_movie_to_view);
+                  // if (!next_movie_to_view) {
+                  //       res.send({
+                  //             message: `You have been logged out.`,
+                  //             status: 0,
+                  //       }).status(401);
+                  // } else {
+                  //       res.send({
+                  //             message: `Grabbing next movie....`,
+                  //             status: 1,
+                  //             current_movie: next_movie_to_view
+                  //       }).status(200);
+                  // }
 });
 
 
