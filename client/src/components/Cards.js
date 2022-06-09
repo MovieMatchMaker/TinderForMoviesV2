@@ -32,7 +32,7 @@ export default function Cards() {
 		}
 	]
 
-
+	const movies= [];
   const [lastDirection, setLastDirection] = useState()
   const swiped = (direction, nameToDelete) => {
     console.log('removing: ' + nameToDelete)
@@ -54,8 +54,10 @@ const getPopularMovies = async () => {
 		}),
 	});
 	const data = await response.json();
-	//setMovies(data);
-	
+	movies.push(data.current_movie.title);
+	console.log(movies);
+	console.log(movies[0].current_movie);
+
 };
 
 	  useEffect(() => {
@@ -64,11 +66,12 @@ const getPopularMovies = async () => {
 
 	  const characters = db;
 
+
   return (
     <div>
       <link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
       <link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
-      <h1>React Tinder Card</h1>
+      <h1>{movies[0]}</h1>
       <div className='cardContainer'>
         {characters.map((character) =>
           <TinderCard className='swipe' key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
