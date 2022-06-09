@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
@@ -5,6 +6,13 @@ import axios from "axios";
 import mongoose from "mongoose";
 import * as urh from "./backend/user_request_handler.js";
 
+=======
+const dotenv = require('dotenv');
+const cors = require('cors');
+const express = require('express');
+const axios = require('axios');
+import user_request_handler from "./user_request_handler.js";
+>>>>>>> main
 
 const app = express();
 
@@ -70,6 +78,7 @@ app.get("/api/matches", (req, res) => {
             });
 });
 
+<<<<<<< HEAD
 app.post("/api/login", (req, res) => {
       const user = JSON.stringify(req.body);
       const {
@@ -106,6 +115,15 @@ app.post("/api/login", (req, res) => {
       //                   }).status(404);
       //                   return;
       //             }
+=======
+app.get('/api/login', (req, res) => {
+
+      const {username, }
+      user_request_handler.login()
+
+})
+
+>>>>>>> main
 
       //             if (err) {
       //                   console.log(err);
