@@ -112,9 +112,11 @@ function Cards() {
 					Swipe left!
         </button>
         <button
-          style={{ backgroundColor: "red"}}
-          >
-            
+          style={{ backgroundColor: "lightgreen"}}
+	    onClick={() => swipe("right")}>
+          
+            Match!
+
           
         </button>
 				<button
@@ -123,15 +125,7 @@ function Cards() {
 					Swipe right!
 				</button>
 			</div>
-			{lastDirection ? (
-				<h2 key={lastDirection} className='infoText'>
-					You swiped {lastDirection}
-				</h2>
-			) : (
-				<h2 className='infoText'>
-					{/* Swipe a card or press a button to get Restore Card button visible! */}
-				</h2>
-			)}
+			
 		</div>
 	);
 }

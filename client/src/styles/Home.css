@@ -4,30 +4,9 @@
       font-weight: bold;
       top: 0;
       font-family: Campton-Bold, sans-serif;
-<<<<<<< HEAD
  }
   
  #logo {
-=======
-}
-
- #welcome-text {
-       position: absolute;
-       font-weight: bold;
-       top: 300px;
-       font-family: Campton-Bold, sans-serif;
-       color: rgb(255, 255, 255);
-       max-width: 70rem;
-       overflow: auto;
- }
-
- #welcome-text p {
-       font-weight: bold;
-       font-size: 1.4rem;
- }
-
-#logo {
->>>>>>> b47ba03 (All)
       position: absolute;
       top: 10px;
       left: 40px;
@@ -73,20 +52,11 @@
  #button-container {
       position: relative;
       top: 160px;
-<<<<<<< HEAD
       height:120px;
       margin: 10px;
  }
   
  .bn29 {
-=======
-      height:100px;
-
-}
-
-.bn29 {
-      transform: translateY(160%);
->>>>>>> b47ba03 (All)
       text-align: center;
       border: none;
       padding: 0.8em 2.5em;
@@ -129,7 +99,6 @@
  .bn29:after {
       -webkit-filter: blur(0.3px);
       filter: blur(0.3px);
-<<<<<<< HEAD
  }
   
  .bn29:hover:before {
@@ -142,7 +111,3 @@
       transition: all .5 ease;
  }
  
-=======
-}
-
->>>>>>> b47ba03 (All)
