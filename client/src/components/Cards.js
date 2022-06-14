@@ -25,15 +25,14 @@ function Cards() {
 
 	const getNextMovie = async () => {
 		const response = await axios.post(
-			"/api/matching/get_current",
+			"/api/matching/swipe_right",
 			{
 				token: localStorage.getItem("token"),
 			}
 		);
 		const old_copy = [...moviePosters];
-		const new_copy = [...old_copy];
-		//new_copy.push(response.data.current_movie);
-		setMoviePosters(new_copy);
+		old_copy.push(response.data.current_movie);
+		setMoviePosters(old_copy);
 	}
 
 
@@ -124,9 +123,16 @@ function Cards() {
 				))}
 			</div>
 			<div className='buttons'>
-			<a class="bn39" href="/"><span class="bn39span">Swipe left</span></a>
-			<a class="bn39" href="/"><span class="bn39span">Match</span></a>
-			<a class="bn39" href="/"><span class="bn39span">Swipe right</span></a>
+			<a class="bn39" href="/" onClick={() => swipe("left")}><span class="bn39span">Swipe left</span></a>
+			<a class="bn39" href="/" onClick={() => swipe("right")}><span class="bn39span">Match</span></a>
+			<a class="bn39" href="/" onClick = {
+						function (event) {
+							swipe("right");
+							getNextMovie();
+						}
+					}
+					><span class="bn39span">Swipe right</span></a>
+
 			</div>
 		</div>
 	);

@@ -4,7 +4,7 @@ import express from "express";
 import axios from "axios";
 import mongoose from "mongoose";
 import * as urh from "./backend/user_request_handler.js";
-import {create_account, get_current_movie} from "./backend/user_request_handler.js";
+import {create_account, get_current_movie, swipe_right} from "./backend/user_request_handler.js";
 
 const app = express();
 
