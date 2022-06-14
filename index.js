@@ -117,11 +117,10 @@ app.post("/api/matching/match", (req, res) => {
 });
 
 // tells the server that the user would like to see the next movie
-
 app.post("/api/matching/get_current", async (req, res) => {
 
-      let login_token = req.body.token
-      login_token = parseInt(login_token)
+      let login_token = req.body.token;
+      login_token = parseInt(login_token);
       // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
       let next_movie_to_view = await get_current_movie(login_token)
       if (!next_movie_to_view) {
@@ -137,7 +136,6 @@ app.post("/api/matching/get_current", async (req, res) => {
             }).status(200);
       }
 });
-
 
 app.post("/api/logout", (req, res) => {
 

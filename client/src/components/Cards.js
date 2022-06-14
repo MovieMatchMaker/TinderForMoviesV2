@@ -5,20 +5,38 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import TinderCard from "react-tinder-card";
 import { animations } from "react-animation";
 import "react-animation/dist/keyframes.css";
+import axios from "axios";
 
 function Cards() {
 	const [moviePosters, setMoviePosters] = useState([]);
 
 	const getPopularMovies = async () => {
-		const response = await fetch("/api");
-		const data = await response.json();
-		console.log(data);
-		if (data.Search) {
-			setMoviePosters(data);
-		} else {
-			setMoviePosters(data.results);
-		}
-	};
+		const response = await axios.post(
+			"/api/matching/get_current",
+			{
+				token: localStorage.getItem("token"),
+			}
+		);
+		console.log(response.data.current_movie);
+		const copy =  [...moviePosters];
+		copy.push(response.data.current_movie);
+		setMoviePosters(copy);
+	}
+
+	const getNextMovie = async () => {
+		const response = await axios.post(
+			"/api/matching/get_current",
+			{
+				token: localStorage.getItem("token"),
+			}
+		);
+		const old_copy = [...moviePosters];
+		const new_copy = [...old_copy];
+		//new_copy.push(response.data.current_movie);
+		setMoviePosters(new_copy);
+	}
+
+
 
 	const db = moviePosters;
 	const [currentIndex, setCurrentIndex] = useState(db.length - 1);
@@ -79,7 +97,6 @@ function Cards() {
 
 	useEffect(() => {
 		getPopularMovies();
-		console.log(currentIndex);
 	}, []);
 
 	return (
@@ -122,7 +139,11 @@ function Cards() {
         </button>
 				<button
 					style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-					onClick={() => swipe("right")}>
+					onClick={
+						() => {
+							getNextMovie();
+						}
+					}>
 					Swipe right!
 				</button>
 			</div>
