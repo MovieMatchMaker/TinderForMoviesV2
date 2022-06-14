@@ -124,30 +124,10 @@ function Cards() {
 				))}
 			</div>
 			<div className='buttons'>
-				<button
-					style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-					onClick={() => swipe("left")}>
-					Swipe left!
-        </button>
-        <button
-          style={{ backgroundColor: "lightgreen"}}
-	    onClick={() => swipe("right")}>
-          
-            Match!
-
-          
-        </button>
-				<button
-					style={{ backgroundColor: !canSwipe && "#c3c4d3" }}
-					onClick={
-						() => {
-							getNextMovie();
-						}
-					}>
-					Swipe right!
-				</button>
+			<a class="bn39" href="/"><span class="bn39span">Swipe left</span></a>
+			<a class="bn39" href="/"><span class="bn39span">Match</span></a>
+			<a class="bn39" href="/"><span class="bn39span">Swipe right</span></a>
 			</div>
-			
 		</div>
 	);
 }
