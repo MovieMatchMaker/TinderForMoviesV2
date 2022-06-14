@@ -79,6 +79,7 @@ function Cards() {
 
 	useEffect(() => {
 		getPopularMovies();
+		console.log(currentIndex);
 	}, []);
 
 	return (

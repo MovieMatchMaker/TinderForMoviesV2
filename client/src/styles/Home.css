@@ -1,113 +1,109 @@
 #welcome-header {
-      position: absolute;
-      font-size: 8.5rem;
-      font-weight: bold;
-      top: 0;
-      font-family: Campton-Bold, sans-serif;
- }
-  
- #logo {
-      position: absolute;
-      top: 10px;
-      left: 40px;
- }
-  
- #logo:hover h1{
-      cursor: pointer;
- }
-  
- #welcome-text {
-      position: absolute;
-      font-weight: bold;
-      top: 300px;
-      font-family: Campton-Bold, sans-serif;
-      color: rgb(255, 255, 255);
-      max-width: 70rem;
-      overflow:auto;
- }
-  
- #welcome-text p{
-      font-weight: bold;
-      font-size: 1.4rem;
- }
-  
- .ms {
-      color: rgba(0, 0, 0, 0.657);
- }
-  
- button {
-      width: 260px;
-      height: 75px;
- }
-  
- .text {
-      font-size: 2.0rem;
-      font-family: 'Roboto', sans-serif;
-      white-space: nowrap;
-      position: relative;
-      right: 30px;
-      margin: 10px;
- }
-  
- #button-container {
-      position: relative;
-      top: 160px;
-      height:120px;
-      margin: 10px;
- }
-  
- .bn29 {
-      text-align: center;
-      border: none;
-      padding: 0.8em 2.5em;
-      outline: none;
-      color: black;
-      font-style: normal;
-      position: relative;
-      z-index: 1;
-      cursor: pointer;
-      font-family: Campton-Bold, sans-serif;
-      background: none;
-      margin: 10px;
- }
-  
- .bn29:before,
- .bn29:after {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      border-radius: 10em;
-      -webkit-transform: translateX(-50%) translateY(-50%);
-      transform: translateX(-50%) translateY(-50%);
-      width: 105%;
-      height: 105%;
-      content: "";
-      z-index: -2;
-      background-size: 400% 400%;
-      background: #ffeba7;
- }
-  
- .bn29:before {
-      -webkit-filter: blur(7px);
-      filter: blur(7px);
-      -webkit-transition: all 0.25s ease;
-      transition: all 0.25s ease;
-      -webkit-animation: pulse 10s infinite ease;
-      animation: pulse 10s infinite ease;
- }
-  
- .bn29:after {
-      -webkit-filter: blur(0.3px);
-      filter: blur(0.3px);
- }
-  
- .bn29:hover:before {
-      width: 115%;
-      height: 115%;
- }
-  
- .bn29:hover{
-      transform: scale(1.1);
-      transition: all .5 ease;
- }
- 
+     position: absolute;
+     font-size: 8.5rem;
+     font-weight: bold;
+     top: 0;
+     font-family: Campton-Bold, sans-serif;
+}
+
+#logo {
+     position: absolute;
+     top: 10px;
+     left: 40px;
+}
+
+#logo:hover h1 {
+     cursor: pointer;
+}
+
+#welcome-text {
+     position: absolute;
+     font-weight: bold;
+     top: 270px;
+     font-family: Campton-Bold, sans-serif;
+     color: rgb(255, 255, 255);
+     max-width: 70rem;
+     overflow: auto;
+}
+
+#welcome-text p {
+     font-weight: bold;
+     font-size: 1.4rem;
+}
+
+.ms {
+     color: rgba(0, 0, 0, 0.657);
+}
+
+button {
+     width: 260px;
+     height: 75px;
+}
+
+.text {
+     font-size: 2.0rem;
+     font-family: 'Roboto', sans-serif;
+     white-space: nowrap;
+     position: relative;
+     right: 30px;
+     margin: 10px;
+}
+
+#button-container {
+     position: relative;
+     top: 160px;
+     height: 80px;
+     margin: 10px;
+}
+
+.bn29 {
+
+     text-align: center;
+     border: none;
+     padding: 0.8em 2.5em;
+     outline: none;
+     color: black;
+     font-style: normal;
+     position: relative;
+     z-index: 1;
+     cursor: pointer;
+     font-family: Campton-Bold, sans-serif;
+     background: none;
+     margin: 10px;
+}
+
+.bn29:before,
+.bn29:after {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     border-radius: 10em;
+     -webkit-transform: translateX(-50%) translateY(-50%);
+     transform: translateX(-50%) translateY(-50%);
+     width: 105%;
+     height: 105%;
+     content: "";
+     z-index: -2;
+     background-size: 400% 400%;
+     background: #ffeba7;
+}
+
+.bn29:before {
+     -webkit-filter: blur(7px);
+     filter: blur(7px);
+     -webkit-transition: all 0.25s ease;
+     transition: all 0.25s ease;
+     -webkit-animation: pulse 10s infinite ease;
+     animation: pulse 10s infinite ease;
+}
+
+.bn29:after {
+     -webkit-filter: blur(0.3px);
+     filter: blur(0.3px);
+}
+
+.bn29:hover:before {
+     width: 115%;
+     height: 115%;
+}
+

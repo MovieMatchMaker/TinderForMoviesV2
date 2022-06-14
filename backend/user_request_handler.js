@@ -161,13 +161,13 @@ function close_login_token(login_token) {
 
 }
 
-// console.log("<===Test Script for Backend===>")
+console.log("<===Test Script for Backend===>")
 
-// console.log("\nlogging in/creating account...")
-// var test_token = create_account("danny", "d")
-// if (!test_token) {
-//     test_token = login("danny", "d")
-// }
+console.log("\nlogging in/creating account...")
+var test_token = create_account("danny", "shhh, password")
+if (!test_token) {
+    test_token = login("danny", "shhh, password")
+}
 
 // console.log("Login Token (expect 1):")
 // console.log(test_token)
