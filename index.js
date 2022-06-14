@@ -61,10 +61,10 @@ app.post("/api/login", (req, res) => {
       console.log(username,password);
       if (login_token !== null) {
             let status = 1;
-            res.send({message: `${username} is now signed in!`, status, login_token});
+            res.send({message: `Signed in as ${username}`, status, login_token});
       } else {
             let status = 0;
-            res.send({message: `Wrong username or password!`, status, login_token});
+            res.send({message: `Wrong username or password`, status, login_token});
       }
 });
 
@@ -80,7 +80,7 @@ app.post("/api/signup", (req, res) => {
       if (login_token !== null) {
             res.send({message: `${username} is now signed up! Redirecting to Home..`, status: 1, login_token: login_token});
       } else {
-            res.send({message: "Cannot Sign-In. Username exist", status: 0, login_token: null});
+            res.send({message: "Failed to create account, username already exists", status: 0, login_token: null});
       }
 
 });
@@ -125,7 +125,7 @@ app.post("/api/matching/get_current", async (req, res) => {
       let next_movie_to_view = await get_current_movie(login_token)
       if (!next_movie_to_view) {
             res.send({
-                  message: `You have been logged out.`,
+                  message: `Error: You have been logged out.`,
                   status: 0,
             }).status(401);
       } else {
@@ -136,6 +136,47 @@ app.post("/api/matching/get_current", async (req, res) => {
             }).status(200);
       }
 });
+
+app.post("/api/matching/swipe_left", async (req, res) => {
+
+      let login_token = req.body.token;
+      login_token = parseInt(login_token);
+      // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
+      let next_movie_to_view = await swipe_left(login_token)
+      if (!next_movie_to_view) {
+            res.send({
+                  message: `Error: You have been logged out.`,
+                  status: 0,
+            }).status(401);
+      } else {
+            res.send({
+                  message: `Grabbing next movie....`,
+                  status: 1,
+                  current_movie: next_movie_to_view
+            }).status(200);
+      }
+});
+
+app.post("/api/matching/swipe_right", async (req, res) => {
+
+      let login_token = req.body.token;
+      login_token = parseInt(login_token);
+      // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
+      let next_movie_to_view = await swipe_right(login_token)
+      if (!next_movie_to_view) {
+            res.send({
+                  message: `Error: You have been logged out.`,
+                  status: 0,
+            }).status(401);
+      } else {
+            res.send({
+                  message: `Grabbing next movie....`,
+                  status: 1,
+                  current_movie: next_movie_to_view
+            }).status(200);
+      }
+});
+
 
 app.post("/api/logout", (req, res) => {
 
