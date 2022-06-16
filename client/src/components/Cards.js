@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import axios from 'axios';
 import React, { useState } from 'react'
 import TinderCard from 'react-tinder-card'
@@ -5,10 +6,18 @@ import "../styles/Cards.css";
 import { useEffect, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import {animations} from 'react-animation';
+import { useSpring, animated as a } from 'react-spring';
 
 var counter = 0;
 
 export default function Cards () {
+
+	const [flipped, setFlipped] = useState(false)
+	const { transform, opacity } = useSpring({
+		opacity: flipped ? 1 : 0,
+		transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
+		config: { mass: 5, tension: 500, friction: 80 }
+	})
 
 	const navigate = useNavigate();
 	const [db, setDb] = useState([]);
@@ -121,6 +130,7 @@ export default function Cards () {
 		getFirst();
 	}, []);
 
+	
 	return (
 		<div>
 			<link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
@@ -128,15 +138,51 @@ export default function Cards () {
 			<div className='cardContainer'>
 			{movies.map((movie, index) =>
 			<TinderCard className='swipe' key={index} onSwipe={(dir) => swiped(dir, movie.title,index)} onCardLeftScreen={() => outOfFrame(movie.title)} ref={childRefs[index]}>
-				<div
+				{/* animation: animations.slideIn,
+				animationDuration: "0.5s",
+					class is card 
+				*/}
+				{/* <div
 					style={{
 						backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`,
-						animation: animations.slideIn,
-						animationDuration: "0.5s",
 					}}
 					className='card'>
 					<h3>{movie.title}</h3>
+				</div> */}
+
+
+				<div className="flip-card">
+					
+					
+					<div className="flip-card-inner">
+
+
+						<div className='card flip-card-front'  style={{
+							backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`,
+						}}>
+
+							
+							<h3>{movie.title}</h3>
+						
+							
+
+						</div>
+
+
+						<div className='flip-card-back'>
+
+							<h1>{movie.title}</h1>
+							<h1 className='back-overview'>{movie.overview}</h1>
+
+						</div>
+
+
+					</div>
+
+
+
 				</div>
+
 			</TinderCard>
 			)}
 			</div>
@@ -147,4 +193,5 @@ export default function Cards () {
 			</div>
 		</div>
 	)
+				
 }

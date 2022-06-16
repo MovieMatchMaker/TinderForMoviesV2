@@ -1,10 +1,15 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import Cards from '../../components/Cards'
 
 function Swipe() {
+
   return (
-    <Cards />
+    <div>
+      <Cards />
+    </div>
   )
+
 }
 
 export default Swipe;
