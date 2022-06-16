@@ -1,141 +1,150 @@
-/* eslint-disable jsx-a11y/heading-has-content */
+import axios from 'axios';
+import React, { useState } from 'react'
+import TinderCard from 'react-tinder-card'
 import "../styles/Cards.css";
-import React from "react";
-import { useEffect, useState, useRef, useMemo } from "react";
-import TinderCard from "react-tinder-card";
-import { animations } from "react-animation";
-import "react-animation/dist/keyframes.css";
-import axios from "axios";
+import { useEffect, useRef, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import {animations} from 'react-animation';
 
-function Cards() {
-	const [moviePosters, setMoviePosters] = useState([]);
+var counter = 0;
 
-	const getPopularMovies = async () => {
-		const response = await axios.post(
-			"/api/matching/get_current",
-			{
-				token: localStorage.getItem("token"),
-			}
-		);
-		console.log(response.data.current_movie);
-		const copy =  [...moviePosters];
-		copy.push(response.data.current_movie);
-		setMoviePosters(copy);
-	}
+export default function Cards () {
 
-	const getNextMovie = async () => {
-		const response = await axios.post(
-			"/api/matching/swipe_right",
-			{
-				token: localStorage.getItem("token"),
-			}
-		);
-		const old_copy = [...moviePosters];
-		old_copy.push(response.data.current_movie);
-		setMoviePosters(old_copy);
-	}
-
-
-
-	const db = moviePosters;
-	const [currentIndex, setCurrentIndex] = useState(db.length - 1);
-	const [lastDirection, setLastDirection] = useState();
-	// used for outOfFrame closure
-	const currentIndexRef = useRef(currentIndex);
+	const navigate = useNavigate();
+	const [db, setDb] = useState([]);
+	const [currentIndex, setCurrentIndex] = useState(db.length);
+	
+	const currentIndexRef = useRef(currentIndex)
 
 	const childRefs = useMemo(() => {
-		const childRefs = [];
+		const refs = [];
 		for (let i = 0; i < db.length; i++) {
-			childRefs.push(React.createRef());
+			refs.push(React.createRef());
 		}
-		return childRefs;
-	}, [db.length]);
+		return refs;
+	}, [db]);
+
+
+	const getFirst = async () => {
+		const response = await axios.get("/api");
+		const append = response.data.results[15];
+		setDb([append]);
+	}
 
 	const updateCurrentIndex = (val) => {
-		setCurrentIndex(val);
-		currentIndexRef.current = val;
-	};
+		setCurrentIndex(val)
+		currentIndexRef.current = val
+	}
 
-	const canGoBack = currentIndex < db.length - 1;
+	if (localStorage.getItem("token") === null) {
+		navigate("/");
+	} 
 
-	const canSwipe = currentIndex >= 0;
+	const getNextMovie = async (id) => {
+		counter +=1;
+		console.log(id)
+		await axios.get("/api/matching/next", 
+			{ params: {
+				id: id,
+				counter: counter
+			}}
+		).then((response) => {
+			const copy = [...db];
+			copy.push(response.data.current_movie);
+			setDb([...copy]);	
+		}).catch((err) => {
+			console.log(err);
+		});
+	}
 
-	// set last direction and decrease current index
-	const swiped = (direction, nameToDelete, index) => {
-		setLastDirection(direction);
-		updateCurrentIndex(index - 1);
-	};
+	const movies = db
+	const [lastDirection, setLastDirection] = useState()
 
-	const outOfFrame = (name, idx) => {
-		console.log(
-			`${name} (${idx}) left the screen!`,
-			currentIndexRef.current
-		);
-		// handle the case in which go back is pressed before card goes outOfFrame
-		currentIndexRef.current >= idx && childRefs[idx].current.restoreCard();
-		// TODO: when quickly swipe and restore multiple times the same card,
-		// it happens multiple outOfFrame events are queued and the card disappear
-		// during latest swipes. Only the last outOfFrame event should be considered valid
-	};
-
-	const swipe = async (dir) => {
-		if (canSwipe && currentIndex < db.length) {
-			await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+	const swiped = async (direction, nameToDelete, index) => {
+		if (direction === 'left') {
+			// show a new set of movies
+		} else if (direction === 'right') {
+			// keep the same set of movies / reccomend more 
+		} else if (direction === 'right') {
+			// add to matches list, show more movies like matched movie
+		} else {
+			// Swiped up or down, (could just prevent this and delete the clause)
 		}
-	};
+		
+		await getNextMovie(db[counter].id)
+			.catch((err) => {
+				console.log(err);
+			});
+		updateCurrentIndex(index + 1);
+		setLastDirection(direction)
+		console.log('Last direction was: ' + lastDirection)
+	}
+	
+	const outOfFrame = (title) => {
+		console.log(title + ' left the screen!')
+	}
+	
+	const swipe = async (dir, index, isMatch) => {
 
-	// increase current index and show card
-	const goBack = async () => {
-		if (!canGoBack) return;
-		const newIndex = currentIndex + 1;
-		updateCurrentIndex(newIndex);
-		await childRefs[newIndex].current.restoreCard();
-	};
+		if (isMatch) {
+			return (
+				<div>
+					<h1>You and {db[index].title} are a match!</h1>
+				</div>
+			)
+		}
 
-
+		if (dir === 'left') {
+			// show a new set of movies
+		} else if (dir === 'right') {
+			// keep the same set of movies / reccomend more 
+		} else if (dir === 'right' && isMatch) {
+			// add to matches list, show more movies like matched movie
+		} else {
+			// Swiped up or down, (could just prevent this and delete the clause)
+		}
+		await getNextMovie(db[counter].id)
+			.catch((err) => {
+				console.log(err);
+			});
+		updateCurrentIndex(index + 1);
+		setLastDirection(dir)
+		if (currentIndex < db.length) {
+			await childRefs[currentIndex].current.swipe(dir)
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}
 
 	useEffect(() => {
-		getPopularMovies();
+		getFirst();
 	}, []);
 
 	return (
 		<div>
-			<br></br>
-			<br></br>
+			<link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
+			<link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
 			<div className='cardContainer'>
-				{db.map((movie, index) => (
-					<TinderCard
-						ref={childRefs[index]}
-						className='swipe'
-						key={movie.title}
-						onSwipe={(dir) => swiped(dir, movie.title, index)}
-						onCardLeftScreen={() => outOfFrame(movie.title, index)}>
-						<div
-							style={{
-								backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`,
-								animation: animations.popIn,
-								animationDuration: "0.5s",
-							}}
-							className='card'>
-							<h3>{movie.title}</h3>
-						</div>
-					</TinderCard>
-				))}
+			{movies.map((movie, index) =>
+			<TinderCard className='swipe' key={index} onSwipe={(dir) => swiped(dir, movie.title,index)} onCardLeftScreen={() => outOfFrame(movie.title)} ref={childRefs[index]}>
+				<div
+					style={{
+						backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`,
+						animation: animations.slideIn,
+						animationDuration: "0.5s",
+					}}
+					className='card'>
+					<h3>{movie.title}</h3>
+				</div>
+			</TinderCard>
+			)}
 			</div>
 			<div className='buttons'>
-			<a class="bn39" href="/" onClick={() => swipe("left")}><span class="bn39span">Swipe left</span></a>
-			<a class="bn39" href="/" onClick={() => swipe("right")}><span class="bn39span">Match</span></a>
-			<a class="bn39" href="/" onClick = {
-						function (event) {
-							swipe("right");
-							getNextMovie();
-						}
-					}
-					><span class="bn39span">Swipe right</span></a>
-
+				<button className="bn39"onClick={() => swipe('left', currentIndex, false)}><span className="bn39span">Swipe Left!</span></button>
+				<button className="bn39"onClick={() => swipe('right', currentIndex, true)}><span className="bn39span">Match!</span></button>
+			      <button className="bn39"onClick={() => swipe('right', currentIndex, false)}><span className="bn39span">Swipe Right!</span></button>
 			</div>
 		</div>
-	);
+	)
 }
-
-export default Cards;

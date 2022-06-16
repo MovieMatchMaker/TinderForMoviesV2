@@ -16,7 +16,6 @@ function Matches() {
 	const getMatches = async () => {
 		const response = await fetch("/api/matches");
 		const data = await response.json();
-		console.log(data.results);
 		setMatches(data.results);
 	};
 

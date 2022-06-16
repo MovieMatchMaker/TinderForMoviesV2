@@ -18,6 +18,10 @@ import Swipe from './routes/swipe/Swipe';
 
 
 function TinderMovies() {
+    const isLoggedIn = localStorage.getItem("token") !== undefined;
+
+    
+
     return (
       <BrowserRouter>
         <Routes>

@@ -10,21 +10,17 @@ export default function Home() {
 		array[Math.floor(Math.random() * array.length)];
 	const [randomEmoji, setRandomEmoji] = useState(getRandomFrom(emojis));
 
-	const checkIfLoggIn = () => {
+	const checkIfLoggedIn = () => {
 		if (localStorage.getItem("token")) {
-			console.log("logged in");
 			return true;
 		} else {
-			console.log("not logged in");
 			return false;
 		}
 	};
 
-	const isLoggedIn = checkIfLoggIn();
-
+	const isLoggedIn = checkIfLoggedIn();
 
 	useEffect(() => {
-		checkIfLoggIn();
 		// Every five seconds change the emoji
 		const interval = setInterval(() => {
 			setRandomEmoji(getRandomFrom(emojis));
@@ -34,7 +30,7 @@ export default function Home() {
 
 	if (isLoggedIn) {
 
-	return isLoggedIn && (
+	return  (
 		<div>
             <br>
             </br>
@@ -111,7 +107,7 @@ export default function Home() {
 						{" "}
 						<button className='bn29'>
 							{" "}
-							<span style={{ "font-size": "2.4rem" }}>
+							<span style={{ "fontSize": "2.4rem" }}>
 								Sign Up!
 							</span>
 						</button>

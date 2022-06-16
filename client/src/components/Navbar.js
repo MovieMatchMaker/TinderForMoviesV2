@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
+import { animations} from "react-animation";
+import "react-animation/dist/keyframes.css";
 
-export default function Navbar({ animationSetting }) {
+export default function Navbar() {
 	  const handleLogout = () => {
 		  const token = localStorage.getItem("token");
       console.log(token);
@@ -24,7 +26,10 @@ export default function Navbar({ animationSetting }) {
 	}
 
 return (
-	<nav style={{ animation: animationSetting, animationDuration: "0.5s" }}>
+	<nav style={{
+		animation: animations.bounceIn,
+		animationDuration: "0.8s",
+	}}>
 		<Link to='/home'>
 			<h1 className='nav home'>Home</h1>
 		</Link>

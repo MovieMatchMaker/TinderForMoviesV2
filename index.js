@@ -7,10 +7,10 @@ import * as urh from "./backend/user_request_handler.js";
 import {create_account, get_current_movie, swipe_right} from "./backend/user_request_handler.js";
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
-
-app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
 dotenv.config();
 
@@ -116,6 +116,35 @@ app.post("/api/matching/match", (req, res) => {
 
 });
 
+
+app.get("/api/matching/next", (req, res) => {
+      let movie_id = req.query.id;
+      let counter = req.query.counter;
+      console.log(`movie_id: ${movie_id}, counter: ${counter}`);
+      axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=${counter}`)
+            .then((response) => {
+                  const x = JSON.parse(JSON.stringify(response.data));
+                  if (x.results[0].poster_path === null || x.results[0].backdrop_path === null) {
+                         res.send({
+                               message: `Next movie is ${x.results[1].title}`,
+                               status: 1,
+                               current_movie: x.results[1]
+                         }).status(200);
+                  }
+                  res.send({
+                        message: `Next movie is ${x.results[0].title}`,
+                        status: 1,
+                        current_movie: x.results[0]
+                  }).status(200);
+            })
+            .catch((err) => {
+                  console.log(err);
+            }
+            );
+}
+);
+
+
 // tells the server that the user would like to see the next movie
 app.post("/api/matching/get_current", async (req, res) => {
 
@@ -123,6 +152,7 @@ app.post("/api/matching/get_current", async (req, res) => {
       login_token = parseInt(login_token);
       // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
       let next_movie_to_view = await get_current_movie(login_token)
+      const x  = JSON.stringify(next_movie_to_view);
       if (!next_movie_to_view) {
             res.send({
                   message: `Error: You have been logged out.`,
