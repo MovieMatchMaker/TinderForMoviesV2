@@ -12,13 +12,6 @@ var counter = 0;
 
 export default function Cards () {
 
-	const [flipped, setFlipped] = useState(false)
-	const { transform, opacity } = useSpring({
-		opacity: flipped ? 1 : 0,
-		transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
-		config: { mass: 5, tension: 500, friction: 80 }
-	})
-
 	const navigate = useNavigate();
 	const [db, setDb] = useState([]);
 	const [currentIndex, setCurrentIndex] = useState(db.length);
@@ -125,10 +118,41 @@ export default function Cards () {
 				});
 		}
 	}
+	const cardRef = useRef(null);
+	const iconRef = useRef(null);
 
 	useEffect(() => {
 		getFirst();
+		window.onload = () => {
+			let card = cardRef.current;
+			let icon = iconRef.current;
+			icon.addEventListener('click', handleIconClick);
+			
+					const flipCard  = () => {
+						console.log("Flipped")
+					}
+			
+					const handleIconClick = () => {
+						console.log("Icon clicked")
+						flipCard();
+					}
+		}
+
+		
+
+
+
 	}, []);
+
+
+
+
+
+	const flipCard = (e) => {
+		// var flipCardInner = document.getElementsByClassName(".flip-card-inner");
+		// flipCardInner.style.transform = "rotateY(180deg)";
+
+	}
 
 	
 	return (
@@ -137,7 +161,8 @@ export default function Cards () {
 			<link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
 			<div className='cardContainer'>
 			{movies.map((movie, index) =>
-			<TinderCard className='swipe' key={index} onSwipe={(dir) => swiped(dir, movie.title,index)} onCardLeftScreen={() => outOfFrame(movie.title)} ref={childRefs[index]}>
+			<TinderCard 
+			className='swipe' key={index} onSwipe={(dir) => swiped(dir, movie.title,index)} onCardLeftScreen={() => outOfFrame(movie.title)} ref={childRefs[index]}>
 				{/* animation: animations.slideIn,
 				animationDuration: "0.5s",
 					class is card 
@@ -154,7 +179,7 @@ export default function Cards () {
 				<div className="flip-card">
 					
 					
-					<div className="flip-card-inner">
+					<div className="flip-card-inner" ref={cardRef}>
 
 
 						<div className='card flip-card-front'  style={{
@@ -162,6 +187,9 @@ export default function Cards () {
 						}}>
 
 							
+							<div className='back-img' onClick={flipCard()} ref={iconRef}>
+								<img src="https://img.icons8.com/ios/50/undefined/info--v1.png"/>
+							</div>
 							<h3>{movie.title}</h3>
 						
 							
