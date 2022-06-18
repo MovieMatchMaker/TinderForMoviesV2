@@ -57,7 +57,7 @@ export default function Signup() {
             setTimeout(() => {
               localStorage.removeItem("token");
               localStorage.setItem("token", data.login_token);
-              navigate("/home");
+              navigate("/");
             }, 5000);
           } else {
             setMessage(data.message);
@@ -69,7 +69,7 @@ export default function Signup() {
 
   return (
     <div>
-      <a href="/home">
+      <a href="/">
         <h1
           style={{ animation: animations.bounceIn, animationDuration: "0.7s" }}
           id="logo"

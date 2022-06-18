@@ -21,29 +21,12 @@
 }
 
 
-.counter {
-      width: fit-content;
-      margin: 0 auto;
-      text-align: center;
-      font-size: calc(50.5% + 1.5vw);
-      white-space: nowrap;
-      position: relative;
-      transform: translateY(385px);
-      color: midnightblue;
-      font-family: "Courier New", Courier, monospace;
-}
-
 .loader-inner {
-      bottom: 0;
-      height: 60px;
-      left: 0;
-      margin: auto;
       position: absolute;
-      right: 0;
-      top: -150px;
-      width: 100px;
-
+      top: 40%;
+      left: 47%;
 }
+
 
 .loader-inner.hidden {
       opacity: 0;

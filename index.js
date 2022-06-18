@@ -120,6 +120,9 @@ app.post("/api/matching/match", (req, res) => {
 app.get("/api/matching/next", (req, res) => {
       let movie_id = req.query.id;
       let counter = req.query.counter;
+      if (counter > 5) {
+            counter = Math.floor(Math.random() * 5) + 1;
+      }
       console.log(`movie_id: ${movie_id}, counter: ${counter}`);
       axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=${counter}`)
             .then((response) => {
@@ -130,12 +133,13 @@ app.get("/api/matching/next", (req, res) => {
                                status: 1,
                                current_movie: x.results[1]
                          }).status(200);
+                  } else {
+                        res.send({
+                              message: `Next movie is ${x.results[0].title}`,
+                              status: 1,
+                              current_movie: x.results[0]
+                        }).status(200);
                   }
-                  res.send({
-                        message: `Next movie is ${x.results[0].title}`,
-                        status: 1,
-                        current_movie: x.results[0]
-                  }).status(200);
             })
             .catch((err) => {
                   console.log(err);

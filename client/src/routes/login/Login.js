@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import React, { useState } from "react";
 import "../../../src/styles/login.css";
 import { animations } from "react-animation";
@@ -73,7 +71,7 @@ const Login = () => {
 
   return (
     <div>
-      <a href="/home">
+      <a href="/">
         <h1
           style={{ animation: animations.bounceIn, animationDuration: "0.7s" }}
           id="logo"

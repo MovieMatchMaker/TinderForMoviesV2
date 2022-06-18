@@ -54,7 +54,8 @@ p {
       line-height: 1.7;
 }
 
-.mb-4 ,.pb-3 {
+.mb-4,
+.pb-3 {
       color: #fafafa;
 }
 
@@ -362,7 +363,7 @@ a {
       color: lightgreen;
 }
 
-.signup-status {  
+.signup-status {
       position: absolute;
       width: 95%;
       text-align: center;

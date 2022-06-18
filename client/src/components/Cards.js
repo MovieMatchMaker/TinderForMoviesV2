@@ -1,23 +1,47 @@
 /* eslint-disable jsx-a11y/alt-text */
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState,useReducer } from 'react'
 import TinderCard from 'react-tinder-card'
 import "../styles/Cards.css";
 import { useEffect, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import {animations} from 'react-animation';
-import { useSpring, animated as a } from 'react-spring';
+import icon from '../utils/icon';
+import "react-animation/dist/keyframes.css";
+// import Spinner from './Spinner';
 
 var counter = 0;
+
+// useReducer enables us to use a loading state in our component without having to use a loading state in the parent component.
+// const reducer = (state, action) => {
+// 	  switch (action.type) {
+// 		case 'LOADING':
+// 			return {
+// 				...state,
+// 				loading: true,
+// 			}
+// 		case 'SUCCESS':
+// 			return {
+// 				...state,
+// 				loading: false,
+// 			}
+// 		default:
+// 			return state;
+// 		}
+// 	}
+
 
 export default function Cards () {
 
 	const navigate = useNavigate();
 	const [db, setDb] = useState([]);
 	const [currentIndex, setCurrentIndex] = useState(db.length);
-	
-	const currentIndexRef = useRef(currentIndex)
+	const [isActive, setActive] = useState(true);
+	// const [isLoading, setLoading] = useState(false);
+	// const [loading, dispatch] = useReducer(reducer, false);
 
+	const currentIndexRef = useRef(currentIndex);
+	
 	const childRefs = useMemo(() => {
 		const refs = [];
 		for (let i = 0; i < db.length; i++) {
@@ -25,12 +49,16 @@ export default function Cards () {
 		}
 		return refs;
 	}, [db]);
-
+	
+	const toggleClass = () => {
+		setActive(!isActive);
+	};
 
 	const getFirst = async () => {
 		const response = await axios.get("/api");
-		const append = response.data.results[15];
+		const append = response.data.results[0];
 		setDb([append]);
+
 	}
 
 	const updateCurrentIndex = (val) => {
@@ -72,7 +100,6 @@ export default function Cards () {
 		} else {
 			// Swiped up or down, (could just prevent this and delete the clause)
 		}
-		
 		await getNextMovie(db[counter].id)
 			.catch((err) => {
 				console.log(err);
@@ -87,13 +114,8 @@ export default function Cards () {
 	}
 	
 	const swipe = async (dir, index, isMatch) => {
-
 		if (isMatch) {
-			return (
-				<div>
-					<h1>You and {db[index].title} are a match!</h1>
-				</div>
-			)
+			// add to matches list, show more movies like matched movie
 		}
 
 		if (dir === 'left') {
@@ -118,44 +140,21 @@ export default function Cards () {
 				});
 		}
 	}
-	const cardRef = useRef(null);
-	const iconRef = useRef(null);
 
+	const parseText = (text) => {
+		const sentences = text.split('.');
+		if (sentences.length >= 4) {
+			return sentences[0] + '.' + sentences[1] + '.' + sentences[2] + '...';
+		} else {
+			return text;
+		}
+	}
+	
 	useEffect(() => {
 		getFirst();
-		window.onload = () => {
-			let card = cardRef.current;
-			let icon = iconRef.current;
-			icon.addEventListener('click', handleIconClick);
-			
-					const flipCard  = () => {
-						console.log("Flipped")
-					}
-			
-					const handleIconClick = () => {
-						console.log("Icon clicked")
-						flipCard();
-					}
-		}
-
-		
-
-
-
 	}, []);
 
-
-
-
-
-	const flipCard = (e) => {
-		// var flipCardInner = document.getElementsByClassName(".flip-card-inner");
-		// flipCardInner.style.transform = "rotateY(180deg)";
-
-	}
-
-	
-	return (
+	return  (
 		<div>
 			<link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
 			<link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
@@ -163,54 +162,23 @@ export default function Cards () {
 			{movies.map((movie, index) =>
 			<TinderCard 
 			className='swipe' key={index} onSwipe={(dir) => swiped(dir, movie.title,index)} onCardLeftScreen={() => outOfFrame(movie.title)} ref={childRefs[index]}>
-				{/* animation: animations.slideIn,
-				animationDuration: "0.5s",
-					class is card 
-				*/}
-				{/* <div
-					style={{
-						backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`,
-					}}
-					className='card'>
-					<h3>{movie.title}</h3>
-				</div> */}
-
-
-				<div className="flip-card">
-					
-					
-					<div className="flip-card-inner" ref={cardRef}>
-
-
-						<div className='card flip-card-front'  style={{
-							backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`,
-						}}>
-
-							
-							<div className='back-img' onClick={flipCard()} ref={iconRef}>
-								<img src="https://img.icons8.com/ios/50/undefined/info--v1.png"/>
+				<div className="flip-card" style={{animation: animations.fadeInUp , animationDuration: "0.5s"}}>
+					<div className={isActive ? 'flip-card-inner': 'flip-card-inner spin'}>
+						<div className='card flip-card-front'  style={{backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`}}>
+							<div className='back-img' onClick={toggleClass}>
+								<img src={icon} alt='icon'/>
 							</div>
-							<h3>{movie.title}</h3>
-						
-							
-
+							<h3>{movie.title}</h3>					
 						</div>
-
-
 						<div className='flip-card-back'>
-
-							<h1>{movie.title}</h1>
-							<h1 className='back-overview'>{movie.overview}</h1>
-
+							<div className='back-img' onClick={toggleClass}>
+								<img src={icon} alt='icon' />
+							</div>
+							<h1 className='back-title'>{movie.title}</h1>
+							<h1 className='back-overview'>{parseText(movie.overview)}</h1>
 						</div>
-
-
 					</div>
-
-
-
 				</div>
-
 			</TinderCard>
 			)}
 			</div>
@@ -220,6 +188,5 @@ export default function Cards () {
 			      <button className="bn39"onClick={() => swipe('right', currentIndex, false)}><span className="bn39span">Swipe Right!</span></button>
 			</div>
 		</div>
-	)
-				
+	)		
 }
