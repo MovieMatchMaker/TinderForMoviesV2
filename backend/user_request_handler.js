@@ -221,7 +221,7 @@ function close_login_token(login_token) {
 // console.log("Providers")
 // console.log(prov.US)
 
-// console.log("Attempting to logout")
-// logout(test_token)
+// // console.log("Attempting to logout")
+// // logout(test_token)
 
 export { create_account,  get_previous_matches, get_current_movie, swipe_right, swipe_left, match, logout };

@@ -4,7 +4,7 @@ import express from "express";
 import axios from "axios";
 import mongoose from "mongoose";
 import * as urh from "./backend/user_request_handler.js";
-import {create_account, get_current_movie, swipe_right} from "./backend/user_request_handler.js";
+import {create_account, get_current_movie, swipe_right, swipe_left, logout} from "./backend/user_request_handler.js";
 
 const app = express();
 app.use(cors());
@@ -57,8 +57,8 @@ app.post("/api/login", (req, res) => {
       } = JSON.parse(user);
 
       const login_token = urh.login(username, password);
-      console.log(login_token);
-      console.log(username,password);
+      console.log("username: (" + username+ ")")
+      console.log("password: (" + password+ ")")
       if (login_token !== null) {
             let status = 1;
             res.send({message: `Signed in as ${username}`, status, login_token});
@@ -96,7 +96,7 @@ app.post("/api/matching/match", (req, res) => {
       let singleMovie = `https://api.themoviedb.org/3/movie/526896/watch/providers?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
       axios.get(singleMovie).then((response) => {
             res.send({
-                  message: "You have successfully matched with a movie provider!",
+                  message: "You have successfully matched with a movie!",
                   status: 1,
                   login_token: login_token,
                   data: response.data
@@ -105,7 +105,7 @@ app.post("/api/matching/match", (req, res) => {
       ).catch((err) => {
             res.send(err);
             res.send({
-                  message: "You have not matched with a movie provider!",
+                  message: "You have not matched with a movie!",
                   status: 0,
                   login_token: null
             });
@@ -212,10 +212,10 @@ app.post("/api/matching/swipe_right", async (req, res) => {
 });
 
 
-app.post("/api/logout", (req, res) => {
+app.post("/api/logout", async (req, res) => {
 
       let login_token = req.body.token;
-      //await logout(login_token);
+      await logout(login_token);
       res.send({
             message: "You have been logged out!"
       }).status(200);
