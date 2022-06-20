@@ -4,7 +4,7 @@ import express from "express";
 import axios from "axios";
 import mongoose from "mongoose";
 import * as urh from "./backend/user_request_handler.js";
-import {create_account, get_current_movie, swipe_right, swipe_left, logout} from "./backend/user_request_handler.js";
+import {create_account, get_current_movie, swipe_right, swipe_left, logout, get_previous_matches} from "./backend/user_request_handler.js";
 
 const app = express();
 app.use(cors());
@@ -47,6 +47,26 @@ app.get("/api/matches", (req, res) => {
             .catch((err) => {
                   res.send(err);
             });
+});
+
+app.post("/api/previous_matches", async(req, res) => {
+      let login_token = req.body.token;
+      login_token = parseInt(login_token);
+      // this is null if login_token is invalid <<OR>> an array of previous movies matched with
+      let prev_matches = await get_previous_matches(login_token)
+      const x  = JSON.stringify(prev_matches);
+      if (!prev_matches) {
+            res.send({
+                  message: `Error: You have been logged out.`,
+                  status: 0,
+            }).status(401);
+      } else {
+            res.send({
+                  message: `Grabbing next movie....`,
+                  status: 1,
+                  previous_matches: prev_matches
+            }).status(200);
+      }
 });
 
 app.post("/api/login", (req, res) => {
@@ -212,10 +232,10 @@ app.post("/api/matching/swipe_right", async (req, res) => {
 });
 
 
-app.post("/api/logout", async (req, res) => {
+app.post("/api/logout", (req, res) => {
 
-      let login_token = req.body.token;
-      await logout(login_token);
+      let login_token = req.body.token
+      logout(login_token)
       res.send({
             message: "You have been logged out!"
       }).status(200);
