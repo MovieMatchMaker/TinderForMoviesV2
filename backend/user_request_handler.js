@@ -161,13 +161,13 @@ function close_login_token(login_token) {
 
 }
 
-console.log("<===Test Script for Backend===>")
+// console.log("<===Test Script for Backend===>")
 
-console.log("\nlogging in/creating account...")
-var test_token = create_account("danny", "shhh, password")
-if (!test_token) {
-    test_token = login("danny", "shhh, password")
-}
+// console.log("\nlogging in/creating account...")
+// var test_token = create_account("danny", "d")
+// if (!test_token) {
+//     test_token = login("danny", "d")
+// }
 
 // console.log("Login Token (expect 1):")
 // console.log(test_token)
@@ -183,7 +183,7 @@ if (!test_token) {
 // console.log("\n grabbing first film...")
 // var test_current_movie_1 = await get_current_movie(test_token)
 // console.log("first movie: ")
-// //console.log(test_current_movie_1.title)
+// console.log(test_current_movie_1.title)
 
 // console.log("\nswiping right")
 // var test_wrong_film = test_user.data.backup_queue[0]
@@ -195,24 +195,33 @@ if (!test_token) {
 // console.log(test_wrong_film.title)
 
 // console.log("\nswiping left on 100 movies")
-// for (let i = 0; i < 100; i++) {
+// for (let i = 0; i < 100; i++){
 //     let test_next_movie = await swipe_left(test_token)
 //     console.log('swipe (' + i + '): ' + test_next_movie.title)
 // }
 
-// // console.log("\nswiping right on 100 movies")
-// // for(let i = 0; i < 100; i++){
-// //     let test_next_movie = await swipe_right(test_token)
-// //     console.log('swipe (' +  i + '): ' + test_next_movie.title)
-// // }
+// console.log("\nprinting current queue (should be empty)")
+// for(let i = 0; i < test_user.data.queue.length; i++){
+//     console.log(test_user.data.queue[i])
+// }
 
-// console.log("\nmatching")
+// console.log("\nswiping right on 100 movies")
+// for(let i = 0; i < 100; i++){
+//     let test_next_movie = await swipe_right(test_token)
+//     console.log('swipe (' +  i + '): ' + test_next_movie.title)
+// }
+
+// for(let i = 0; i < test_user.data.queue.length; i++){
+//     console.log(test_user.data.queue[i].title)
+// }
+
+// console.log("\nmatching with ",  test_user.data.current.title)
 // var prov = await match(test_token)
 
 // console.log("Providers")
 // console.log(prov.US)
 
-// console.log("Attempting to logout")
-// logout(test_token)
+// // console.log("Attempting to logout")
+// // logout(test_token)
 
 export { create_account,  get_previous_matches, get_current_movie, swipe_right, swipe_left, match, logout };

@@ -80,6 +80,7 @@ export function access(username, password) {
  * (bool) success state
  */
 export function save(user_info) {
+    console.log("save called on", user_info)
     let file_data = JSON.stringify(user_info)
     fs.writeFileSync(account_file_path + user_info.username + '.json', file_data)
     return true
