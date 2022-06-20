@@ -281,7 +281,6 @@ h2 {
 }
 
 .back-img {
-  border-radius: 50%;
   padding-left: 5px;
   padding-top: 5px;
   position: absolute;
@@ -289,5 +288,5 @@ h2 {
   z-index: 999;
   width: fit-content;
   height: fit-content;
-  background-color: #0088ff36;
+  background-color: none;
 }

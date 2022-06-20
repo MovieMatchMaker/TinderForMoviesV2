@@ -171,8 +171,8 @@ export default function Cards () {
 							<h3>{movie.title}</h3>					
 						</div>
 						<div className='flip-card-back'>
-							<div className='back-img' onClick={toggleClass}>
-								<img src={icon} alt='icon' />
+							<div className='back-img'>
+								<img src={icon} alt='icon' onClick={toggleClass} />
 							</div>
 							<h1 className='back-title'>{movie.title}</h1>
 							<h1 className='back-overview'>{parseText(movie.overview)}</h1>
