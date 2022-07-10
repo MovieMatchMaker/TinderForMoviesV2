@@ -22,13 +22,12 @@ function TinderMovies() {
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<><FourOhFour/><Nav/></>} />
-          <Route path="/" element={<><Home/></>}/>
-          <Route path="/swipe" element={<><Swipe/><Nav/></>}/>
-          <Route path="/login" element={<><Login/></>}/>
-          <Route path="/signup" element={<><Signup/></>}/>
+          <Route path="/" element={<><Home/><Nav/></>}/>
+          <Route path="/swipe" element={<><Swipe/></>}/>
+          <Route path="/login" element={<><Login/><Nav/></>}/>
+          <Route path="/signup" element={<><Signup/><Nav/></>}/>
           <Route path="/matches" element={<><Matches/><Nav/></>}/>
-          <Route path='/logout' element={<><Logout/></>}/>
-          <Route path='/nav'  element={<><Nav/></>}/>
+          <Route path='/logout' element={<><Logout/><Nav/></>}/>
         </Routes>
       </BrowserRouter>
     )

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {animations} from 'react-animation';
 import icon from '../utils/icon';
 import "react-animation/dist/keyframes.css";
+import Nav from './Gation';
 // import Spinner from './Spinner';
 
 var counter = 0;
@@ -50,9 +51,17 @@ export default function Cards () {
 		return refs;
 	}, [db]);
 	
-	const toggleClass = () => {
+	const iconRef = useRef(null);
+
+	const toggleFront = () => {
+		iconRef.current.classList.toggle('hidden');
 		setActive(!isActive);
-	};
+	}
+
+	const toggleBack = () => {
+		iconRef.current.classList.toggle('show');
+		setActive(!isActive);
+	}
 
 	const getFirst = async () => {
 		const response = await axios.get("/api");
@@ -150,6 +159,7 @@ export default function Cards () {
 		}
 	}
 	
+
 	useEffect(() => {
 		getFirst();
 	}, []);
@@ -158,6 +168,7 @@ export default function Cards () {
 		<div>
 			<link href='https://fonts.googleapis.com/css?family=Damion&display=swap' rel='stylesheet' />
 			<link href='https://fonts.googleapis.com/css?family=Alatsi&display=swap' rel='stylesheet' />
+			<Nav/>
 			<div className='cardContainer'>
 			{movies.map((movie, index) =>
 			<TinderCard 
@@ -165,14 +176,18 @@ export default function Cards () {
 				<div className="flip-card" style={{animation: animations.fadeInUp , animationDuration: "0.5s"}}>
 					<div className={isActive ? 'flip-card-inner': 'flip-card-inner spin'}>
 						<div className='card flip-card-front'  style={{backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`}}>
-							<div className='back-img' onClick={toggleClass}>
-								<img src={icon} alt='icon'/>
+							<div className='back-img' onClick={()=> {
+								toggleFront();
+							}}>
+								<img ref={iconRef} src={icon} alt='icon'/>
 							</div>
 							<h3>{movie.title}</h3>					
 						</div>
 						<div className='flip-card-back'>
 							<div className='back-img'>
-								<img src={icon} alt='icon' onClick={toggleClass} />
+								<img src={icon} alt='icon' onClick={() => {
+									toggleBack();
+								}} />
 							</div>
 							<h1 className='back-title'>{movie.title}</h1>
 							<h1 className='back-overview'>{parseText(movie.overview)}</h1>
