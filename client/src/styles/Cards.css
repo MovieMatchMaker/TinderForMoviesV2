@@ -310,4 +310,9 @@ h2 {
 
 .show {
   display: block;
+  background-color: #0088ff36;
+}
+
+#hidden{
+  visibility: inherit;
 }

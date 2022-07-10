@@ -17,14 +17,16 @@ export async function rec_swipe_right(user){
     // adds to queue with recommendations based on this movie
     let recommendations = await get_recommendations(user.data.current.id, 1)
     let i = 0
-    while (i < 5){
+    let new_movie_count = 0
+    while (new_movie_count < 5){
         if(i === recommendations.length){
             break
         }
         if(!user.data.swiped.includes(recommendations[i].id)){
             user.data.queue.push(recommendations[i])
-            i++
+            new_movie_count++
         }
+        i++
     }
     user.data.current = null
 
@@ -41,7 +43,11 @@ export function rec_match(user){
     user.data.swiped.push(user.data.current.id)
     user.data.matches.push(user.data.current)
 
+    let out = get_watch_providers(user.data.current.id)
+
     user.data.current = null
+
+    return out
 }
 
 // private
