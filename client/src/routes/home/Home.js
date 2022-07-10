@@ -7,7 +7,7 @@ import "../../styles/Home.css";
 
 
 export default function Home() {
-	const emojis = ["🎥", "🍿", "🎬", "📽️", "🎞️", "📺", "⬅️", "🎦", "➡️"];
+	const emojis = ["🎥", "🍿", "🎬", "📽️", "🎞️", "📺", "⬅️", "🎦"];
 	const getRandomFrom = (array) =>
 		array[Math.floor(Math.random() * array.length)];
 	const [randomEmoji, setRandomEmoji] = useState(getRandomFrom(emojis));
@@ -70,7 +70,7 @@ export default function Home() {
 							{" "}
 							<span className='text'>
 								{" "}
-								Start Swiping! &nbsp;
+								Start Swiping&nbsp;
 								<AnimateOnChange
 									animationIn='popIn'
 									animationOut='popOut'>
