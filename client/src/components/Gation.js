@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useRef, useState } from 'react'
 import { animations } from "react-animation";
+import { Link } from 'react-router-dom';
 import "../styles/Navbar.css";
 
 function Nav() {
@@ -52,7 +53,7 @@ function Nav() {
         <div className="bar2"></div>
         <div className="bar3"></div>
       </div> */}
-
+  
 
       {/* <nav style={{
 		animation: animations.bounceIn,

@@ -4,7 +4,7 @@ import express from "express";
 import axios from "axios";
 import mongoose from "mongoose";
 import * as urh from "./backend/user_request_handler.js";
-import {create_account, get_current_movie, swipe_right, swipe_left, logout, get_previous_matches} from "./backend/user_request_handler.js";
+import {create_account, get_current_movie, swipe_right, swipe_left, logout, get_previous_matches,  match} from "./backend/user_request_handler.js";
 
 const app = express();
 app.use(cors());
@@ -106,31 +106,26 @@ app.post("/api/signup", (req, res) => {
 });
 
 // tells the server that the user has matched and would like to see the viewing options for the previously served movie
-app.post("/api/matching/match", (req, res) => {
+app.post("/api/matching/match", async (req, res) => {
 
-      let login_token = null;
-      let data;
+      let login_token = req.body.token;
+      login_token = parseInt(login_token);
       // this is null if login_token is invalid <<OR>> a movie providers object with the viewing options
-      //let prov_ops = match(login_token);
-
-      let singleMovie = `https://api.themoviedb.org/3/movie/526896/watch/providers?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
-      axios.get(singleMovie).then((response) => {
+      let prov_ops = await match(login_token);
+      const x = JSON.parse(JSON.stringify(prov_ops));
+      console.log(x.US)
+      if (!prov_ops) {
             res.send({
-                  message: "You have successfully matched with a movie!",
-                  status: 1,
-                  login_token: login_token,
-                  data: response.data
-            });
-      }
-      ).catch((err) => {
-            res.send(err);
-            res.send({
-                  message: "You have not matched with a movie!",
+                  message: `Error: You have been logged out.`,
                   status: 0,
-                  login_token: null
-            });
+            }).status(401);
+      } else {
+            res.send({
+                  message: `Grabbing next movie....`,
+                  status: 1,
+
+            }).status(200);
       }
-      );
       
 
 
@@ -171,8 +166,8 @@ app.get("/api/matching/next", (req, res) => {
 
 // tells the server that the user would like to see the next movie
 app.post("/api/matching/get_current", async (req, res) => {
-
       let login_token = req.body.token;
+      console.log(login_token);
       login_token = parseInt(login_token);
       // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
       let next_movie_to_view = await get_current_movie(login_token)
@@ -212,7 +207,6 @@ app.post("/api/matching/swipe_left", async (req, res) => {
 });
 
 app.post("/api/matching/swipe_right", async (req, res) => {
-
       let login_token = req.body.token;
       login_token = parseInt(login_token);
       // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated

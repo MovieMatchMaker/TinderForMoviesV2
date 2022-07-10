@@ -288,5 +288,10 @@ h2 {
   z-index: 999;
   width: fit-content;
   height: fit-content;
-  background-color: none;
+
+  background-color: #0088ff36;
+}
+
+#hidden{
+  visibility: inherit;
 }
