@@ -5,14 +5,12 @@
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
-  background: #40E0D0;
+  background:#f5aeae;
   /* fallback for old browsers 
   Chrome 10-25, Safari 5.1-6
   background: linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);
   W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background-color: #8BC6EC;
-  background: -webkit-linear-gradient(135deg, #4CB8C4 0%, #3CD3AD 50%);
-  background-image: linear-gradient(135deg, #4CB8C4 0%, #3CD3AD 50%);
+  background-color: #f5aeae;
 
 
 }
@@ -40,12 +38,12 @@
 }
 
 h1 {
-  color: #fff;
+
   text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.30);
 }
 
 h2 {
-  color: #fff;
+  color: #874356;
   text-shadow: 0px 0px 60px 0px rgba(0, 0, 0, 0.30);
 }
 
@@ -103,10 +101,10 @@ h2 {
 }
 
 .bn39 {
-  background-image: linear-gradient(135deg, #008aff, #38be164d);
+  background-color: rgb(255, 197, 225);
+  border-color: #ffd4e0;
   border-radius: 6px;
   box-sizing: border-box;
-  color: #ffffff;
   height: 4em;
   font-size: 1.4em;
   font-weight: 600;
@@ -126,7 +124,8 @@ h2 {
 
 .bn39 .bn39span {
   align-items: center;
-  background: #74abff;
+  background: #F6E7D8;
+  color: #874356;
   border-radius: 6px;
   display: flex;
   justify-content: center;
@@ -181,7 +180,7 @@ h2 {
   background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
   border: 0;
   border-radius: 6px;
-  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-shadow: rgba(102, 40, 236, 0.4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
   box-sizing: border-box;
   color: #fff;
   width: 200px;
@@ -263,32 +262,54 @@ h2 {
 }
 
 .flip-card-back {
-  background-color: #2980b9;
-  color: white;
+  border-radius: 20px;
+  background-color: rgb(247, 239, 180);
+  color: #874356;
   transform: rotateY(180deg);
 }
 
+.back-title {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10%;
+  font-size: 2.0vw;
+}
+
 .back-overview {
-  padding-top: 5%;
-  color: white;
+  padding-top: 20%;
+  color: #874356;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   width: 90%;
-  font-size: 1.2em;
+  font-size: 1.2vw;
 }
 
 .back-img {
-  padding-left: 5px;
-  padding-top: 5px;
+  padding-right: 15px;
+  padding-top: 10px;
   position: absolute;
   right: 0;
   z-index: 999;
   width: fit-content;
   height: fit-content;
+  background-color: none;
+  transition: all 0.2s ease-in-out;
+}
 
+.back-img:hover{
+  cursor: pointer;
+  transform: scale(1.15);
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
   background-color: #0088ff36;
 }
 

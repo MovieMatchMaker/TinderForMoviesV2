@@ -4,6 +4,7 @@
      font-weight: bold;
      top: 0;
      font-family: Campton-Bold, sans-serif;
+     color: #874356;
 }
 
 #logo {
@@ -11,6 +12,7 @@
      top: 5px;
      left: 30px;
      font-size: 2.3rem;
+     color: #874356;
 }
 
 #logo:hover h1 {
@@ -20,7 +22,7 @@
 #welcome-text {
      position: absolute;
      font-weight: bold;
-     top: 270px;
+     top: 300px;
      font-family: Campton-Bold, sans-serif;
      color: rgb(255, 255, 255);
      max-width: 70rem;
@@ -86,7 +88,7 @@ button {
      content: "";
      z-index: -2;
      background-size: 400% 400%;
-     background: #ffeba7;
+     background: #F6E7D8;
 }
 
 .bn29:before {
@@ -99,6 +101,7 @@ button {
 }
 
 .bn29:after {
+     color: black;
      -webkit-filter: blur(0.3px);
      filter: blur(0.3px);
 }

@@ -72,13 +72,7 @@ const Login = () => {
   return (
     <div>
       <a href="/">
-        <h1
-          style={{ animation: animations.bounceIn, animationDuration: "0.7s" }}
-          id="logo"
-        >
-          <span className="ms">M</span>ovie<span className="ms">M</span>atch
-          <span className="ms">M</span>aker
-        </h1>
+        
       </a>
 
       <Link to="/signup">

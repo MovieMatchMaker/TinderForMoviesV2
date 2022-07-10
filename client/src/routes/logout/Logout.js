@@ -25,9 +25,9 @@ function Logout() {
 
   return (
     <div>
-      <h1 style={{ color: "lightgreen" }}>You have logged out.</h1>
-      <h1 style={{ color: "lightgreen" }}>Hope you come again!</h1>
-      <h1 style={{ color: "lightgreen" }}>This page will be redirected in {timeLeft} seconds....</h1>
+      <h1 style={{ color: "lightyellow" }}>You have logged out of MovieMatchMaker.</h1>
+      <h1 style={{ color: "lightyellow" }}>If you'd like to see your matches again, log back in!</h1>
+      <h1 style={{ color: "lightyellow" }}>This page will be redirected in {timeLeft} seconds....</h1>
       <br></br>
       <br></br>
       <Link to="/login">

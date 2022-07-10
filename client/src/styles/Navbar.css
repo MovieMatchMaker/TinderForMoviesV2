@@ -49,7 +49,7 @@
 
 
 .open {
-      background-color: #3c3c3c;
+      background-color: #000000;
       width: 24px;
       height: 4px;
       display: block;
@@ -61,7 +61,7 @@
 
 .open:before {
       content: "";
-      background-color: #3c3c3c;
+      background-color: #000000;
       width: 24px;
       height: 4px;
       display: block;
@@ -74,7 +74,7 @@
 
 .open:after {
       content: "";
-      background-color: #3c3c3c;
+      background-color: #000000;
       width: 24px;
       height: 4px;
       display: block;
@@ -86,15 +86,17 @@
 }
 
 .menuOpen {
+      transform: scale(1.8);
       position: absolute;
-      top: 50px;
-      right: 50px;
+      top: 40px;
+      right: 115px;
       width: 24px;
       height: 20px;
       display: block;
       padding: 15px;
       cursor: pointer;
       float: right;
+
 }
 
 .menuOpen:hover .open:before {
@@ -106,6 +108,7 @@
 }
 
 .menu {
+      z-index: 99999;
       position: fixed;
       width: 100vw;
       height: 100vh;
@@ -115,8 +118,8 @@
 }
 
 .menu label {
-      width: 30px;
-      height: 30px;
+      width: 100vw;
+      height: 100vh;
       position: absolute;
       right: 20px;
       top: 20px;
@@ -150,11 +153,11 @@
 }
 
 .menu ul li a:hover {
-      color: #005435;
+      color: #874356;
 }
 
 .menu ul li:hover {
-      background: whitesmoke;
+      background:  lightpink;
 }
 
 .menuEffects {
@@ -205,8 +208,6 @@
 #menuToggle:not(:checked)~.menuEffects ul {
       transform: translateY(-30%);
 }
-
-
 
 
 
