@@ -291,3 +291,7 @@ h2 {
   height: fit-content;
   background-color: #0088ff36;
 }
+
+#hidden{
+  visibility: inherit;
+}
