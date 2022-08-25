@@ -7,7 +7,7 @@ import { useEffect, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { animations, AnimateOnChange } from "react-animation";
 import "react-animation/dist/keyframes.css";
-import Nav from './Gation';
+import Nav from './NavigationBar';
 import icon from '../utils/icon';
 // import Spinner from './Spinner';
 
@@ -79,7 +79,7 @@ export default function Cards () {
 	}
 
 	if (localStorage.getItem("token") === null) {
-		navigate("/");
+		navigate("/home");
 	} 
 
 	const getCurrentMovie = async (id) => {

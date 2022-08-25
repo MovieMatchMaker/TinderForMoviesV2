@@ -30,7 +30,7 @@ return (
 		animation: animations.bounceIn,
 		animationDuration: "0.8s",
 	}}>
-		<Link to='/'>
+		<Link to='/home'>
 			<h1 className='nav home'>Home</h1>
 		</Link>
 

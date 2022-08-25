@@ -57,7 +57,7 @@ export default function Signup() {
             setTimeout(() => {
               localStorage.removeItem("token");
               localStorage.setItem("token", data.login_token);
-              navigate("/");
+              navigate("/home");
             }, 5000);
           } else {
             setMessage(data.message);

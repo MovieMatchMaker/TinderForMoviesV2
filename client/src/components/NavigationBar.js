@@ -38,7 +38,7 @@ function Nav() {
   return (
     <div>
 
-      <a href="/">
+      <a href="/home">
         <h1
           style={{ animation: animations.bounceIn, animationDuration: "0.7s" }}
           id="logo"
@@ -92,7 +92,7 @@ function Nav() {
   <label for="menuToggle"></label>
   <div className="menuContent">
     <ul>
-      <li><a href="/">Home</a></li>
+      <li><a href="/home">Home</a></li>
       <li><a href="/swipe">Swipe</a></li>
       <li><a href="/matches">Matches {/* Match count */}</a></li>
       <li><a href="/logout">Logout</a></li>

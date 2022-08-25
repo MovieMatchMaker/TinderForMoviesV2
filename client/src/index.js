@@ -14,20 +14,33 @@ import Signup from './routes/signup/Signup';
 import Logout from './routes/logout/Logout';
 import Matches from './routes/matches/Matches';
 import Swipe from './routes/swipe/Swipe';
-import Nav from './components/Gation';
+import NavigatonBar from './components/NavigationBar';
+import { PrivateRoutes } from './routes/private/PrivateRoute';
+
+// Redux Stuff
+// import {configureStore} from '@reduxjs/toolkit';
+// import {Provider} from 'react-redux';
+
+// const store = configureStore();
+
+
 
 function TinderMovies() {
 
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<><FourOhFour/><Nav/></>} />
-          <Route path="/" element={<><Home/><Nav/></>}/>
-          <Route path="/swipe" element={<><Swipe/></>}/>
-          <Route path="/login" element={<><Login/><Nav/></>}/>
-          <Route path="/signup" element={<><Signup/><Nav/></>}/>
-          <Route path="/matches" element={<><Matches/><Nav/></>}/>
-          <Route path='/logout' element={<><Logout/><Nav/></>}/>
+          <Route element={<PrivateRoutes/>}>
+            <Route path="/matches" element={<><Matches/><NavigatonBar/></>}/>
+            <Route path="/swipe" element={<><Swipe/></>}/>
+          </Route>
+          <Route path="*" element={<><FourOhFour/><NavigatonBar/></>} />
+          {["/","","/home"].map((path) => (
+            <Route key="Home" path={path} element={<><Home/><NavigatonBar/></>} />
+          ))}
+          <Route path="/login" element={<><Login/><NavigatonBar/></>}/>
+          <Route path="/signup" element={<><Signup/><NavigatonBar/></>}/>
+          <Route path='/logout' element={<><Logout/><NavigatonBar/></>}/>
         </Routes>
       </BrowserRouter>
     )

@@ -2,9 +2,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import axios from "axios";
-import mongoose from "mongoose";
+
 import * as urh from "./backend/user_request_handler.js";
 import {create_account, get_current_movie, swipe_right, swipe_left, logout, get_previous_matches,  match} from "./backend/user_request_handler.js";
+
 
 const app = express();
 app.use(cors());

@@ -11,8 +11,9 @@ function Logout() {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
   useEffect(() => {
+    localStorage.removeItem("token");
     if (!timeLeft){
-      navigate("/");
+      navigate("/home");
     } else if (!timeLeft&&window.location.pathname !== "/logout"){ 
       return;
     }
