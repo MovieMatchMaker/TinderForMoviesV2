@@ -2,8 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from "react";
+import { useDispatch } from "react-redux";
+import { deleteAllMatches } from "../../reducers/matchesReducer";
 
 function Logout() {
+
+  const dispatch = useDispatch();
 
   const seconds = 5;
   const navigate = useNavigate();
@@ -12,6 +16,7 @@ function Logout() {
 
   useEffect(() => {
     localStorage.removeItem("token");
+    dispatch(deleteAllMatches());
     if (!timeLeft){
       navigate("/home");
     } else if (!timeLeft&&window.location.pathname !== "/logout"){ 
@@ -32,7 +37,7 @@ function Logout() {
       <br></br>
       <br></br>
       <Link to="/login">
-        <button className="bn29" style={{ "font-size": "1.5rem" }}>
+        <button className="bn29" style={{ "fontSize": "1.5rem" }}>
           Log Back In
         </button>
       </Link>

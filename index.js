@@ -30,7 +30,7 @@ app.get("/api", (req, res) => {
                   `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1&origin_country=US`
             )
             .then((response) => {
-                  res.send(response.data);
+                  res.send(response.data.results[0]);
             })
             .catch((err) => {
                   res.send(err);
@@ -114,7 +114,7 @@ app.post("/api/matching/match", async (req, res) => {
       // this is null if login_token is invalid <<OR>> a movie providers object with the viewing options
       let prov_ops = await match(login_token);
       const x = JSON.parse(JSON.stringify(prov_ops));
-      console.log(x.US)
+      // console.log(x.US)
       if (!prov_ops) {
             res.send({
                   message: `Error: You have been logged out.`,
@@ -158,7 +158,7 @@ app.get("/api/matching/next", (req, res) => {
                   }
             })
             .catch((err) => {
-                  console.log(err);
+                  console.trace(err);
             }
             );
 }
@@ -168,15 +168,25 @@ app.get("/api/matching/next", (req, res) => {
 // tells the server that the user would like to see the next movie
 app.post("/api/matching/get_current", async (req, res) => {
       let login_token = req.body.token;
-      console.log(login_token);
       login_token = parseInt(login_token);
       // this is null if login_token is invalid <<OR>> a movie object with the data of the next movie to be rated
       let next_movie_to_view = await get_current_movie(login_token)
       const x  = JSON.stringify(next_movie_to_view);
       if (!next_movie_to_view) {
+            console.trace(`Error: response is null`);
+            // Bug. Need a default movie to view.
+            let null_movie = {
+                  title: "No movie to view",
+                  overview: "No movie to view",
+                  poster_path: "",
+                  backdrop_path: "",
+                  id: "",
+                  release_date: "",
+            }
             res.send({
-                  message: `Error: You have been logged out.`,
+                  message: `No movie found.`,
                   status: 0,
+                  current_movie: null_movie
             }).status(401);
       } else {
             res.send({
@@ -240,5 +250,5 @@ app.post("/api/logout", (req, res) => {
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
-      console.log(`Server started on port ${PORT}`);
+      console.info(`Server started on port ${PORT}`);
 });

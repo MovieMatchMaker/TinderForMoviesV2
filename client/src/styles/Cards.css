@@ -263,7 +263,7 @@ h2 {
 
 .flip-card-back {
   border-radius: 20px;
-  background-color: rgb(247, 239, 180);
+  background-color: #ffd4e0;
   color: #874356;
   transform: rotateY(180deg);
 }
@@ -310,7 +310,6 @@ h2 {
 
 .show {
   display: block;
-  background-color: #0088ff36;
 }
 
 #hidden{

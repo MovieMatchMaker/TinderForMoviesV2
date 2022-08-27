@@ -36,8 +36,8 @@ const Login = () => {
 
   const handleLogin = () => {
     const { username, password } = userL;
-    console.log(username, password);
-    if (username === "" || password === "" || password.length < 0) {
+    
+    if (username === "" || password === "" || password.length < 0 || username.length < 0) {
       setMessage("Fill out both fields before submitting!");
       return;
     } else {
@@ -62,6 +62,8 @@ const Login = () => {
           setMessage(data.message);
           setTimeout(() => {
             localStorage.setItem("token", data.login_token);
+            localStorage.setItem("isLoggedIn", true);
+            localStorage.setItem("auth","auth");
             navigate("/swipe");
           }, 2000);
         }

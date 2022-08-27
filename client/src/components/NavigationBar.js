@@ -47,60 +47,25 @@ function Nav() {
           <span className="ms">M</span>aker
         </h1>
       </a>
+          <div id="menuArea">
+        <input type="checkbox" id="menuToggle"></input>
 
-{/* 
-      <div className="container" onClick={handleClick} ref={menuRef}>
-        <div className="bar1"></div>
-        <div className="bar2"></div>
-        <div className="bar3"></div>
-      </div> */}
-  
+      <label htmlFor="menuToggle" className="menuOpen">
+        <div className="open"></div>
+      </label>
 
-      {/* <nav style={{
-		animation: animations.bounceIn,
-		animationDuration: "0.8s",
-	}}>
-		<Link to='/'>
-			<h1 className='nav home'>Home</h1>
-		</Link>
-
-		<Link to='/swipe'>
-			<h1 className='nav swipe'>Swipe</h1>
-		</Link>
-
-		<br>
-		</br>
-
-		<Link to='/matches'>
-			<h1 className='nav matches'>Matches</h1>
-		</Link>
-
-		<Link to='/logout' onClick={handleLogout}>
-			<h1 className='nav logout'>Logout</h1>
-		</Link>
-	</nav> */}
-
-
-    <div id="menuArea">
-  <input type="checkbox" id="menuToggle"></input>
-
-<label for="menuToggle" className="menuOpen">
-  <div className="open"></div>
-</label>
-
-<div className="menu menuEffects">
-  <label for="menuToggle"></label>
-  <div className="menuContent">
-    <ul>
-      <li><a href="/home">Home</a></li>
-      <li><a href="/swipe">Swipe</a></li>
-      <li><a href="/matches">Matches {/* Match count */}</a></li>
-      <li><a href="/logout">Logout</a></li>
-    </ul>
-  </div>
-</div>
-</div>
-
+      <div className="menu menuEffects">
+        <label htmlFor="menuToggle"></label>
+        <div className="menuContent">
+          <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/swipe">Swipe</a></li>
+            <li><a href="/matches">Matches {/* Match count */}</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+      </div>
     </div >
   )
 }

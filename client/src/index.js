@@ -18,31 +18,47 @@ import NavigatonBar from './components/NavigationBar';
 import { PrivateRoutes } from './routes/private/PrivateRoute';
 
 // Redux Stuff
-// import {configureStore} from '@reduxjs/toolkit';
-// import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
+import store from './store/store.js';
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
 
-// const store = configureStore();
-
-
+// const store = configureStore({
+//   matches: [
+//     {
+//       id: 1,
+//       title: 'Toms movie',
+//       overview: 'Hi Tom',
+//       poster_path: 'https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg',
+//       release_date: '2020-01-01',
+//     }
+//   ]
+// });
 
 function TinderMovies() {
 
+  let persistor = persistStore(store);
+
     return (
-      <BrowserRouter>
-        <Routes>
-          <Route element={<PrivateRoutes/>}>
-            <Route path="/matches" element={<><Matches/><NavigatonBar/></>}/>
-            <Route path="/swipe" element={<><Swipe/></>}/>
-          </Route>
-          <Route path="*" element={<><FourOhFour/><NavigatonBar/></>} />
-          {["/","","/home"].map((path) => (
-            <Route key="Home" path={path} element={<><Home/><NavigatonBar/></>} />
-          ))}
-          <Route path="/login" element={<><Login/><NavigatonBar/></>}/>
-          <Route path="/signup" element={<><Signup/><NavigatonBar/></>}/>
-          <Route path='/logout' element={<><Logout/><NavigatonBar/></>}/>
-        </Routes>
-      </BrowserRouter>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="*" element={<><FourOhFour/><NavigatonBar/></>} />
+                {["/","","/home"].map((path) => (
+                  <Route key="Home" path={path} element={<><Home/><NavigatonBar/></>} />
+                ))}
+                <Route path="/login" element={<><Login/><NavigatonBar/></>}/>
+                <Route path="/signup" element={<><Signup/><NavigatonBar/></>}/>
+                <Route path='/logout' element={<><Logout/><NavigatonBar/></>}/>
+                <Route element={<PrivateRoutes/>}>
+                  <Route path="/matches" element={<><Matches/><NavigatonBar/></>}/>
+                  <Route path="/swipe" element={<><Swipe/></>}/>
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </PersistGate>
+        </Provider>
     )
 }
 

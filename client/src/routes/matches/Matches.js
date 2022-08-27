@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 import "../../styles/loading.css";
 import { animations } from "react-animation";
 import "react-animation/dist/keyframes.css";
-function Matches() {
-	var options = {
-		weekday: "long",
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	};
-	const [matches, setMatches] = useState([]);
+import { useSelector } from "react-redux";
 
-	const getMatches = async () => {
-		const response = await fetch("/api/matches");
-		const data = await response.json();
-		setMatches(data.results);
-	};
+var options = {
+	weekday: "long",
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+};
+
+function Matches() {
+	const [matches, setMatches] = useState([]);
+	
+	// Retireve the matches from the store
+	const storedMatches = useSelector(state => state.matches.matches);
 
 	const mapMatches = matches.map((match) => {
 		return (
@@ -71,8 +71,9 @@ function Matches() {
 		);
 	};
 
+
 	useEffect(() => {
-		getMatches();
+		setMatches(storedMatches);
 	}, []);
 
 	return (

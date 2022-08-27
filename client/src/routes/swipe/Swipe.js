@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import Cards from '../../components/Cards'
-function Swipe() {
+
+export default function Swipe() {
 
 
   return (
@@ -11,5 +12,3 @@ function Swipe() {
   )
 
 }
-
-export default Swipe;
