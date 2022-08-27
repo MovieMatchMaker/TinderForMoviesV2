@@ -3,11 +3,13 @@
 // Date Modified: 8 June 2022
 
 import {get_popular, get_recommendations, get_watch_providers} from './moviedb_api_caller.js';
+import {save} from "./account_database.js"
 
 export async function rec_get_current_movie(user){
     if(user.data.current === null){
         await fill_current(user)
     }
+    save(user)
     return user.data.current
 }
 
@@ -47,6 +49,7 @@ export function rec_match(user){
 
     user.data.current = null
 
+    save(user)
     return out
 }
 

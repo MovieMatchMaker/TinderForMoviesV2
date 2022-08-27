@@ -58,19 +58,14 @@ export function create(username, password) {
  * username - string
  * password - string
  * returns:
- * (if successful) js object with user info
- * (if username or password is incorrect) null
+ * js object with user info
  */
-export function access(username, password) {
+export function access(username) {
     if (fs.existsSync(account_file_path + username + '.json')) {
         let file_data = fs.readFileSync(account_file_path + username + '.json')
         let user = JSON.parse(file_data)
-        if (user.password === password) {
-            return user
-        }
+        return user
     }
-
-    return null
 }
 
 /* saves account to database

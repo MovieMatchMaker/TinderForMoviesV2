@@ -18,148 +18,67 @@ import {
     rec_match
 } from './recommendation_engine.js';
 
+// loads user from file
+function get_user_by_username(username){
+    return access(username)
+}
 
 
 /* creates account in database
  * inputs:
- * current page- page of popular movies, int 1-1000
  * returns:
- * array of movie objects
+ * true if successful, false if an account with that username already exists
  */
-// returns login_token or null if username already exists
 function create_account(username, password) {
     let user = create(username, password)
 
     if (!user) {
-        return null
+        return false
     }
 
-    let login_token = create_login_token(user)
-    return login_token
+    return true
 }
 
-// returns login_token or null if username/password is incorrent
-export function login(username, password) {
-    let user = access(username, password)
 
-    if (!user) {
-        return null
-    }
 
-    let login_token = create_login_token(user)
-    return login_token
-}
 
 // returns array of previous matches 
-function get_previous_matches(login_token) {
-    let user = resolve_login_token(login_token)
-
-    if (user === null) {
-        return null
-    }
-
+function get_previous_matches(user) {
     return user.data.matches
 }
 
 // returns movie object of current 
-async function get_current_movie(login_token) {
-    let user = resolve_login_token(login_token)
-
-    if (user === null) {
-        return null
-    }
-
+async function get_current_movie(user) {
     let out = await rec_get_current_movie(user)
     return out
 }
 
-// returns next movie recommendation or null if login token invalid
-async function swipe_right(login_token) {
-    let user = resolve_login_token(login_token)
-
-    if (user === null) {
-        return null
-    }
-
+// returns next movie recommendation
+async function swipe_right(user) {
     await rec_swipe_right(user)
-
     let out = await rec_get_current_movie(user)
-
     return out
 }
 
-// returns next movie recommendation or null if login token invalid
-async function swipe_left(login_token) {
-    let user = resolve_login_token(login_token)
-
-    if (user === null) {
-        return null
-    }
-
+// returns next movie recommendation
+async function swipe_left(user) {
     await rec_swipe_left(user)
-
-    let out = await get_current_movie(login_token)
+    let out = await rec_get_current_movie(user)
     return out
 }
 
 // returns watch providers or null if login token invalid
-async function match(login_token) {
-    let user = resolve_login_token(login_token)
-
-    if (user === null) {
-        return null
-    }
-
+async function match(user) {
     let providers = await rec_match(user)
     return providers
 }
 
-function logout(login_token) {
-    let user = resolve_login_token(login_token)
-    if (user === null)
-        return
-    if (user) {
-        close_login_token(login_token)
-        save(user)
-    }
-}
 
-// private
-var login_token_count = 1
-var current_users = []
+// TO DO
+// function logout(login_token) { }
 
-// returns new login token 
-function create_login_token(user) {
-    let new_token = login_token_count
-    login_token_count++
 
-    let key_val = {
-        key: new_token,
-        val: user
-    }
-    current_users.push(key_val)
 
-    return new_token
-}
-
-// returns user object of corresponding login_token if existant
-function resolve_login_token(login_token) {
-    for (let i = 0; i < current_users.length; i++) {
-        if (current_users[i].key === login_token) {
-            return current_users[i].val
-        }
-    }
-    return null
-}
-
-function close_login_token(login_token) {
-    for (let i = 0; i < current_users.length; i++) {
-        if (current_users[i].key === login_token) {
-            current_users.splice(i)
-        }
-    }
-
-}
 
 // console.log("<===Test Script for Backend===>")
 
@@ -224,4 +143,4 @@ function close_login_token(login_token) {
 // // console.log("Attempting to logout")
 // // logout(test_token)
 
-export { create_account,  get_previous_matches, get_current_movie, swipe_right, swipe_left, match, logout };
+export { get_user_by_username, create_account,  get_previous_matches, get_current_movie, swipe_right, swipe_left, match };
