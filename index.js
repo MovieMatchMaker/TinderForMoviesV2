@@ -42,16 +42,17 @@ app.use(function (req, res, next) {
 
 app.post("/api/signup/", async (req, res) => {
       try {
-            const hashed_password = await bcrypt.hash(rec.body.password, 10)
+            const hashed_password = await bcrypt.hash(req.body.password, 10)
             if (!urh.create_account(req.body.username, hashed_password)){
                   res.send({
                         message: "Failed to create account, username already exists", 
                         status: 0
                   });
             }
-            res.send({message: `${username} is now signed up! Redirecting to Login`, status: 1 })
+            res.send({message: `Now signed up! Redirecting to Login`, status: 1 })
 
-      } catch {
+      } catch (err) {
+            console.trace(err);
             res.send({
                   message: "Server error", 
                   status: 0
@@ -59,21 +60,20 @@ app.post("/api/signup/", async (req, res) => {
       }
 });
 
-app.post("/api/login", passport.authenticate('local', {
-      successRedirect: '/', // not sure what to put here
-      failureRedirect: '/', // not sure what to put here
-      failureFlash: true
-}))
+app.post("/api/login", passport.authenticate('local'), (req, res) =>{
+      res.redirect('/swipe')
+});
 
-app.get("api/matching/get_current", checkAuthenticated, async(req, res) => {
+app.get("api/matching/get_current", checkAuthenticated,(req, res) => {
       try{
-            let next_movie_to_view = await urh.get_current_movie(req.user)
+            let next_movie_to_view = await urh.get_current_movie(req.user);
             res.send({
                   message: `Grabbing next movie....`,
                   status: 1,
                   current_movie: next_movie_to_view
             }).status(200);
       } catch(e) {
+            console.log(e);
             res.send({
                   message: "Server error", 
                   status: 0
@@ -153,14 +153,17 @@ app.post("/api/matching/match", checkAuthenticated, async (req, res) => {
 
 
 function checkAuthenticated(req, res, next){
+      console.log(`Req: \n Res: ${JSON.stringify(res)}`)
       if(req.isAuthenticated()){
+            console.log("Authed")
             return next()
       }
-
+      console.log("Not authed")
       res.send({
             message: `You have been logged out.`,
             status: 0,
       }).status(401);
+      
 }
 
 

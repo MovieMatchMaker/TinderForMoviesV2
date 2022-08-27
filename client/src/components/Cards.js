@@ -89,21 +89,11 @@ export default function Cards () {
 			navigate('/logout');
 		}
 
-		console.log(id)
-		await axios.post("/api/matching/get_current", 
-		{ 
-			id: id,
-			token: token,
-
-		}
-		).then((response) => {
-			console.log("Called get current movie")
-			const copy = [...db];
-			copy.push(response.data.current_movie);
-			setDb([...copy]);	
-		}).catch((err) => {
-			console.log(err);
-		});
+		const response = await axios.get("/api/matching/get_current");
+		console.log("Called get current movie. Response: ", response)
+		const copy = [...db];
+		copy.push(response.data.current_movie);
+		setDb([...copy]);	
 	}
 
 	const getNextMovie = async (id, direction) => {

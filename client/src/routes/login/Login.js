@@ -36,7 +36,6 @@ const Login = () => {
 
   const handleLogin = () => {
     const { username, password } = userL;
-    console.log(username, password);
     if (username === "" || password === "" || password.length < 0) {
       setMessage("Fill out both fields before submitting!");
       return;
@@ -53,19 +52,13 @@ const Login = () => {
         token,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 0) {
-          setMessage(data.message);
-          return;
+      .then((res) => {
+        if (res.redirected) {
+          navigate("/swipe");
         } else {
-          setMessage(data.message);
-          setTimeout(() => {
-            localStorage.setItem("token", data.login_token);
-            navigate("/swipe");
-          }, 2000);
+          setMessage("Error, couldn't log in.")
         }
-      });
+      })
     }
   };
 

@@ -53,12 +53,7 @@ export default function Signup() {
         .then((res) => res.json())
         .then((data) => {
           if (data.status === 1) {
-            setMessage(data.message);
-            setTimeout(() => {
-              localStorage.removeItem("token");
-              localStorage.setItem("token", data.login_token);
-              navigate("/");
-            }, 5000);
+            navigate("/swipe")
           } else {
             setMessage(data.message);
           }
