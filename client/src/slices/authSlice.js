@@ -3,6 +3,7 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { url, setHeaders } from "./api";
 
+
 const initialState = {
   token: localStorage.getItem("token"),
   matches: [],
@@ -51,6 +52,54 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const getUserMatches = createAsyncThunk(
+  "auth/getUserMatches",
+  async (values, { rejectWithValue }) => {
+    try {
+      const matches = await axios.post(`api/matches`, {
+        username: values.username,
+      });
+      return matches.data;
+    } catch (error) {
+      console.log(error.response);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const saveMatch = createAsyncThunk(
+  "auth/saveMatch",
+  async (values, { rejectWithValue }) => {
+    try {
+      const match = await axios.post(`api/save_match`, {
+        username: values.username,
+        match: values.match,
+      });
+      return match;
+    } catch (error) {
+      console.log(error.response);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteAllMatches = createAsyncThunk(
+  "auth/deleteAllMatches",
+  async (values, { rejectWithValue }) => {
+    try {
+      const match = await axios.post(`api/delete_matches`, {
+        username: values.username
+      });
+      return match;
+    } catch (error) {
+      console.log(error.response);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+
 export const getUser = createAsyncThunk(
   "auth/getUser",
   async (id, { rejectWithValue }) => {
@@ -72,6 +121,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
 
+    removeMatch (state, action) {
+      const matches = state.matches.filter((match) => match.id !== action.payload);
+      state.matches = matches;
+      
+    },
+
     addMatch (state, action) {
       if (state.matches.find(match => match.id === action.payload.id)) {
         console.error('Match already exists!');
@@ -88,7 +143,6 @@ const authSlice = createSlice({
         state.matches = [];
       }
     },
-
     loadUser(state, action) {
       const token = state.token;
 
@@ -121,6 +175,44 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getUserMatches.pending , (state, action) => {
+      return { ...state, userLoaded: "pending" };
+    });
+    builder.addCase(getUserMatches.fulfilled , (state, action) => {
+      return { ...state, userLoaded: "fulfilled", matches: action.payload }
+    } );
+
+    builder.addCase(getUserMatches.rejected , (state, action) => {
+
+      return { ...state, userLoaded: "rejected get matches", matches: [] }
+    } );
+
+    builder.addCase(saveMatch.pending , (state, action) => {
+      return { ...state, userLoaded: "pending save match" };
+    } );
+    builder.addCase(saveMatch.fulfilled , (state, action) => {
+
+      return state;
+    } );
+
+    builder.addCase(saveMatch.rejected , (state, action) => {
+
+      return { ...state, userLoaded: "rejected save", matches: [] }
+    } );
+
+    builder.addCase(deleteAllMatches.pending , (state, action) => {
+      return { ...state, matches: state.matches };
+    } );
+
+    builder.addCase(deleteAllMatches.fulfilled , (state, action) => {
+      return { ...state, matches: []};
+    } );
+
+    builder.addCase(deleteAllMatches.rejected , (state, action) => {
+      return { ...state , matches: state.matches };  
+    } );
+
+    
     builder.addCase(registerUser.pending, (state, action) => {
       return { ...state, registerStatus: "pending" };
     });
@@ -158,6 +250,7 @@ const authSlice = createSlice({
           username: user.username,
           _id: user._id,
           loginStatus: "success",
+          loginError: "",
         };
       } else return state;
     });
@@ -197,7 +290,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { loadUser, logoutUser, addMatch, removeAllMatches } = authSlice.actions;
+export const { loadUser, logoutUser, addMatch, removeAllMatches, saveMatchesInDatabase , removeMatch} = authSlice.actions;
 
 export const selectMatches = state => state.auth.matches;
 
