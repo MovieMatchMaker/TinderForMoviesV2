@@ -10,8 +10,8 @@ import Nav from "./NavigationBar";
 import icon from "../utils/icon";
 // import Spinner from './Spinner';
 import { useDispatch, useSelector } from "react-redux";
-import { addMatch, selectMatches } from "../reducers/matchesReducer";
-
+import { addMatch, selectMatches } from "../slices/authSlice";
+// import { addMatch, selectMatches } from "../reducers/matchesReducer";
 
 export default function Cards() {
 
@@ -24,7 +24,7 @@ export default function Cards() {
 
 
 	// Redux Stuff
-	const matches = useSelector(selectMatches)
+	const matches = useSelector(selectMatches);
 	const dispatch = useDispatch();
 
 	const childRefs = useMemo(() => {

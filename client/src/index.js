@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   BrowserRouter,
   Route,
@@ -22,7 +22,8 @@ import { Provider } from 'react-redux';
 import store from './store/store.js';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
-
+import { useDispatch } from "react-redux";
+import { loadUser } from "./slices/authSlice";
 // const store = configureStore({
 //   matches: [
 //     {
@@ -36,9 +37,11 @@ import { persistStore } from 'redux-persist'
 // });
 
 function TinderMovies() {
-
+  
+  
   let persistor = persistStore(store);
-
+  
+  
     return (
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>

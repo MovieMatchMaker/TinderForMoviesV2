@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../src/styles/login.css";
 import { animations } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../slices/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   const [username, setUsernameL] = useState("");
   const [password, setPasswordL] = useState("");
@@ -16,58 +20,44 @@ const Login = () => {
     password: "",
   });
 
+  
   const [message, setMessage] = useState("");
-
+  
   const handleChangeU = (e) => {
-    setUsernameL(e.target.value);
     setUserL({
       ...userL,
       username: e.target.value,
     });
   };
-
+  
   const handleChangeP = (e) => {
-    setPasswordL(e.target.value);
     setUserL({
       ...userL,
       password: e.target.value,
     });
   };
 
-  const handleLogin = () => {
+ 
+  
+  
+  const handleLogin = (e) => {
     const { username, password } = userL;
     
     if (username === "" || password === "" || password.length < 0 || username.length < 0) {
       setMessage("Fill out both fields before submitting!");
       return;
     } else {
-      const token = localStorage.getItem("token");
-    fetch(`/api/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-        token,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 0) {
-          setMessage(data.message);
-          return;
-        } else {
-          setMessage(data.message);
-          setTimeout(() => {
-            localStorage.setItem("token", data.login_token);
-            localStorage.setItem("isLoggedIn", true);
-            localStorage.setItem("auth","auth");
-            navigate("/swipe");
-          }, 2000);
-        }
-      });
+      e.preventDefault();
+      dispatch(loginUser(userL));
+      if (auth.loginStatus === "success") {  
+        setMessage(`Logged in! Welcome back! ${auth.username}`);
+        setTimeout(() => {
+          navigate("/swipe");
+        } , 2000);
+      } else {
+        //setMessage("Invalid username or password.");
+        return;
+      }
     }
   };
 
@@ -124,9 +114,12 @@ const Login = () => {
                         autoComplete="off"
                       ></input>
                     </form>
-                    <i className="login-status">{message}</i>
+                    <i className="login-status">
+                    {auth.loginStatus === "rejected" ? <p>{auth.loginError}</p> : null}
+                    {message ? <p>{message}</p> : null}
+                    </i>
                   </div>
-                  <a href="#" onClick={handleLogin} className="btn mt-4">
+                  <a href="f" onClick={handleLogin} className="btn mt-4">
                     submit
                   </a>
                 </div>

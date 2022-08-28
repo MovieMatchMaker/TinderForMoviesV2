@@ -1,26 +1,30 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import "../../../src/styles/login.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { animations } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../slices/authSlice";
 
 
 export default function Signup() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState({
     username: "",
     password: "",
+    matches: [],
   });
+
+
   const [message, setMessage] = useState("");
 
   const handleChangeU = (e) => {
-    setUsername(e.target.value);
     setUser({
       ...user,
       username: e.target.value,
@@ -28,45 +32,41 @@ export default function Signup() {
   };
 
   const handleChangeP = (e) => {
-    setPassword(e.target.value);
     setUser({
       ...user,
       password: e.target.value,
     });
   };
 
-  const handleSignup = () => {
+  const handleSignup = (e) => {
     const { username, password } = user;
+    e.preventDefault();
     if (username === "" || password === "") {
       setMessage("Please fill out all fields");
     } else {
-      fetch("/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.status === 1) {
-            setMessage(data.message);
-            setTimeout(() => {
-              localStorage.removeItem("token");
-              localStorage.setItem("token", data.login_token);
-              localStorage.setItem("isLoggedIn", true);
-              navigate("/home");
-            }, 5000);
-          } else {
-            setMessage(data.message);
-          }
-        }
-        );
+      dispatch(registerUser(user));
+
+      if (auth.registerStatus === "success") {
+        setMessage(`Welcome ${auth.username}!`);
+        setTimeout(() => {
+          navigate("/swipe");
+        } , 2000);
+      } else {
+        setMessage(`${auth.registerError}`);
       }
+    }
+
   };
+
+  useEffect(() => {
+    if (auth._id) {
+      setMessage("You are already logged in");
+      setTimeout(() => {
+        navigate("/swipe");
+      } , 2000);
+    }
+  } , []);
+    
 
   return (
     <div>
@@ -92,27 +92,27 @@ export default function Signup() {
             <div className="card-front">
               <div className="center-wrap">
                 <div className="section text-center">
-                  <form action="#" autoComplete="off">
+                  <form action="/signup" autoComplete="off">
                     <h4 className="mb-4 pb-3">Sign Up</h4>
                     <div className="form-group mt-2">
                       <input
                         type="text"
                         username="logemail"
                         className="form-style"
-                        defaultValue={username}
                         onChange={handleChangeU}
                         placeholder="New Username"
                         id="logemail2"
                         autoComplete="off"
                       ></input>
-                      <i className="signup-status">{message}</i>
+                      <i className="signup-status">
+                        {message ? message : null}
+                      </i>
                     </div>
                     <div className="form-group mt-2">
                       <input
                         type="password"
                         username="logpass"
                         className="form-style"
-                        defaultValue={password}
                         onChange={handleChangeP}
                         placeholder="New Password"
                         id="logpass2"
@@ -133,5 +133,3 @@ export default function Signup() {
     </div>
   );
 }
-
-

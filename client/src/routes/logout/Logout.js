@@ -2,21 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteAllMatches } from "../../reducers/matchesReducer";
+import { logoutUser } from "../../slices/authSlice";
 
 function Logout() {
 
   const dispatch = useDispatch();
-
+  const auth = useSelector((state) => state.auth);
   const seconds = 5;
   const navigate = useNavigate();
 
   const [timeLeft, setTimeLeft] = useState(seconds);
 
   useEffect(() => {
-    localStorage.removeItem("token");
-    dispatch(deleteAllMatches());
+    if (auth._id) {
+      dispatch(logoutUser(null));
+      dispatch(deleteAllMatches(null));
+      navigate("/");
+      localStorage.removeItem("token");
+    } 
     if (!timeLeft){
       navigate("/home");
     } else if (!timeLeft&&window.location.pathname !== "/logout"){ 
