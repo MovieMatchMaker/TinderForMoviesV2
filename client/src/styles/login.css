@@ -46,10 +46,14 @@ a:hover {
       color: #ffeba7;
 }
 
-p {
+ul.login-status {
       font-weight: 500;
       font-size: 14px;
       line-height: 1.7;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      
 }
 
 .mb-4,
@@ -353,11 +357,11 @@ a {
       position: absolute;
       width: 95%;
       text-align: center;
-      bottom: 240px;
-      display: flex;
+      bottom: 234px;
       justify-content: center;
       align-items: center;
       color: #874356;
+      display: list-item;
 }
 
 .signup-status {

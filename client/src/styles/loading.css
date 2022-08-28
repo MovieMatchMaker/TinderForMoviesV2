@@ -22,9 +22,10 @@
 
 
 .loader-inner {
+      transform: scale(0.5);
       position: absolute;
-      top: 40%;
-      left: 47%;
+      top: 3%;
+      left: 45%;
 }
 
 

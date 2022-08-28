@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAllMatches } from "../../reducers/matchesReducer";
-import { logoutUser } from "../../slices/authSlice";
+import { logoutUser, deleteAllMatches } from "../../slices/authSlice";
 
 function Logout() {
 
@@ -18,7 +17,7 @@ function Logout() {
   useEffect(() => {
     if (auth._id) {
       dispatch(logoutUser(null));
-      dispatch(deleteAllMatches(null));
+      // dispatch(deleteAllMatches(auth.username));
       navigate("/");
       localStorage.removeItem("token");
     } 

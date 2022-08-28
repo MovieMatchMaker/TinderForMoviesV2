@@ -10,24 +10,17 @@ router.post("/", async (req, res) => {
             username: joi.string().min(3).max(200).required(),
             password: joi.string().min(6).max(200).required(),
       });
-
-      const {
-            error
-      } = schema.validate(req.body);
-
-      if (error) return res.status(400).send(error.details[0].message);
-
+      const { error } = schema.validate(req.body);
+      if (error !== undefined) return res.status(400).send(error.details[0].message);
       let user = await User.findOne({
             username: req.body.username
       });
-      if (!user) return res.status(400).send("Invalid username or password...");
+      if (!user) return res.status(400).send("User doesn't exist.");
 
       const validPassword = await compare(req.body.password, user.password);
-      if (!validPassword)
-            return res.status(400).send("Invalid username or password...");
+      if (!validPassword) return res.status(400).send("Incorrect username or password. Try again.");
 
-      const token = generateAuthToken(user);
-
+      const token = generateAuthToken(user);  
       res.send(token);
 });
 

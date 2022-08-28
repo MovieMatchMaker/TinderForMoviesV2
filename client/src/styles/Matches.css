@@ -16,19 +16,16 @@
   margin-right: 10px;
 }
 
-/* 
-  The styling below is only for the decoration of this demo, 
-  it has no impact on scrolling or scroll behavior
-*/
 .list {
   list-style: none;
-  border: 5px solid whitesmoke;
+  border: 1px solid whitesmoke;
   background-color: #90576777;
   padding: 20px;
   border-radius: 12px;
 }
 
 .item {
+  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,14 +48,9 @@
   margin-right: 10px;
 }
 
-
-
-
-/* Card carosuel */
 .matches-container {
   position: relative;
   display: flex;
-
 }
 
 .container {
@@ -66,6 +58,7 @@
 }
 
 .image {
+
   display: inline-block;
   width: 400px;
   height: 500px
@@ -136,4 +129,60 @@
 
 #no-matches-here:hover  {
   text-decoration: underline;
+}
+
+.match-delete {
+  position: absolute;
+  right: 32px;
+  top: 17px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+}
+
+.match-delete:hover {
+  opacity: 1;
+}
+
+.match-delete:before,
+.match-delete:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: rgb(255, 255, 255);
+}
+
+.match-delete:before {
+  transform: rotate(45deg);
+}
+
+.match-delete:after {
+  transform: rotate(-45deg);
+}
+
+.match-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .5s ease;
+}
+
+
+@-webkit-keyframes action {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+@keyframes action {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+}
+
+/* Implement randomly floating match images... */
+
+#to-animate {
+ -webkit-animation: action 1s infinite alternate;
+ animation: action 1s infinite alternate;
 }

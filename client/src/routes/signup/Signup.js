@@ -105,7 +105,9 @@ export default function Signup() {
                         autoComplete="off"
                       ></input>
                       <i className="signup-status">
-                        {message ? message : null}
+                        {
+                          message ? message.replace(/(^\w|\s\w)/g, m => m.toUpperCase()): null
+                        }
                       </i>
                     </div>
                     <div className="form-group mt-2">

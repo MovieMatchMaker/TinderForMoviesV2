@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import "../../../src/styles/login.css";
 import { animations } from "react-animation";
@@ -6,67 +7,68 @@ import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../slices/authSlice";
+import { loginUser, getUserMatches } from "../../slices/authSlice";
+import Spinner from "../../components/Spinner";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState("");
 
-  const [username, setUsernameL] = useState("");
-  const [password, setPasswordL] = useState("");
-  const [userL, setUserL] = useState({
+  const [user, setUser] = useState({
     username: "",
     password: "",
   });
 
-  
-  const [message, setMessage] = useState("");
-  
   const handleChangeU = (e) => {
-    setUserL({
-      ...userL,
+    setUser({
+      ...user,
       username: e.target.value,
     });
   };
-  
+
   const handleChangeP = (e) => {
-    setUserL({
-      ...userL,
+    setUser({
+      ...user,
       password: e.target.value,
     });
   };
 
- 
-  
-  
   const handleLogin = (e) => {
-    const { username, password } = userL;
-    
-    if (username === "" || password === "" || password.length < 0 || username.length < 0) {
-      setMessage("Fill out both fields before submitting!");
-      return;
-    } else {
-      e.preventDefault();
-      dispatch(loginUser(userL));
-      if (auth.loginStatus === "success") {  
-        setMessage(`Logged in! Welcome back! ${auth.username}`);
-        setTimeout(() => {
-          navigate("/swipe");
-        } , 2000);
-      } else {
-        //setMessage("Invalid username or password.");
-        return;
-      }
-    }
+    e.preventDefault();
+    const { username, password } = user;
+    setIsLoading(true);
+    dispatch(loginUser({ username, password }))
+    dispatch(getUserMatches(auth.username));
+    setStatus(auth.loginStatus);
   };
+
+  useEffect(() => {
+    setMessage("");
+    if (auth.loginStatus === "success") {
+      setMessage(
+        `Logged in! Welcome back! ${auth.username.replace(/(^\w|\s\w)/g, (m) =>
+          m.toUpperCase()
+        )}.`
+      );
+      setTimeout(() => {
+        navigate("/swipe");
+      }, 2000);
+    } else if (auth.loginStatus === "pending") {
+      setMessage(`${auth.loginError}`);
+    } else if (auth.loginStatus === "rejected") {
+      setMessage(`${auth.loginError}`);
+    } else {
+      setMessage(auth.loginError);
+    }
+    setIsLoading(false);
+  }, [auth.loginStatus]);
 
   return (
     <div>
-      <a href="/">
-        
-      </a>
-
       <Link to="/signup">
         <div
           style={{ animation: animations.bounceIn, bottom: "50px" }}
@@ -83,17 +85,16 @@ const Login = () => {
         <div className="card-3d-wrap mx-auto">
           <div className="card-3d-wrapper">
             <div className="card-front">
+              {isLoading === true ? <Spinner /> : null}
               <div className="center-wrap">
                 <div className="section text-center">
                   <h4 className="mb-4 pb-3">Log In</h4>
                   <div className="form-group">
-                    <form>
+                    <form onSubmit={handleLogin}>
                       <input
                         type="text"
-                        username="logemail"
                         className="form-style"
                         placeholder="Username"
-                        defaultValue={username}
                         onChange={handleChangeU}
                         id="logemail"
                         autoComplete="off"
@@ -105,21 +106,20 @@ const Login = () => {
                     <form onSubmit={handleLogin}>
                       <input
                         type="password"
-                        username="logpass"
                         className="form-style"
                         placeholder="Password"
                         id="logpass"
-                        defaultValue={password}
                         onChange={handleChangeP}
                         autoComplete="off"
                       ></input>
                     </form>
-                    <i className="login-status">
-                    {auth.loginStatus === "rejected" ? <p>{auth.loginError}</p> : null}
-                    {message ? <p>{message}</p> : null}
-                    </i>
+                    <ul className="login-status">{message ? message : null}</ul>
                   </div>
-                  <a href="f" onClick={handleLogin} className="btn mt-4">
+                  <a
+                    href="/"
+                    onClick={(e) => handleLogin(e)}
+                    className="btn mt-4"
+                  >
                     submit
                   </a>
                 </div>

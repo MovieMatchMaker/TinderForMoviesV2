@@ -1,10 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import "../../styles/Matches.css";
 import { useEffect, useState } from "react";
 import "../../styles/loading.css";
-import { animations } from "react-animation";
+import { animations, AnimateOnChange, AnimateGroup } from "react-animation";
 import "react-animation/dist/keyframes.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAllMatches, removeMatch } from "../../slices/authSlice";
 
 var options = {
 	weekday: "long",
@@ -15,12 +17,34 @@ var options = {
 
 function Matches() {
 	const [matches, setMatches] = useState([]);
-	
-	// Retireve the matches from the store
-	const storedMatches = useSelector(state => state.matches.matches);
+	const dispatch = useDispatch();
+	const storedMatches = useSelector(state => state.auth.matches);
+	const username = useSelector(state => state.auth.username);
 
-	const mapMatches = matches.map((match) => {
+	const [isActive, setIsActive] = useState(false);
+
+	const handleClick = event => {
+		// 👇️ toggle isActive state on click
+		setIsActive(current => !current);
+	};
+	
+	const handleRemoveItem = (e, index) => {
+		e.persist();
+		e.preventDefault();
+		handleClick();
+		setMatches(matches.filter((match, i) => i !== index));
+		dispatch(removeMatch(matches[index].id));	
+	};
+
+	const delete_all_matches = (e) => {
+		e.preventDefault();
+		dispatch(deleteAllMatches(username));
+	}
+
+	
+	const mapMatches = matches.map((match, index) => {
 		return (
+			
 			<div
 				key={match.id}
 				style={{
@@ -28,12 +52,18 @@ function Matches() {
 					animationDuration: "1s",
 				}}
 				className='container'>
+					<a href="#" onClick={(e) => handleRemoveItem(e, index)} className="match-delete">
+						</a>
+					
 				<img
 					className='image'
 					src={`https://image.tmdb.org/t/p/w500${match.poster_path}`}
 					alt=''
 				/>
+				
 				<div className='overlay'>
+					<a href="#" onClick={(e) => handleRemoveItem(e, index)} className="match-delete">
+						</a>
 					<p className='text-release'>
 						{new Date(match.release_date).toLocaleDateString(
 							"en-US",
@@ -85,7 +115,9 @@ function Matches() {
 			<h1>Matches ({matches.length})</h1>
 			<div className='viewport'>
 				<ul className='list'>
-					{matches.length > 0 ? mapMatches : noMatches()}
+					<AnimateGroup animation="fadeout" className="match-row">
+						{matches.length > 0 ? mapMatches : noMatches()}
+					</AnimateGroup>
 				</ul>
 			</div>
 		</div>
