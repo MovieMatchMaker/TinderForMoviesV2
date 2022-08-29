@@ -10,7 +10,7 @@ import Nav from "./NavigationBar";
 import icon from "../utils/icon";
 // import Spinner from './Spinner';
 import { useDispatch, useSelector } from "react-redux";
-import { addMatch, selectMatches } from "../slices/authSlice";
+import { addMatch, saveMatch, selectMatches } from "../slices/authSlice";
 // import { addMatch, selectMatches } from "../reducers/matchesReducer";
 
 export default function Cards() {
@@ -25,7 +25,9 @@ export default function Cards() {
 
 	// Redux Stuff
 	const matches = useSelector(selectMatches);
+
 	const dispatch = useDispatch();
+	const username = useSelector((state) => state.auth.username);
 
 	const childRefs = useMemo(() => {
 		const refs = [];
@@ -75,17 +77,16 @@ export default function Cards() {
 		console.info("Rendering post-match movie.");
 
 		await axios
-			.post("/api/matching/get_current", {
+			.post("/api/get_movie", {
 				id: id,
-				token: token,
 			})
 			.then((response) => {
-				if (response.data.status === 1) {
+				if (response){
 					const copy = [...db];
-					copy.push(response.data.current_movie)
+					copy.push(response.data)
 					setDb([...copy])
 				} else {
-					console.error("Error: ", response.data.message);
+					// console.error("Error: ", response.data.message);
 					navigate("/logout");
 					// navigate("/logout") or handle this 
 				}
@@ -102,17 +103,16 @@ export default function Cards() {
 			navigate("/logout");
 		}
 
-		console.info(" Seving next movie.\n Previous was: \n", db[db.length - 1].title);
+		console.info(" Serving next movie.\n Previous was: \n", db[db.length - 1].title);
 
 		if (direction === "right") {
 			await axios
-				.post("/api/matching/swipe_right", {
+				.post("/api/get_movie", {
 					id: id,
-					token: token,
 				})
 				.then((response) => {
 					const copy = [...db];
-					copy.push(response.data.current_movie);
+					copy.push(response.data);
 					setDb([...copy]);
 				})
 				.catch((err) => {
@@ -120,13 +120,12 @@ export default function Cards() {
 				});
 		} else {
 			await axios
-				.post("/api/matching/swipe_left", {
+				.post("/api/get_movie", {
 					id: id,
-					token: token,
 				})
 				.then((response) => {
 					const copy = [...db];
-					copy.push(response.data.current_movie);
+					copy.push(response.data);
 					setDb([...copy]);
 				})
 				.catch((err) => {
@@ -175,7 +174,7 @@ export default function Cards() {
 		}
 
 		await axios
-			.post("/api/matching/match", {
+			.post("/api/match", {
 				token: token,
 			})
 			.then((response) => {
@@ -194,14 +193,17 @@ export default function Cards() {
 			// Add to matches list
 			console.info(" New Match: \n", Array.from(db)[db.length - 1].title);
 			dispatch(addMatch(db[index]));
+			dispatch(saveMatch(username , db[index]));
+
 
 			// setTimeout(fun => {
 			// 	document.getElementById("hidden").style.visibility = "visible";
 			// },1000)
 
-			await getMatchMovie().catch((err) => {
-				console.error(err);
-			});
+			// await getMatchMovie().catch((err) => {
+			// 	console.error(err);
+			// });
+
 			updateCurrentIndex(index + 1);
 
 			childRefs[currentIndex].current.swipe(dir)

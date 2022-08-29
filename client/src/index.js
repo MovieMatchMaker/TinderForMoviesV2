@@ -18,32 +18,19 @@ import NavigatonBar from './components/NavigationBar';
 import { PrivateRoutes } from './routes/private/PrivateRoute';
 
 // Redux Stuff
-import { Provider } from 'react-redux';
 import store from './store/store.js';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
-import { useDispatch } from "react-redux";
-import { loadUser } from "./slices/authSlice";
-// const store = configureStore({
-//   matches: [
-//     {
-//       id: 1,
-//       title: 'Toms movie',
-//       overview: 'Hi Tom',
-//       poster_path: 'https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg',
-//       release_date: '2020-01-01',
-//     }
-//   ]
-// });
+import { Provider} from "react-redux";
+// import { loadUser } from "./slices/authSlice";
+
 
 function TinderMovies() {
-  
-  
+
   let persistor = persistStore(store);
   
-  
     return (
-        <Provider store={store}>
+      <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <BrowserRouter>
               <Routes>
@@ -61,7 +48,7 @@ function TinderMovies() {
               </Routes>
             </BrowserRouter>
           </PersistGate>
-        </Provider>
+      </Provider>
     )
 }
 
