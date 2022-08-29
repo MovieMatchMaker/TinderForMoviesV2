@@ -15,13 +15,17 @@ function Logout() {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
   useEffect(() => {
+
     if (auth._id) {
+      dispatch(deleteAllMatches(auth.username))
+      console.log("deleted all matches")
       dispatch(logoutUser(null));
-      // dispatch(deleteAllMatches(auth.username));
+      console.log("logged out")
       navigate("/");
       localStorage.removeItem("token");
     } 
     if (!timeLeft){
+      dispatch(logoutUser(null));
       navigate("/home");
     } else if (!timeLeft&&window.location.pathname !== "/logout"){ 
       return;

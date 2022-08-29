@@ -3,21 +3,15 @@ import { Router } from "express";
 const router = Router();
 
 router.post("/", async (req, res) => {
-      const username = req.body.username;
-      let match = [];
-      User.findOne({
-            username: username
-      }, (err, user) => {
-            if (err) {console.log(err);}
-            if (user) {
-                  user.matches = [];
-                  user.save();
-            } else {
-                  console.log("No matches to delete");
-            }
-            
-      });
-      res.send(match);
+      // using a try catch block, deletee all matches for the user in monogdb
+      let username = req.body.username;
+      try {
+            User.findOneAndUpdate({ username: username }, { $set: { matches: [Array] } }).exec();
+            User.save();
+            res.send("Successfully deleted all matches for user");
+      } catch (error) {
+            res.send(error);
+      }
 });
 
 export default router;

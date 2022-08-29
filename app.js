@@ -69,20 +69,22 @@ app.post("/api/get_movie", (req, res) => {
 );   
 
 app.post("/api/matches", (req, res) => {
-      // find the matches for the requested user in the user database schema
       const username = req.body.username;
       console.log(username);
-      console.log(req.body);
-      User.findOne({ username: username }, (err, user) => {
-            if (err) {
-                  console.trace(err);
-            }
+      let match = [];
+      User.findOne({
+            username: username
+      }, (err, user) => {
+            if (err) {console.trace(err);}
             if (user) {
-                  console.trace(user);
-                  res.send(user.matches);
+                  user.matches = [];
+                  user.save();
+            } else {
+                  console.trace("No matches to delete");
             }
+            
       });
-      return true;
+      res.send(match);
 });
 
 
