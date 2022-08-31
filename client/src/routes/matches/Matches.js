@@ -38,21 +38,12 @@ function Matches() {
 		dispatch(deleteSingleMatch(request));
 	};
 
-	const deleteAllMatches = (e) => {
+	const deleteAll = (e) => {
 		e.preventDefault();
-		dispatch(deleteAllMatches(username));
+		let request = {}
+		request.username = username;
+		dispatch(deleteAllMatches(request));
 	}
-
-	const parseText = (text) => {
-		const sentences = text.split(".");
-		if (sentences.length >= 4) {
-			return (
-				sentences[0] + "." + sentences[1] + "." + sentences[2] + "..."
-			);
-		} else {
-			return text;
-		}
-	};
 	
 	const mapMatches = matches.map((match, index) => {
 		return (
@@ -83,7 +74,7 @@ function Matches() {
 						)}
 					</p>
 					<h2 className='text-title'>{match.title}</h2>
-					<p className='text-overview'>{parseText(match.overview)}</p>
+					<p className='text-overview'>{match.overview}</p>
 				</div>
 			</div>
 		);
@@ -124,7 +115,8 @@ function Matches() {
 			<br></br>
 			<br></br>
 			<br></br>
-			<h1>Matches ({matches.length})</h1>
+			<h1>Your matches ({matches.length})</h1>
+			<a><button className="bn632-hover bn28" onClick={deleteAll}>Delete All</button></a>
 			<div className='viewport'>
 				<ul className='list'>
 					<AnimateGroup animation="fadeout" className="match-row">

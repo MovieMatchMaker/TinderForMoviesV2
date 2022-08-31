@@ -347,17 +347,17 @@ export default function Cards() {
 				<button
 					className='bn39'
 					onClick={() => swipe("left", currentIndex, false)}>
-					<span className='bn39span'>Swipe Left!</span>
+					<span className='bn39span'>⬅️ Swipe Left</span>
 				</button>
 				<button
 					className='bn39'
 					onClick={() => swipe("right", currentIndex, true)}>
-					<span className='bn39span'>Match!</span>
+					<span className='bn39span'>Match ⭐</span>
 				</button>
 				<button
 					className='bn39'
 					onClick={() => swipe("right", currentIndex, false)}>
-					<span className='bn39span'>Swipe Right!</span>
+					<span className='bn39span'>Swipe Right ➡️</span>
 				</button>
 			</div>
 		</div>
