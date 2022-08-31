@@ -1,31 +1,30 @@
+import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import axios from "axios";
 import mongoose from "mongoose";
+import { User } from "./models/user.js";
+import matches from "./middleware/matches.js";
 import login from "./routes/login.js";
 import register from "./routes/register.js";
-import save from "./middleware/save.js";
-import _delete from "./routes/delete.js";
-import { User } from "./models/user.js";
+import save from "./routes/save.js";
+import deleteAll from "./routes/delete.js";
+import deleteSingle from "./routes/delete_single.js";
 import headers from "./utils/setHeaders.js";
-// import * as urh from "./backend/user_request_handler.js";
-// import {
-//       create_account,
-//       get_current_movie,
-//       swipe_right,
-//       swipe_left,
-//       logout,
-//       get_previous_matches,
-//       match
-// } from "./backend/user_request_handler.js";
-
-// `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1`
-const app = express();
-app.use(express.json());
-app.use(cors());
+import tracker from "./middleware/tracker.js";
 
 dotenv.config();
+
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+app.use(express.static("public"));
+
+// Set headers for the the requests
+app.use(headers,);
+// Track all the requests in the console
+app.use(tracker);
 // Log the user in, and return a token
 app.use('/api/login', login)
 // Register a new user, save them to MongoDB, and return a token
@@ -33,104 +32,28 @@ app.use('/api/register', register)
 // Save a new match the the database
 app.use('/api/save_match', save)
 // Delete all matches from the database
-app.use('/api/delete_matches', _delete)
-// Set the headers to allow CORS requests
-app.use(headers);
+app.use('/api/delete_matches', deleteAll)
+// Delete a single match from the database
+app.use('/api/delete_one', deleteSingle)
+// Get all matches for a user
+app.use("/api/matches", matches);
 
-
-app.get("/api", (req, res) => {
-      axios
-            .get(
-                  `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1&origin_country=US`
-            )
-            .then((response) => {
-                  let random = Math.floor(Math.random() * response.data.results.length);
-                  res.send(response.data.results[random]);
-            })
-            .catch((err) => {
-                  res.send(err);
-            });
-});
 
 app.post("/api/get_movie", (req, res) => {
-      let id = Math.floor(Math.random() * 100);
-      axios
-            .get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&page=1&origin_country=US`      
-            )
-            .then((response) => {
-                  console.log(response.data.results[0]);
+      let id = Math.floor(Math.random() * 10) || Math.floor(Math.random() * 10);
+      let page = Math.floor((Math.random()*10) + 1); 
+      axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_watch_monetization_types=flatrate`      
+      )
+      .then((response) => {
+            if (response.data.results[page].poster_path !== undefined) {
                   let random = Math.floor(Math.random() * response.data.results.length);
-                  res.send(response.data.results[random]);
-            })
-            .catch((err) => {
-                  res.send(err);
-            });
-}
-);   
-
-app.post("/api/matches", (req, res) => {
-      const username = req.body.username;
-      console.log(username);
-      let match = [];
-      User.findOne({
-            username: username
-      }, (err, user) => {
-            if (err) {console.trace(err);}
-            if (user) {
-                  user.matches = [];
-                  user.save();
-            } else {
-                  console.trace("No matches to delete");
-            }
-            
+                  res.send(response.data.results[random]).status(200);
+            } 
+      })
+      .catch((err) => {
+            res.send(err);
       });
-      res.send(match);
-});
-
-
-
-
-
-
-
-
-
-
-
-// creates an account and logs the user in
-// app.post("/api/register", (req, res) => {
-
-//       let username = req.body.username;
-//       let password = req.body.password;
-
-      
-
-//       if (login_token !== null) {
-//             res.send({
-//                   message: `${username} is now signed up! Redirecting to Home..`,
-//                   status: 1,
-//                   login_token: login_token
-//             });
-//       } else {
-//             res.send({
-//                   message: "Failed to create account, username already exists",
-//                   status: 0,
-//                   login_token: null
-//             });
-//       }
-
-// });
-
-
-app.get("/", (req, res) => {
-      res.send("Welcome.");
-});
-
-app.get("/matches", (req, res) => {
-      res.send(matches);
-});
-
-
+});   
 
 const uri = process.env.URI;
 mongoose

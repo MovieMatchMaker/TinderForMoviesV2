@@ -42,7 +42,7 @@ const Login = () => {
     const { username, password } = user;
     setIsLoading(true);
     dispatch(loginUser({ username, password }))
-    dispatch(getUserMatches(auth.username));
+    dispatch(getUserMatches(username));
     setStatus(auth.loginStatus);
   };
 

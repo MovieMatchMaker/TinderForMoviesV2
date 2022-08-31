@@ -6,7 +6,7 @@ import "../../styles/loading.css";
 import { animations, AnimateOnChange, AnimateGroup } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAllMatches, removeMatch } from "../../slices/authSlice";
+import { deleteAllMatches, deleteSingleMatch, removeMatch } from "../../slices/authSlice";
 
 var options = {
 	weekday: "long",
@@ -20,27 +20,28 @@ function Matches() {
 	const dispatch = useDispatch();
 	const storedMatches = useSelector(state => state.auth.matches);
 	const username = useSelector(state => state.auth.username);
-
 	const [isActive, setIsActive] = useState(false);
 
 	const handleClick = event => {
-		// 👇️ toggle isActive state on click
 		setIsActive(current => !current);
 	};
 	
 	const handleRemoveItem = (e, index) => {
+		let request = {};
+		request.toDelete = matches[index]
+		request.username = username;
 		e.persist();
 		e.preventDefault();
 		handleClick();
 		setMatches(matches.filter((match, i) => i !== index));
-		dispatch(removeMatch(matches[index].id));	
+		dispatch(removeMatch(request.toDelete.id));	
+		dispatch(deleteSingleMatch(request));
 	};
 
-	const delete_all_matches = (e) => {
+	const deleteAllMatches = (e) => {
 		e.preventDefault();
 		dispatch(deleteAllMatches(username));
 	}
-
 	
 	const mapMatches = matches.map((match, index) => {
 		return (

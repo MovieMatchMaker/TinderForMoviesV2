@@ -17,7 +17,9 @@ function Logout() {
   useEffect(() => {
 
     if (auth._id) {
-      dispatch(deleteAllMatches(auth.username))
+      // let obj = {}
+      // obj.username = auth.username;
+      // dispatch(deleteAllMatches(obj))
       console.log("deleted all matches")
       dispatch(logoutUser(null));
       console.log("logged out")

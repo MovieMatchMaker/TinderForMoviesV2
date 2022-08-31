@@ -139,10 +139,11 @@ export default function Cards() {
 
 	// Swipe w/o buttons.
 	const swiped = async (direction, nameToDelete, index) => {
+
 		setLastDirection(direction);
 		//console.info("Last direction was: " + lastDirection);
 
-		if (direction === "left") {
+		if (direction === "left" ) {
 			// show a new set of movies
 			await serveNextMovie(db[db.length - 1].id, direction).catch((err) => {
 				console.error(err);
@@ -165,6 +166,20 @@ export default function Cards() {
 	const outOfFrame = (title) => {
 		// console.log(title + " left the screen!");
 	};
+
+	//TODO: Add go back to previous movie functionality
+	// const canGoBack = currentIndexRef.current > 0;
+	// console.log(canGoBack);
+
+	// const goBack = async  () => {
+	// 	if (canGoBack) {
+	// 		updateCurrentIndex(currentIndexRef.current - 1);
+	// 		await childRefs[currentIndexRef.current].current.restoreCard();
+	// 	} else {
+	// 		return;
+	// 		console.log("Can't go back anymore!");
+	// 	}
+	// }
 
 	const getMatchMovie = async () => {
 		console.info("Called get match movie on: ", db[db.length - 1].title);
@@ -193,7 +208,13 @@ export default function Cards() {
 			// Add to matches list
 			console.info(" New Match: \n", Array.from(db)[db.length - 1].title);
 			dispatch(addMatch(db[index]));
-			dispatch(saveMatch(username , db[index]));
+			let curr = db[index];
+			// assign a var an object with the username and the movie object
+			let obj = {};
+			obj.username = username;
+			obj.match = curr;
+			console.log(obj);
+			dispatch(saveMatch(obj));
 
 
 			// setTimeout(fun => {

@@ -3,7 +3,6 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { url, setHeaders } from "./api";
 
-
 const initialState = {
   token: localStorage.getItem("token"),
   matches: [],
@@ -15,7 +14,6 @@ const initialState = {
   loginError: "",
   userLoaded: false,
 };
-
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
@@ -57,8 +55,9 @@ export const getUserMatches = createAsyncThunk(
   async (values, { rejectWithValue }) => {
     try {
       const matches = await axios.post(`api/matches`, {
-        username: values.username,
+        username: values
       });
+      console.log(matches);
       return matches.data;
     } catch (error) {
       console.log(error.response);
@@ -71,6 +70,7 @@ export const saveMatch = createAsyncThunk(
   "auth/saveMatch",
   async (values, { rejectWithValue }) => {
     try {
+      console.log(values);
       const match = await axios.post(`api/save_match`, {
         username: values.username,
         match: values.match,
@@ -98,16 +98,28 @@ export const deleteAllMatches = createAsyncThunk(
   }
 );
 
-
+export const deleteSingleMatch = createAsyncThunk(
+  "auth/deleteSingleMatch",
+  async (values, { rejectWithValue }) => {
+    try {
+      const request = await axios.post(`api/delete_one`, {
+        username: values.username,
+        toDelete: values.toDelete,
+      });
+      return request;
+    } catch (error) {
+      console.log(error.response);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const getUser = createAsyncThunk(
   "auth/getUser",
   async (id, { rejectWithValue }) => {
     try {
       const token = await axios.get(`${url}/user/${id}`, setHeaders());
-
       localStorage.setItem("token", token.data);
-
       return token.data;
     } catch (error) {
       console.log(error.response);
