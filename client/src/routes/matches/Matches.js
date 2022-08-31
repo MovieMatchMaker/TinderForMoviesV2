@@ -44,7 +44,21 @@ function Matches() {
 		request.username = username;
 		dispatch(deleteAllMatches(request));
 	}
-	
+
+	const parseText = (text) => {
+		let max = 60;
+		if (text.length < 1){
+			return "No description provided :( "
+		}
+		let words = text.split(" ");
+
+		if (words.length < max) {
+			return text;
+		} else {
+			return words.slice(0, max).join(" ") + "...";
+		}
+	}
+
 	const mapMatches = matches.map((match, index) => {
 		return (
 			
@@ -74,7 +88,7 @@ function Matches() {
 						)}
 					</p>
 					<h2 className='text-title'>{match.title}</h2>
-					<p className='text-overview'>{match.overview}</p>
+					<p className='text-overview'>{ parseText(match.overview) }</p>
 				</div>
 			</div>
 		);
@@ -104,10 +118,9 @@ function Matches() {
 		);
 	};
 
-
 	useEffect(() => {
 		setMatches(storedMatches);
-	}, []);
+	}, [storedMatches]);
 
 	return (
 		<div>

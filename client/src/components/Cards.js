@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import axios from "axios";
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import TinderCard from "react-tinder-card";
@@ -68,13 +67,10 @@ export default function Cards() {
 
 	const renderCurrentMovie = async (id) => {
 		//document.getElementById("hidden").style.visibility = "hidden";
-
 		const token = localStorage.getItem("token");
 		if (token === null) {
 			navigate("/logout");
 		}
-
-		console.info("Rendering post-match movie.");
 
 		await axios
 			.post("/api/get_movie", {
@@ -94,6 +90,7 @@ export default function Cards() {
 			.catch((err) => {
 				console.error(err);
 			});
+
 	};
 
 
@@ -181,25 +178,7 @@ export default function Cards() {
 	// 	}
 	// }
 
-	const getMatchMovie = async () => {
-		console.info("Called get match movie on: ", db[db.length - 1].title);
-		const token = localStorage.getItem("token");
-		if (token === null) {
-			navigate("/logout");
-		}
-
-		await axios
-			.post("/api/match", {
-				token: token,
-			})
-			.then((response) => {
-
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	};
-
+	
 	const swipe = async (dir, index, isMatch) => {
 		setLastDirection(dir);
 		console.info("Last direction was: " + dir);
@@ -247,14 +226,18 @@ export default function Cards() {
 	};
 
 	const parseText = (text) => {
-		const sentences = text.split(".");
-		if (sentences.length >= 4) {
-			return (
-				sentences[0] + "." + sentences[1] + "." + sentences[2] + "..."
-			);
-		} else {
-			return text;
+		let max = 60;
+		if (text.length < 1){
+			return "No description provided :( "
 		}
+		let words = text.split(" ");
+
+		if (words.length < max) {
+			return text;
+		} else {
+			return words.slice(0, max).join(" ") + "...";
+		}
+		
 	};
 
 	useEffect(() => {
@@ -346,17 +329,17 @@ export default function Cards() {
 			<div className='buttons'>
 				<button
 					className='bn39'
-					onClick={() => swipe("left", currentIndex, false)}>
+					onClick={() => swipe("left", currentIndex, false) && !isActive ? toggleFront() : null}>
 					<span className='bn39span'>⬅️ Swipe Left</span>
 				</button>
 				<button
 					className='bn39'
-					onClick={() => swipe("right", currentIndex, true)}>
+					onClick={() => swipe("right", currentIndex, true) && !isActive ? toggleFront() : null}>
 					<span className='bn39span'>Match ⭐</span>
 				</button>
 				<button
 					className='bn39'
-					onClick={() => swipe("right", currentIndex, false)}>
+					onClick={() => swipe("right", currentIndex, false) && !isActive ? toggleFront() : null}>
 					<span className='bn39span'>Swipe Right ➡️</span>
 				</button>
 			</div>

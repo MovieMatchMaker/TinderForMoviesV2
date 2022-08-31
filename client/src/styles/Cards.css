@@ -229,10 +229,13 @@ h2 {
 }
 
 .flip-card {
+  background-color: transparent;
   width: 80vw;
   max-width: 400px;
   height: 600px;
-  perspective: 1000px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
 }
 
 .flip-card-inner {
@@ -276,7 +279,6 @@ h2 {
 }
 
 .back-overview {
-  padding-top: 20%;
   color: #874356;
   position: absolute;
   top: 50%;
