@@ -42,6 +42,17 @@ function Matches() {
 		e.preventDefault();
 		dispatch(deleteAllMatches(username));
 	}
+
+	const parseText = (text) => {
+		const sentences = text.split(".");
+		if (sentences.length >= 4) {
+			return (
+				sentences[0] + "." + sentences[1] + "." + sentences[2] + "..."
+			);
+		} else {
+			return text;
+		}
+	};
 	
 	const mapMatches = matches.map((match, index) => {
 		return (
@@ -72,7 +83,7 @@ function Matches() {
 						)}
 					</p>
 					<h2 className='text-title'>{match.title}</h2>
-					<p className='text-overview'>{match.overview}</p>
+					<p className='text-overview'>{parseText(match.overview)}</p>
 				</div>
 			</div>
 		);
