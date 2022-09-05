@@ -185,7 +185,7 @@ function close_login_token(login_token) {
 // console.log("first movie: ")
 // console.log(test_current_movie_1.title)
 
-// console.log("\nswiping right")
+// // console.log("\nswiping right")
 // var test_wrong_film = test_user.data.backup_queue[0]
 // var test_current_movie_2 = await swipe_right(test_token)
 

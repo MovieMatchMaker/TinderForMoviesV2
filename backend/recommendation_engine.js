@@ -1,6 +1,5 @@
 // Author: Danny Zahariev
-// Date Created: 7 June 2022
-// Date Modified: 8 June 2022
+
 
 import {get_popular, get_recommendations, get_watch_providers} from './moviedb_api_caller.js';
 
