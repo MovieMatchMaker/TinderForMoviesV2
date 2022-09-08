@@ -112,7 +112,7 @@ export default function Home() {
 					</div>
 				</Link>
 
-					<HomeCards />
+					{/* <HomeCards /> */}
 
 				</span>
 				<span id="welcome" class="z-depth-4">
