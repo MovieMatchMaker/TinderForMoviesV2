@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import TinderCard from "react-tinder-card";
 import "../styles/Cards.css";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,37 @@ import icon from "../utils/icon";
 import { useDispatch, useSelector } from "react-redux";
 import { addMatch, saveMatch, selectMatches } from "../slices/authSlice";
 // import { addMatch, selectMatches } from "../reducers/matchesReducer";
+import ReactCanvasConfetti from "react-canvas-confetti";
+// import confetti from "canvas-confetti"
+
+
+function randomInRange(min, max) {
+	return Math.random() * (max - min) + min;
+  }
+  
+  const canvasStyles = {
+	position: "fixed",
+	pointerEvents: "none",
+	width: "100%",
+	height: "100%",
+	top: 0,
+	left: 0
+  };
+  
+  function getAnimationSettings(originXA, originXB, setParticleCount) {
+	return {
+	  startVelocity: 30,
+	  spread: 360,
+	  ticks: 60,
+	  zIndex: 0,
+	  particleCount: setParticleCount,
+	  origin: {
+		x: randomInRange(originXA, originXB),
+		y: Math.random() - 0.2
+	  }
+	};
+  }
+
 
 export default function Cards() {
 
@@ -178,7 +209,43 @@ export default function Cards() {
 	// 	}
 	// }
 
-	
+	const refAnimationInstance = useRef(null);
+	const [intervalId, setIntervalId] = useState();
+  
+	const getInstance = useCallback((instance) => {
+	  refAnimationInstance.current = instance;
+	}, []);
+    
+	const startAnimation = useCallback(() => {
+	  if (!intervalId) {
+		var duration = 10 * 1000;		//animation lasts 10 seconds
+		var animationEnd = Date.now() + duration;
+		
+		var interval = setInterval(function() {
+			var timeLeft = animationEnd - Date.now();
+			if (timeLeft <= 0) {
+				return clearInterval(interval);
+			}
+			var particleCount = 50 * (timeLeft / duration);
+			refAnimationInstance.current(getAnimationSettings(0.1, 0.3, particleCount));
+			refAnimationInstance.current(getAnimationSettings(0.7, 0.9, particleCount));
+
+	  }, 250);
+	}});
+
+	//have this function just in case for testing
+	const stopAnimation = useCallback(() => {
+	  clearInterval(intervalId);
+	  setIntervalId(null);
+	  refAnimationInstance.current && refAnimationInstance.current.reset();
+	}, [intervalId]);
+  
+	useEffect(() => {
+	  return () => {
+		clearInterval(intervalId);
+	  };
+	}, [intervalId]);
+  
 	const swipe = async (dir, index, isMatch) => {
 		setLastDirection(dir);
 		console.info("Last direction was: " + dir);
@@ -187,6 +254,13 @@ export default function Cards() {
 			// Add to matches list
 			console.info(" New Match: \n", Array.from(db)[db.length - 1].title);
 			dispatch(addMatch(db[index]));
+
+			// start canvas confetti animation
+			startAnimation();
+
+			// here, we will also need to add a pop up (that should be of a same size as a card) that shows 'congrats' 
+			// message to the user, something like: "Congrats you've matched with the movie, you can watch it here"
+			
 			let curr = db[index];
 			// assign a var an object with the username and the movie object
 			let obj = {};
@@ -341,6 +415,7 @@ export default function Cards() {
 					onClick={() => swipe("right", currentIndex, true) && !isActive ? toggleFront() : null}>
 					Match ⭐
 				</button>
+				<ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
 				<button 
 					className="bn632-hover bn27"
 					onClick={() => swipe("right", currentIndex, false) && !isActive ? toggleFront() : null}>
