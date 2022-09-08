@@ -176,14 +176,13 @@ button {
   padding: 0px;
   /* border: 130em solid #b0dcfb; */
   position: absolute;
-  left: 50%;
-  top: 100%;
-  display: block;
   box-sizing: initial;
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   animation: puff 0.5s 1.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, borderRadius 0.2s 2.3s linear forwards;
+  width: 100vw;
 }
+
 
 .welcome #welcome {
   background: #f88181 ;
@@ -221,7 +220,6 @@ button {
   100% {
     top: 50%;
     height: 100%;
-    padding: 0px 100%;
   }
 }
 
