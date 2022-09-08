@@ -7,6 +7,7 @@ import { animations, AnimateOnChange, AnimateGroup } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllMatches, deleteSingleMatch, removeMatch } from "../../slices/authSlice";
+import Spinner from "../../components/Spinner";
 
 var options = {
 	weekday: "long",
@@ -21,6 +22,7 @@ function Matches() {
 	const storedMatches = useSelector(state => state.auth.matches);
 	const username = useSelector(state => state.auth.username);
 	const [isActive, setIsActive] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const handleClick = event => {
 		setIsActive(current => !current);
@@ -58,7 +60,7 @@ function Matches() {
 			return words.slice(0, max).join(" ") + "...";
 		}
 	}
-
+	
 	const mapMatches = matches.map((match, index) => {
 		return (
 			
@@ -89,10 +91,12 @@ function Matches() {
 					</p>
 					<h2 className='text-title'>{match.title}</h2>
 					<p className='text-overview'>{ parseText(match.overview) }</p>
+
 				</div>
 			</div>
 		);
 	});
+	
 
 	const noMatches = () => {
 		return (
@@ -128,7 +132,7 @@ function Matches() {
 			<br></br>
 			<br></br>
 			<br></br>
-			<h1>Your matches ({matches.length})</h1>
+			<h1>Your Matches ({matches.length})</h1>
 			<a><button className="bn632-hover bn28" onClick={deleteAll}>Delete All</button></a>
 			<div className='viewport'>
 				<ul className='list'>

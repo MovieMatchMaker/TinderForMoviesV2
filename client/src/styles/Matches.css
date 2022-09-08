@@ -222,11 +222,11 @@ h1 {
 
 .bn632-hover.bn28 {
   background-image: linear-gradient(
-    to right,
-    #eb3941,
-    #f15e64,
-    #e14e53,
-    #e2373f
+    to left,
+    rgb(153, 189, 241),
+    #f15e9b,
+    #fa7377,
+    #fe9297
   );
   box-shadow: 0 5px 15px rgba(242, 97, 103, 0.4);
 }

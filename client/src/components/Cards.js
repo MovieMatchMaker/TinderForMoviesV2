@@ -237,8 +237,7 @@ export default function Cards() {
 		} else {
 			return words.slice(0, max).join(" ") + "...";
 		}
-		
-	};
+	}
 
 	useEffect(() => {
 		renderCurrentMovie();
@@ -278,7 +277,7 @@ export default function Cards() {
 								<div
 									className='card flip-card-front'
 									style={{
-										backgroundImage: `url("https://image.tmdb.org/t/p/w500${movie.poster_path}")`,
+										backgroundImage: `url("https://image.tmdb.org/t/p/w500/${movie.poster_path}")`,
 									}}>
 									<div
 										className='back-img'
@@ -315,19 +314,9 @@ export default function Cards() {
 					</TinderCard>
 				))}
 			</div>
-			{/* <div
-				style={{
-					animation: animations.bounceIn,
-					animationDuration: "3.5s",
-				}}
-				id='welcome-text'>
-				<p id='hidden'>
-					You matched with a movie! You can watch it{" "}
-					<a href={`www.nyumat.tech/movies/`}>here!</a>
-				</p>
-			</div> */}
+			
 			<div className='buttons'>
-				<button
+				{/* <button
 					className='bn39'
 					onClick={() => swipe("left", currentIndex, false) && !isActive ? toggleFront() : null}>
 					<span className='bn39span'>⬅️ Swipe Left</span>
@@ -341,6 +330,21 @@ export default function Cards() {
 					className='bn39'
 					onClick={() => swipe("right", currentIndex, false) && !isActive ? toggleFront() : null}>
 					<span className='bn39span'>Swipe Right ➡️</span>
+				</button> */}
+				<button 
+					className="bn632-hover bn27"
+					onClick={() => swipe("left", currentIndex, false) && !isActive ? toggleFront() : null}>
+					⬅️ Swipe Left
+				</button>
+				<button 
+					className="bn632-hover bn27"
+					onClick={() => swipe("right", currentIndex, true) && !isActive ? toggleFront() : null}>
+					Match ⭐
+				</button>
+				<button 
+					className="bn632-hover bn27"
+					onClick={() => swipe("right", currentIndex, false) && !isActive ? toggleFront() : null}>
+					Swipe Right ➡️
 				</button>
 			</div>
 		</div>

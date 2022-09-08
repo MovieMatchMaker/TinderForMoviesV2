@@ -48,7 +48,7 @@ const Login = () => {
 
   useEffect(() => {
     setMessage("");
-    if (auth.loginStatus === "success") {
+    if (auth.loginStatus === "success" && auth.username) {
       setMessage(
         `Logged in! Welcome back! ${auth.username.replace(/(^\w|\s\w)/g, (m) =>
           m.toUpperCase()

@@ -1,0 +1,139 @@
+
+.mb {
+      color: #91a5e6;
+}
+
+.textcontainer {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+}
+
+.mb3 {
+      color: rgb(243, 148, 164);
+}
+.firstcardcontainer {
+      position: relative;
+      top: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: space-between;
+      margin-left: 150px;
+}
+
+.secondcardcontainer {
+      position: relative;
+      top: 1200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: space-between;
+      margin-left: 150px;
+
+}
+
+.cardd {
+      backface-visibility: visible;
+      background: transparent;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
+      transform-style: preserve-3d;
+      padding: 0;
+      height: 100%;
+      width: 18rem;
+      height: 25rem;
+      transition: all 0.2s ease-out;
+      letter-spacing: 1px;
+}
+
+.jaws .inner-card-backface .image {
+      background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSKiATr7rDz89_qv3MzZ2jRuIoFaHehdK_G2pZIVxoZVaCIhrfn");
+}
+
+.jaws .inner-card-backface .image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-radius: 14px;
+      height: 100%;
+      transform: rotateY(180deg);
+      background-size: auto 102%;
+      background-position: -2px -5px;
+}
+
+
+.inner-card-backface {
+      transform: rotateX(0) rotateY(0deg) scale(1) translateZ(-4px);
+      border-radius: 14px;
+      background: linear-gradient(45deg, #0b0b2a, #0b0b2a);
+      position: absolute;
+      top: 0;
+      color: white;
+      padding: 2rem;
+      box-sizing: border-box;
+      transition: all 0.15s ease-out;
+      will-change: transform, filter;
+      left: 0;
+      width: 100%;
+      height: 100%;
+}
+
+.cardd .inner-card {
+      font-size: 2rem;
+      color: white;
+      padding: 1rem 2rem;
+      line-height: 3rem;
+      will-change: transform, filter;
+      float: none;
+      background: black;
+      background-size: calc(100% + 6px) auto;
+      background-position: -3px -3px;
+      margin: 0;
+      transition: all 0.15s ease-out;
+      height: 100%;
+      border-radius: 14px;
+      box-sizing: border-box;
+      overflow: hidden;
+      display: block;
+      margin: 0px auto;
+      transform: rotateX(0deg) rotateY(0deg) scale(1);
+      top: 0;
+      height: 100%;
+      filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.3));
+      font-weight: 500;
+      perspective-origin: 0 0;
+      letter-spacing: 0;
+}
+
+.cardd.jaws .inner-card {
+      background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSKiATr7rDz89_qv3MzZ2jRuIoFaHehdK_G2pZIVxoZVaCIhrfn");
+}
+
+
+
+.avengers .inner-card-backface .image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-radius: 14px;
+      height: 100%;
+      transform: rotateY(180deg);
+      background-size: auto 102%;
+      background-position: -2px -5px;
+}
+
+
+.cardd.avengers .inner-card {
+      background-image: url("https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg");
+}
+
+.gaphome {
+      margin-top: 100px;
+      margin-bottom: 100px;
+}

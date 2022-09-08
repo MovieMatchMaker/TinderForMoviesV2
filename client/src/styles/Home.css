@@ -1,10 +1,11 @@
+
+
 #welcome-header {
-     position: absolute;
-     font-size: 8.5rem;
+     font-size: 4.5rem;
      font-weight: bold;
-     top: 0;
+     position: relative;
      font-family: Campton-Bold, sans-serif;
-     color: #874356;
+     color: #ffffff;
 }
 
 #logo {
@@ -12,7 +13,8 @@
      top: 5px;
      left: 30px;
      font-size: 2.3rem;
-     color: #874356;
+     color: #ffffff;
+     
 }
 
 #logo:hover h1 {
@@ -35,7 +37,8 @@
 }
 
 .ms {
-     color: rgba(0, 0, 0, 0.657);
+     color: #f88c8c;
+     text-shadow: "0px 0px 10px #000";
 }
 
 button {
@@ -50,22 +53,23 @@ button {
      position: relative;
      right: 30px;
      margin: 10px;
+     
 }
 
 #button-container {
+     display: inline-block;
      position: relative;
-     top: 160px;
-     height: 80px;
-     margin: 10px;
+     width: fit-content;
+     -ms-transform: translateY(-50%);
+     transform: translateY(-50%);
 }
 
 .bn29 {
-
      text-align: center;
      border: none;
      padding: 0.8em 2.5em;
      outline: none;
-     color: black;
+     color: white;
      font-style: normal;
      position: relative;
      z-index: 1;
@@ -88,7 +92,7 @@ button {
      content: "";
      z-index: -2;
      background-size: 400% 400%;
-     background: #F6E7D8;
+     background: #f5aeae;
 }
 
 .bn29:before {
@@ -101,7 +105,7 @@ button {
 }
 
 .bn29:after {
-     color: black;
+     color: rgb(61, 55, 55);
      -webkit-filter: blur(0.3px);
      filter: blur(0.3px);
 }
@@ -110,4 +114,178 @@ button {
      width: 115%;
      height: 115%;
 }
+
+
+
+
+.bn632-hover {
+  width: 290px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+
+  height: 85px;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.bn632-hover:hover {
+  background-position: 100% 0;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.bn632-hover:focus {
+  outline: none;
+}
+
+.bn632-hover.bn27 {
+  background-image: linear-gradient(
+    to right,
+    #F5AEAE,
+    #f88181,
+    #e9bdf7df,
+    #fb90ae
+  );
+  box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+
+
+
+.bn632-hover.bn27.home {
+     position: relative;
+     width: max-content;
+     padding-left: 70px;
+}
+
+.bn632-hover.bn27.effect {
+  
+}
+
+.welcome .splash {
+  height: 0px;
+  padding: 0px;
+  /* border: 130em solid #b0dcfb; */
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  display: block;
+  box-sizing: initial;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: puff 0.5s 1.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, borderRadius 0.2s 2.3s linear forwards;
+}
+
+.welcome #welcome {
+  background: #f88181 ;
+  width: 56px;
+  height: 56px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  animation: init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, fadeUpOut 1.5s 2.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+   
+
+@keyframes init {
+  0% {
+    width: 0px;
+    height: 0px;
+  }
+  100% {
+    width: 56px;
+    height: 56px;
+    margin-top: 0px;
+    opacity: 1;
+  }
+}
+
+@keyframes puff {
+  0% {
+    top: 100%;
+    height: 0px;
+    padding: 0px;
+  }
+  100% {
+    top: 50%;
+    height: 100%;
+    padding: 0px 100%;
+  }
+}
+
+@keyframes borderRadius {
+  0% {
+    border-radius: 50%;
+  }
+  100% {
+    border-radius: 0px;
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    top: 50%;
+  }
+  50% {
+    top: 40%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes moveUp {
+  0% {
+    background: #f88181;
+    top: 100%;
+  }
+  50% {
+    top: 40%;
+  }
+  100% {
+    top: 50%;
+    background: #f88181;
+  }
+}
+
+@keyframes fadeUpOut {
+  0% {
+    opacity: 1;
+    top: 50%;
+  }
+  100% {
+    opacity: 0;
+    top: 100%;
+  }
+}
+
+@keyframes moveIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+} 
 

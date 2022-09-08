@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../styles/Home.css";
+import NavigationBar from "../../components/NavigationBar";
+import HomeCards from "../../components/HomeCards";
+
 
 export default function Home() {
 	const emojis = ["🎥", "🍿", "🎬", "📽️", "🎞️", "📺", "⬅️", "🎦"];
@@ -27,12 +30,14 @@ export default function Home() {
 			setRandomEmoji(getRandomFrom(emojis));
 		}, 1300);
 		return () => clearInterval(interval);
+
+
 	});
 
 	if (isLoggedIn) {
 		return (
 			<div>
-				<br></br>
+				<br></br>	
 				<h1
 					style={{
 						animation: animations.fadeInUp,
@@ -44,31 +49,14 @@ export default function Home() {
 					atch<span className='ms'>M</span>aker
 				</h1>
 
-				<div
-					style={{
-						animation: animations.bounceIn,
-						animationDuration: "0.7s",
-					}}
-					id='welcome-text'>
-					Welcome Back!
-					<p></p>
-
-					<br></br>
-					<br></br>
-				</div>
-				<br></br>
-				<br></br>
-				<br></br>
-
+				
+				
 				<Link to='/swipe'>
 					<div
 						style={{ animation: animations.fadeInUp }}
 						id='button-container'>
-						{" "}
-						<button className='bn29'>
-							{" "}
+						<button className='bn632-hover bn27 home'>
 							<span className='text'>
-								{" "}
 								Start Swiping&nbsp;
 								<AnimateOnChange
 									animationIn='popIn'
@@ -79,11 +67,18 @@ export default function Home() {
 						</button>
 					</div>
 				</Link>
+				<NavigationBar />
 			</div>
 		);
 	} else {
 		return (
-			<div>
+			<div className="welcome" style={
+				{
+					height: "3000px",
+				}
+			}>
+				<span id="splash-overlay" class="splash">
+				
 				<h1
 					style={{ animation: animations.fadeInUp }}
 					id='welcome-header'>
@@ -92,28 +87,13 @@ export default function Home() {
 					atch<span className='ms'>M</span>aker
 				</h1>
 
-				<div
-					style={{
-						animation: animations.bounceIn,
-						animationDuration: "0.5s",
-					}}
-					id='welcome-text'>
-					<p>
-						Welcome to MovieMatchMaker! 
-						<br>
-						</br>
-						<br>
-						</br>
-						Signup or login to get started!
-					</p>
-				</div>
 
 				<Link to='/signup'>
 					<div
 						style={{ animation: animations.fadeInUp }}
 						id='button-container'>
 						{" "}
-						<button className='bn29'>
+						<button className='bn632-hover bn27 effect'>
 							{" "}
 							<span style={{ fontSize: "2.4rem" }}>Sign Up!</span>
 						</button>
@@ -125,12 +105,18 @@ export default function Home() {
 						style={{ animation: animations.fadeInUp }}
 						id='button-container'>
 						{" "}
-						<button className='bn29'>
+						<button className='bn632-hover bn27 effect'>
 							{" "}
 							<span style={{ fontSize: "2.4rem" }}>Login!</span>
 						</button>
 					</div>
 				</Link>
+
+					<HomeCards />
+
+				</span>
+				<span id="welcome" class="z-depth-4">
+				</span>
 			</div>
 		);
 	}

@@ -1,18 +1,18 @@
 #root {
+  padding-bottom: 60px;
   text-align: center;
   display: flex;
   justify-content: center;
   width: 100vw;
   min-height: 100vh;
+  max-height: max-content;
   overflow: hidden;
-  background:#f5aeae;
+  background: linear-gradient(180deg,rgb(192, 214, 245),#f88c8c);
   /* fallback for old browsers 
   Chrome 10-25, Safari 5.1-6
   background: linear-gradient(to right, #FF0080, #FF8C00, #40E0D0);
-  W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background-color: #f5aeae;
-
-
+  W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 #root>div {
@@ -52,12 +52,12 @@ h2 {
 }
 
 .cardContainer {
-  width: 80vw;
-  max-width: 400px;
+  width: 85vw;
+  max-width: 450px;
   height: 500px;
   padding: 120px;
+  padding-left: 140px;
 }
-
 
 
 .card {
@@ -96,7 +96,8 @@ h2 {
 }
 
 .buttons {
-  margin: 20px;
+  margin: -20px;
+  padding-bottom: 20px;
   display: flex;
 }
 
@@ -316,4 +317,46 @@ h2 {
 
 #hidden{
   visibility: inherit;
+}
+
+
+.bn632-hover {
+  width: 205px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px;
+  height: 85px;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.bn632-hover:hover {
+  background-position: 100% 0;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.bn632-hover:focus {
+  outline: none;
+}
+
+.bn632-hover.bn27 {
+  background-image: linear-gradient(
+    to right,
+    #F5AEAE,
+    #f88181,
+    #e9bdf7df,
+    #fb90ae
+  );
+  box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
 }

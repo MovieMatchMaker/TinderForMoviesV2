@@ -36,11 +36,11 @@ function TinderMovies() {
               <Routes>
                 <Route path="*" element={<><FourOhFour/><NavigatonBar/></>} />
                 {["/","","/home"].map((path) => (
-                  <Route key="Home" path={path} element={<><Home/><NavigatonBar/></>} />
+                  <Route key="Home" path={path} element={<><Home/></>} />
                 ))}
                 <Route path="/login" element={<><Login/><NavigatonBar/></>}/>
                 <Route path="/signup" element={<><Signup/><NavigatonBar/></>}/>
-                <Route path='/logout' element={<><Logout/><NavigatonBar/></>}/>
+                <Route path='/logout' element={<><Logout/></>}/>
                 <Route element={<PrivateRoutes/>}>
                   <Route path="/matches" element={<><Matches/><NavigatonBar/></>}/>
                   <Route path="/swipe" element={<><Swipe/></>}/>

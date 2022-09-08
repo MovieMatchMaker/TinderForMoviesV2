@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser, deleteAllMatches } from "../../slices/authSlice";
+import { logoutUser } from "../../slices/authSlice";
+import NavigationBar from "../../components/NavigationBar";
 
 function Logout() {
 
@@ -15,21 +16,18 @@ function Logout() {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
   useEffect(() => {
-
-    if (auth._id) {
-      // let obj = {}
-      // obj.username = auth.username;
-      // dispatch(deleteAllMatches(obj))
-      console.log("deleted all matches")
+    localStorage.removeItem("token");
+  
+    if (timeLeft && window.location.pathname !== "/logout") {
       dispatch(logoutUser(null));
-      console.log("logged out")
-      navigate("/");
-      localStorage.removeItem("token");
-    } 
+    }
+
     if (!timeLeft){
       dispatch(logoutUser(null));
-      navigate("/home");
+      window.location.reload();
+      navigate("/");
     } else if (!timeLeft&&window.location.pathname !== "/logout"){ 
+      dispatch(logoutUser(null));
       return;
     }
     
@@ -47,7 +45,12 @@ function Logout() {
       <br></br>
       <br></br>
       <Link to="/login">
-        <button className="bn29" style={{ "fontSize": "1.5rem" }}>
+        {/* <NavigationBar /> */}
+        <button 
+        className="bn29" 
+        style={{ "fontSize": "1.5rem" }}
+        onClick={() => dispatch(logoutUser(null))}
+        >
           Log Back In
         </button>
       </Link>
