@@ -233,7 +233,6 @@ export default function Cards() {
 	  }, 250);
 	}});
 
-	//have this function just in case for testing
 	const stopAnimation = useCallback(() => {
 	  clearInterval(intervalId);
 	  setIntervalId(null);
@@ -255,12 +254,12 @@ export default function Cards() {
 			console.info(" New Match: \n", Array.from(db)[db.length - 1].title);
 			dispatch(addMatch(db[index]));
 
+			// here, we will add a pop up that shows 'congrats' message to the user
+			handleConfirmationBox();
+
 			// start canvas confetti animation
 			startAnimation();
 
-			// here, we will also need to add a pop up (that should be of a same size as a card) that shows 'congrats' 
-			// message to the user, something like: "Congrats you've matched with the movie, you can watch it here"
-			
 			let curr = db[index];
 			// assign a var an object with the username and the movie object
 			let obj = {};
@@ -299,10 +298,27 @@ export default function Cards() {
 		}
 	};
 
+
+	const [isCongratsShown, setIsCongratsShown] = useState(false)
+	
+	const handleConfirmationBox = () => {
+		if (!isCongratsShown) {
+			document.querySelector(".congrats-bg").style.display = "flex"
+			document.querySelector(".congrats-container").style.display = "flex"
+			stopAnimation()				//stop confetti animation
+			setIsCongratsShown(true)
+		} else {
+			document.querySelector(".congrats-bg").style.display = "none"
+			document.querySelector(".congrats-container").style.display = "none"
+			stopAnimation()
+			setIsCongratsShown(false)
+		}
+	}
+
 	const parseText = (text) => {
 		let max = 60;
 		if (text.length < 1){
-			return "No description provided :( "
+			return "No description provided 😢"
 		}
 		let words = text.split(" ");
 
@@ -390,32 +406,36 @@ export default function Cards() {
 			</div>
 			
 			<div className='buttons'>
-				{/* <button
-					className='bn39'
-					onClick={() => swipe("left", currentIndex, false) && !isActive ? toggleFront() : null}>
-					<span className='bn39span'>⬅️ Swipe Left</span>
-				</button>
-				<button
-					className='bn39'
-					onClick={() => swipe("right", currentIndex, true) && !isActive ? toggleFront() : null}>
-					<span className='bn39span'>Match ⭐</span>
-				</button>
-				<button
-					className='bn39'
-					onClick={() => swipe("right", currentIndex, false) && !isActive ? toggleFront() : null}>
-					<span className='bn39span'>Swipe Right ➡️</span>
-				</button> */}
 				<button 
 					className="bn632-hover bn27"
 					onClick={() => swipe("left", currentIndex, false) && !isActive ? toggleFront() : null}>
 					⬅️ Swipe Left
 				</button>
+
 				<button 
 					className="bn632-hover bn27"
 					onClick={() => swipe("right", currentIndex, true) && !isActive ? toggleFront() : null}>
 					Match ⭐
 				</button>
-				<ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
+
+				<div 
+					className="congrats-bg" onClick={() => handleConfirmationBox()}>
+					<ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
+				</div>
+
+				<div className="congrats-container">
+					<div className="congrats-text">
+					Congrats you've matched with the movie and it has been added to your collection. You can also watch it here: 
+					</div>
+					<div className="ok-button-container">
+					<button 
+						className="bn632-hover bn27"
+						onClick={() => handleConfirmationBox()}>
+						OK
+					</button>
+					</div>
+				</div>
+
 				<button 
 					className="bn632-hover bn27"
 					onClick={() => swipe("right", currentIndex, false) && !isActive ? toggleFront() : null}>
