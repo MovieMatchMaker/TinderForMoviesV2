@@ -50,9 +50,9 @@ function Matches() {
 	const parseText = (text) => {
 		let max = 60;
 		if (text.length < 1){
-			return "No description provided :( "
+			return "No description provided 😢"
 		}
-		let words = text.split(" ");
+		let words = text.split(" ");				//should be doing max number of chars, not words
 
 		if (words.length < max) {
 			return text;

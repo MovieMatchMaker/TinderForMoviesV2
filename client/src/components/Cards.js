@@ -303,8 +303,11 @@ export default function Cards() {
 	
 	const handleConfirmationBox = () => {
 		if (!isCongratsShown) {
+			// document.querySelector(".congrats-bg").style.opacity = "0.55"
+			// document.querySelector(".congrats-bg").style.transition = "0.5s ease-in"
 			document.querySelector(".congrats-bg").style.display = "flex"
 			document.querySelector(".congrats-container").style.display = "flex"
+			
 			stopAnimation()				//stop confetti animation
 			setIsCongratsShown(true)
 		} else {
@@ -404,7 +407,28 @@ export default function Cards() {
 					</TinderCard>
 				))}
 			</div>
-			
+
+			<div 
+				className="congrats-bg" onClick={() => handleConfirmationBox()}>
+				<ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
+			</div>
+
+			<div className="congrats-container">
+				<div className="congrats">
+					<div className="congrats-text">
+					Congrats you've matched with the movie and it has been added to your <a href="http://localhost:3000/matches" target="_blank"> collection</a>.
+					You can also watch it here: <a href="https://nyumatflix.herokuapp.com/tvshows" target="_blank"> nyumatflix</a> 
+					</div>
+					<div className="ok-button-container">
+						<button 
+							className="bn632-hover bn27"
+							onClick={() => handleConfirmationBox()}>
+							OK
+						</button>
+					</div>
+				</div>
+			</div>
+
 			<div className='buttons'>
 				<button 
 					className="bn632-hover bn27"
@@ -417,24 +441,6 @@ export default function Cards() {
 					onClick={() => swipe("right", currentIndex, true) && !isActive ? toggleFront() : null}>
 					Match ⭐
 				</button>
-
-				<div 
-					className="congrats-bg" onClick={() => handleConfirmationBox()}>
-					<ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
-				</div>
-
-				<div className="congrats-container">
-					<div className="congrats-text">
-					Congrats you've matched with the movie and it has been added to your collection. You can also watch it here: 
-					</div>
-					<div className="ok-button-container">
-					<button 
-						className="bn632-hover bn27"
-						onClick={() => handleConfirmationBox()}>
-						OK
-					</button>
-					</div>
-				</div>
 
 				<button 
 					className="bn632-hover bn27"
