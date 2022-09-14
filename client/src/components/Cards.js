@@ -48,6 +48,7 @@ export default function Cards() {
 	const navigate = useNavigate();
 
 	const [db, setDb] = useState([]);
+	const id = useRef(0)
 	const [isActive, setActive] = useState(true);
 	const [currentIndex, setCurrentIndex] = useState(db.length);
 	const currentIndexRef = useRef(currentIndex);
@@ -253,6 +254,7 @@ export default function Cards() {
 			// Add to matches list
 			console.info(" New Match: \n", Array.from(db)[db.length - 1].title);
 			dispatch(addMatch(db[index]));
+			console.log("db[index]", db[index].id)
 
 			// here, we will add a pop up that shows 'congrats' message to the user
 			handleConfirmationBox();
@@ -268,7 +270,7 @@ export default function Cards() {
 			console.log(obj);
 			dispatch(saveMatch(obj));
 
-
+			id.value = db[index].id
 			// setTimeout(fun => {
 			// 	document.getElementById("hidden").style.visibility = "visible";
 			// },1000)
@@ -332,8 +334,14 @@ export default function Cards() {
 		}
 	}
 
+	const getLatestId = () => {
+		console.log(db)
+		return 1
+	}
+
 	useEffect(() => {
 		renderCurrentMovie();
+		document.body.style.overflow = "hidden";
 	}, []);
 
 	return  (
@@ -417,7 +425,7 @@ export default function Cards() {
 				<div className="congrats">
 					<div className="congrats-text">
 					Congrats you've matched with the movie and it has been added to your <a href="http://localhost:3000/matches" target="_blank"> collection</a>.
-					You can also watch it here: <a href="https://nyumatflix.herokuapp.com/tvshows" target="_blank"> nyumatflix</a> 
+					You can also watch it here: <a href={`https://nyumatflix.herokuapp.com/movies/${id.value}`} target="_blank"> nyumatflix</a> 
 					</div>
 					<div className="ok-button-container">
 						<button 

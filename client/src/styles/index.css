@@ -5,7 +5,6 @@ body, html {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: auto;
   height: auto; /* or delete this line entirely */
     min-height: 100%;
   -webkit-background-size: cover;
