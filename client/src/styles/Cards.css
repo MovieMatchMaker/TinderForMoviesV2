@@ -99,6 +99,8 @@ h2 {
   margin: -20px;
   padding-bottom: 20px;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bn39 {
@@ -375,9 +377,13 @@ h2 {
 }
 
 .congrats-container {
-  position: fixed;
+  /* position: fixed;
   top: 0;
-  left: 0;
+  left: 0; */
+
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
 
   display: none;
   justify-content: center;
@@ -385,9 +391,9 @@ h2 {
 
   /* width: 40rem;
   height: 40rem; */
-
-  width: 100%;
-  height: 100%;
+  top: 35%;
+  width: 40rem;
+  height: 17rem;
 
   /* --m-background is set as inline style */
   background: var(--m-background);

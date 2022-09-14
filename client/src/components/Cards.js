@@ -428,7 +428,7 @@ export default function Cards() {
 					</div>
 				</div>
 			</div>
-
+			
 			<div className='buttons'>
 				<button 
 					className="bn632-hover bn27"
