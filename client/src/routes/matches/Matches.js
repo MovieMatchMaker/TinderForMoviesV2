@@ -10,7 +10,6 @@ import { deleteAllMatches, deleteSingleMatch, removeMatch } from "../../slices/a
 import Spinner from "../../components/Spinner";
 
 var options = {
-	weekday: "long",
 	year: "numeric",
 	month: "long",
 	day: "numeric",
@@ -83,7 +82,7 @@ function Matches() {
 				<div className='overlay'>
 					<a href="#" onClick={(e) => handleRemoveItem(e, index)} className="match-delete">
 						</a>
-					<p className='text-release'>
+					<p className='text-release'> Release date: &nbsp;
 						{new Date(match.release_date).toLocaleDateString(
 							"en-US",
 							options

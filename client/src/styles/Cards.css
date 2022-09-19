@@ -52,15 +52,17 @@ h2 {
 }
 
 .cardContainer {
-  width: 85vw;
-  max-width: 450px;
+  justify-content: center;
+  /* width: 85vw; */
+  /* max-width: 455px; */
   height: 500px;
-  padding: 120px;
-  padding-left: 140px;
+  padding: 140px;
+  /* padding-left: 140px; */
 }
 
 
 .card {
+  justify-content: center;
   position: relative;
   background-color: transparent;
   width: 80vw;
@@ -281,6 +283,11 @@ h2 {
   font-size: 2.0vw;
 }
 
+.back-overview-wrapper{
+  word-wrap: break-word;
+  height: 30px;
+}
+
 .back-overview {
   color: #874356;
   position: absolute;
@@ -412,8 +419,8 @@ h2 {
   border-radius: .8rem;
 
   color: rgb(255, 255, 255);
-  background: radial-gradient(100% 100% at 100% 0, #5adaff 0, #8e9bff 100%);
-  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #7584fb 0 -3px 0 inset;
+  background: radial-gradient(100% 100% at 100% 0, #5adaff 0, #f68bd2 100%);
+  box-shadow: rgb(127 95 194 / 40%) 0 4px 8px, rgb(168 128 255 / 30%) 0 7px 13px -3px, #d98ef5 0 -3px 0 inset;
   position: relative;
 
   overflow: hidden;
@@ -436,3 +443,8 @@ h2 {
   margin-bottom: 0rem;
   text-align: center;
 }
+
+a:link {color: rgb(76, 64, 246);}  
+   a:visited {color: rgb(76, 64, 246);} 
+   a:hover {color: #FCFC0C}  
+   a:active {color: #C0F0FC}  
