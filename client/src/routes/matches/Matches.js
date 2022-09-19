@@ -105,7 +105,7 @@ function Matches() {
 					animation: animations.popIn,
 					animationDuration: "0.7s",
 				}}>
-				<h1>No matches found!</h1>
+				<h1>No matches found 😢</h1>
 				<br></br>
 				<h1>
 					{" "}
@@ -113,8 +113,8 @@ function Matches() {
 					<span
 						id='no-matches-here'
 						onClick={() => (window.location.href = "/swipe")}>
-						here,
-					</span>{" "}
+						here
+					</span>{" "} in order
 					to get your first matches!
 				</h1>
 			</div>
@@ -125,21 +125,39 @@ function Matches() {
 		setMatches(storedMatches);
 	}, [storedMatches]);
 
+	const ShowNumOfMatches = () => (
+		<h1>Your Matches ({matches.length})</h1>
+	)
+
+	const ShowDeleteButton = () => (
+		<a><button className="bn632-hover bn28" onClick={deleteAll}>Delete All</button></a>
+	)
+
+	const ListCollection = () => (
+		<div className='viewport'>
+			<ul className='list'>
+				<AnimateGroup animation="fadeout" className="match-row">
+					{mapMatches}
+				</AnimateGroup>
+			</ul>
+		</div>
+	)
+
+	const NoMatches = () => (
+		<AnimateGroup animation="fadeout" className="match-row">
+			{noMatches()}
+		</AnimateGroup>
+	)
+
 	return (
 		<div>
 			<br></br>
 			<br></br>
 			<br></br>
 			<br></br>
-			<h1>Your Matches ({matches.length})</h1>
-			<a><button className="bn632-hover bn28" onClick={deleteAll}>Delete All</button></a>
-			<div className='viewport'>
-				<ul className='list'>
-					<AnimateGroup animation="fadeout" className="match-row">
-						{matches.length > 0 ? mapMatches : noMatches()}
-					</AnimateGroup>
-				</ul>
-			</div>
+			{matches.length > 0 ? ShowNumOfMatches() : null}		{/* show "your matches" */}
+			{matches.length > 0 ? ShowDeleteButton() : null}		{/* show "delete all" */}
+			{matches.length > 0 ? ListCollection() : NoMatches()}	{/* show list or 404 */}
 		</div>
 	);
 }

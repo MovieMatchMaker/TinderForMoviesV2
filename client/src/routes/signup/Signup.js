@@ -122,7 +122,7 @@ export default function Signup() {
                       ></input>
                       <i className="input-icon uil uil-lock-alt"></i>
                     </div>
-                    <a onClick={handleSignup} href="#" className="btn mt-4">
+                    <a id='submit-a-text' onClick={handleSignup} href="#" className="btn mt-4">
                       submit
                     </a>
                   </form>

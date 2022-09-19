@@ -321,22 +321,21 @@ export default function Cards() {
 	}
 
 	const parseText = (text) => {
-		let max = 60;
 		if (text.length < 1){
 			return "No description provided 😢"
 		}
-		let words = text.split(" ");
 
-		if (words.length < max) {
-			return text;
-		} else {
-			return words.slice(0, max).join(" ") + "...";
+		const max = 250;
+		if (text.length <= max) { 
+			return text; 				//if string is less than 400 chars
 		}
-	}
-
-	const getLatestId = () => {
-		console.log(db)
-		return 1
+		let subString = text.slice(0, max-1); // the original check
+		subString.slice(0, subString.lastIndexOf(" "));
+		if (subString[subString.length-1] === ","){
+			subString[subString.length-1] = ""
+		}
+		
+		return subString + "...";
 	}
 
 	useEffect(() => {
@@ -403,12 +402,17 @@ export default function Cards() {
 											}}
 										/>
 									</div>
-									<h1 className='back-title'>
-										{movie.title}
-									</h1>
-									<h1 className='back-overview'>
-										{parseText(movie.overview)}
-									</h1>
+									<div>
+										<h1 className='back-title'>
+											{movie.title}
+										</h1>
+									</div>
+
+									<div className='back-overview-wrapper'>
+										<h1 className='back-overview'>
+											{parseText(movie.overview)}
+										</h1>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -424,8 +428,8 @@ export default function Cards() {
 			<div className="congrats-container">
 				<div className="congrats">
 					<div className="congrats-text">
-					Congrats you've matched with the movie and it has been added to your <a href="http://localhost:3000/matches" target="_blank"> collection</a>.
-					You can also watch it here: <a href={`https://nyumatflix.herokuapp.com/movies/${id.value}`} target="_blank"> nyumatflix</a> 
+					Congrats, you've matched with the movie! It's been added to your <a className= "matches-hyperlink" href="http://localhost:3000/matches" target="_blank"> collection</a> and
+					you can also watch it here: <a className= "matches-hyperlink" href={`https://nyumatflix.herokuapp.com/movies/${id.value}`} target="_blank"> nyumatflix</a>. 
 					</div>
 					<div className="ok-button-container">
 						<button 

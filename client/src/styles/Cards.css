@@ -444,7 +444,14 @@ h2 {
   text-align: center;
 }
 
-a:link {color: rgb(76, 64, 246);}  
-   a:visited {color: rgb(76, 64, 246);} 
-   a:hover {color: #FCFC0C}  
-   a:active {color: #C0F0FC}  
+.matches-hyperlink:link {color: rgb(76, 64, 246);}
+.matches-hyperlink:visited {color: rgb(76, 64, 246);}
+.matches-hyperlink:hover {color: #FCFC0C}  
+
+/* .matches-hyperlink:link color: rgb(76, 64, 246); */
+
+/*   
+  a:visited {color: rgb(76, 64, 246);} 
+  a:hover {color: #FCFC0C}  
+  a:active {color: #C0F0FC}
+} */
