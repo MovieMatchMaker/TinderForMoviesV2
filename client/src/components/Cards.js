@@ -7,12 +7,16 @@ import { animations } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import Nav from "./NavigationBar";
 import icon from "../utils/icon";
-// import Spinner from './Spinner';
 import { useDispatch, useSelector } from "react-redux";
-import { addMatch, saveMatch, selectMatches } from "../slices/authSlice";
-// import { addMatch, selectMatches } from "../reducers/matchesReducer";
+import { addMatch, addSeen, saveMatch, selectMatches, setNewSeenMovie, initLogin} from "../slices/authSlice";
 import ReactCanvasConfetti from "react-canvas-confetti";
-// import confetti from "canvas-confetti"
+
+
+import { Steps } from 'intro.js-react';
+import 'intro.js/introjs.css';
+import introJs from 'intro.js';
+
+var intro = introJs();
 
 
 function randomInRange(min, max) {
@@ -59,6 +63,8 @@ export default function Cards() {
 
 	const dispatch = useDispatch();
 	const username = useSelector((state) => state.auth.username);
+	const initLoginState = useSelector((state) => state.auth.initLogin);
+	
 
 	const childRefs = useMemo(() => {
 		const refs = [];
@@ -126,7 +132,7 @@ export default function Cards() {
 	};
 
 
-	const serveNextMovie = async (id, direction) => {
+	const serveNextMovie = async (id, direction, username) => {
 		const token = localStorage.getItem("token");
 		if (token === null) {
 			navigate("/logout");
@@ -136,8 +142,10 @@ export default function Cards() {
 
 		if (direction === "right") {
 			await axios
-				.post("/api/get_movie", {
-					id: id,
+				.post("/api/swipe_right", {
+					username: username,
+					id: db[db.length - 1].id,
+					genres: db[db.length - 1].genre_ids,
 				})
 				.then((response) => {
 					const copy = [...db];
@@ -149,8 +157,9 @@ export default function Cards() {
 				});
 		} else {
 			await axios
-				.post("/api/get_movie", {
-					id: id,
+				.post("/api/swipe_left", {
+					username: username,
+					id: db[db.length - 1].id,
 				})
 				.then((response) => {
 					const copy = [...db];
@@ -172,15 +181,22 @@ export default function Cards() {
 		setLastDirection(direction);
 		//console.info("Last direction was: " + lastDirection);
 
+		let request = {};
+		request.id = db[index].id
+		request.username = username;
+
+		dispatch(addSeen(request));	
+
+
 		if (direction === "left" ) {
 			// show a new set of movies
-			await serveNextMovie(db[db.length - 1].id, direction).catch((err) => {
+			await serveNextMovie(db[db.length - 1].id, direction, username).catch((err) => {
 				console.error(err);
 			});
 			updateCurrentIndex(index + 1);
 		} else if (direction === "right") {
 			// keep the same set of movies / reccomend more
-			await serveNextMovie(db[db.length - 1].id, direction).catch((err) => {
+			await serveNextMovie(db[db.length - 1].id, direction, username).catch((err) => {
 				console.error(err);
 			});
 			updateCurrentIndex(index + 1);
@@ -190,6 +206,10 @@ export default function Cards() {
 			// Swiped up or down, (could just prevent this and delete the clause)
 			console.info("Swiped up or down");
 		}
+
+		dispatch(setNewSeenMovie(db[index].id));
+
+		
 	};
 
 	const outOfFrame = (title) => {
@@ -250,6 +270,8 @@ export default function Cards() {
 		setLastDirection(dir);
 		console.info("Last direction was: " + dir);
 
+			
+
 		if (isMatch) {
 			// Add to matches list
 			console.info(" New Match: \n", Array.from(db)[db.length - 1].title);
@@ -271,13 +293,6 @@ export default function Cards() {
 			dispatch(saveMatch(obj));
 
 			id.value = db[index].id
-			// setTimeout(fun => {
-			// 	document.getElementById("hidden").style.visibility = "visible";
-			// },1000)
-
-			// await getMatchMovie().catch((err) => {
-			// 	console.error(err);
-			// });
 
 			updateCurrentIndex(index + 1);
 
@@ -289,15 +304,27 @@ export default function Cards() {
 		}
 
 		if (dir === "left") {
-			// show a new set of movies
+			childRefs[currentIndex].current.swipe(dir)
+			await serveNextMovie(db[db.length - 1].id, dir, username).catch((err) => {
+				console.error(err);
+			});
+			updateCurrentIndex(index + 1);
+			
 		} else if (dir === "right") {
-			// keep the same set of movies / reccomend more
-		} else if (dir === "right" && isMatch) {
-			// add to matches list, show more movies like matched movie
-			// TODO: make the ui change in some way
+			childRefs[currentIndex].current.swipe(dir)
+			await serveNextMovie(db[db.length - 1].id, dir, username).catch((err) => {
+				console.error(err);
+			});
+			updateCurrentIndex(index + 1);
 		} else {
-			// Swiped up or down, (could just prevent this and delete the clause)
+			childRefs[currentIndex].current.swipe(dir)
+			await serveNextMovie(db[db.length - 1].id, dir, username).catch((err) => {
+				console.error(err);
+			}
+			);
+			updateCurrentIndex(index + 1);
 		}
+		
 	};
 
 
@@ -341,7 +368,60 @@ export default function Cards() {
 	useEffect(() => {
 		renderCurrentMovie();
 		document.body.style.overflow = "hidden";
-	}, []);
+
+		if (initLoginState) {
+			setTimeout(() => {
+					intro.setOptions({
+						steps: [
+							{
+								element: '#movie-card',
+								intro: 'This is the movie card. The image being shown is the movie\'s poster.',
+								position: 'right',
+							},
+							{
+								element: '#info-button',
+								intro: 'You can use this button to read an overview of the movie.',
+								position: 'right',
+							},
+							{
+								element: '#swipe-left-button', 
+								intro: 'Swipe left to dislike a movie. \nThis will show you a different set of movies.',
+								position: 'right'
+							},
+							{
+								element: '#swipe-right-button', 
+								intro: 'Swipe right to like a movie. \nThis will show you similar, relevant movies.',
+								position: 'right'
+							},
+							{
+								element: '#match-button', 
+								intro: 'Click this button to match with a movie. \n This stores the movie in your matches collection.',
+								position: 'right'
+							}
+						],
+						showStepNumbers: false,
+						showBullets: false,
+						exitOnOverlayClick: true,
+						exitOnEsc: true,
+						nextLabel: 'Next',
+						prevLabel: 'Back',
+					});
+					intro.start();
+	
+					intro.oncomplete && intro.onbeforeexit(() => {
+						window.scrollTo(0, 0);
+					});
+	
+					
+				}, 1000);
+			}
+
+			let obj = {}
+			obj.username = username
+			dispatch(initLogin(obj));
+
+		
+		}, []);
 
 	return  (
 		<div>
@@ -375,7 +455,7 @@ export default function Cards() {
 										: "flip-card-inner spin"
 								}>
 								<div
-									className='card flip-card-front'
+									className='card flip-card-front' id="movie-card"
 									style={{
 										backgroundImage: `url("https://image.tmdb.org/t/p/w500/${movie.poster_path}")`,
 									}}>
@@ -388,6 +468,7 @@ export default function Cards() {
 											ref={iconRef}
 											src={icon}
 											alt='icon'
+											id="info-button"
 										/>
 									</div>
 									<h3>{movie.title}</h3>
@@ -443,18 +524,21 @@ export default function Cards() {
 			
 			<div className='buttons'>
 				<button 
+					id="swipe-left-button"
 					className="bn632-hover bn27"
 					onClick={() => swipe("left", currentIndex, false) && !isActive ? toggleFront() : null}>
 					⬅️ Swipe Left
 				</button>
 
 				<button 
+					id="match-button"
 					className="bn632-hover bn27"
 					onClick={() => swipe("right", currentIndex, true) && !isActive ? toggleFront() : null}>
 					Match ⭐
 				</button>
 
 				<button 
+					id="swipe-right-button"
 					className="bn632-hover bn27"
 					onClick={() => swipe("right", currentIndex, false) && !isActive ? toggleFront() : null}>
 					Swipe Right ➡️

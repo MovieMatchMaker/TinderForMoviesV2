@@ -13,6 +13,8 @@ const userSchema = new mongoose.Schema({
 		unique: true,
 	},
 	password: { type: String, required: true, minlength: 3, maxlength: 1024 },
+	seen: [],
+	initLogin: { type: Boolean, default: true },
 });
 
 const User = mongoose.model("User", userSchema);

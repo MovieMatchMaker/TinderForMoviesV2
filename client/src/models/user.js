@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
             minlength: 3,
             maxlength: 1024
       },
+      seen: []
 });
 
 const User = mongoose.model("User", userSchema);

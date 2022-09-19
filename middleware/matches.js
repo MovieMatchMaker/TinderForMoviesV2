@@ -7,7 +7,7 @@ const router = Router();
 router.post("/", async (req, res) => {
       let username = req.body.username;
       console.log(" Req.body: \n", req.body);
-       try {
+      try {
             let user = await User.findOne({ username: username }).exec();
             res.send(user.matches);
       } catch (error) {

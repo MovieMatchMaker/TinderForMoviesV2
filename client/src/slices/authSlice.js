@@ -6,6 +6,8 @@ import { url, setHeaders } from "./api";
 const initialState = {
   token: localStorage.getItem("token"),
   matches: [],
+  seen: [],
+  initLogin: true,
   username: "",
   _id: "",
   registerStatus: "",
@@ -14,6 +16,70 @@ const initialState = {
   loginError: "",
   userLoaded: false,
 };
+
+export const swipeLeft = createAsyncThunk(
+  "auth/swipeLeft",
+  async (values, {rejectWithValue}) => {
+    try {
+      const nextMovie = await axios.post(`api/swipe_left`, {
+        username: values.username,
+        movie_id: values.movie_id
+      });
+      return nextMovie.data;
+    }
+    catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const swipeRight = createAsyncThunk(
+  "auth/swipeRight",
+  async (values, {rejectWithValue}) => {
+    try {
+      const nextMovie = await axios.post(`api/swipe_right`, {
+        username: values.username,
+        movie_id: values.movie_id
+      });
+      return nextMovie.data;
+    }
+    catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const addSeen = createAsyncThunk(
+  "auth/addSeenMovie",
+  async (values, {rejectWithValue}) => {
+    try {
+      const nextMovie = await axios.post(`api/add_seen_movie`, {
+        username: values.username,
+        movie_id: values.id
+      });
+      return nextMovie;
+    }
+    catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const initLogin = createAsyncThunk(
+  "auth/initLogin",
+  async (values, {rejectWithValue}) => {
+    try {
+      const initLogin = await axios.post(`api/init_login`, {
+        username: values.username,
+      });
+      console.log(initLogin);
+      return initLogin.data.initLogin;
+    }
+    catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
@@ -133,6 +199,17 @@ const authSlice = createSlice({
   initialState,
   reducers: {
 
+    setNewSeenMovie: (state, action) => {
+      let newSeen = action.payload;
+      const oldSeen = state.seen;
+      let newSeenArray = [...oldSeen, newSeen];
+      state.seen = newSeenArray;
+    },
+
+    deleteAllSeenMovies: (state, action) => {
+      state.seen =  [];
+    },
+
     removeMatch (state, action) {
       const matches = state.matches.filter((match) => match.id !== action.payload);
       state.matches = matches;
@@ -164,9 +241,11 @@ const authSlice = createSlice({
           ...state,
           token,
           matches: user.matches,
+          seen: user.seen,
           username: user.username,
           _id: user._id,
           userLoaded: true,
+          initLogin: true,
         };
       } else return { ...state, userLoaded: true };
     },
@@ -177,6 +256,7 @@ const authSlice = createSlice({
         ...state,
         token: "",
         matches: [],
+        seen: [],
         username: "",
         _id: "",
         registerStatus: "",
@@ -187,6 +267,23 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+
+    builder.addCase(addSeen.fulfilled, (state, action) => {
+      return {...state, seen: action.payload}
+    });
+
+    builder.addCase(addSeen.rejected, (state, action) => {
+      return { ...state, seen: "error" };
+    });
+
+    builder.addCase(addSeen.pending, (state, action) => {
+      return { ...state};
+    });
+
+    builder.addCase(initLogin.fulfilled, (state, action) => {
+      return {...state, initLogin: action.payload};
+    });
+
     builder.addCase(getUserMatches.pending , (state, action) => {
       return { ...state, userLoaded: "pending" };
     });
@@ -203,8 +300,7 @@ const authSlice = createSlice({
       return { ...state, userLoaded: "pending save match" };
     } );
     builder.addCase(saveMatch.fulfilled , (state, action) => {
-
-      return state;
+        return { ...state, userLoaded: "fulfilled save match" }
     } );
 
     builder.addCase(saveMatch.rejected , (state, action) => {
@@ -234,10 +330,12 @@ const authSlice = createSlice({
         return {
           ...state,
           token: action.payload,
+          seen: [],
           matches: user.matches,
           username: user.username,
           _id: user._id,
           registerStatus: "success",
+          initLogin: true,
         };
       } else return state;
     });
@@ -258,6 +356,7 @@ const authSlice = createSlice({
         return {
           ...state,
           token: action.payload,
+          seen: user.seen,
           matches: user.matches,
           username: user.username,
           _id: user._id,
@@ -286,6 +385,7 @@ const authSlice = createSlice({
           ...state,
           token: action.payload,
           matches: user.matches,
+          seen: user.seen,
           username: user.username,
           _id: user._id,
           getUserStatus: "success",
@@ -302,8 +402,12 @@ const authSlice = createSlice({
   },
 });
 
-export const { loadUser, logoutUser, addMatch, removeAllMatches, saveMatchesInDatabase , removeMatch} = authSlice.actions;
+export const { loadUser, logoutUser, addMatch, removeAllMatches, saveMatchesInDatabase , removeMatch, setNewSeenMovie, deleteAllSeenMovies} = authSlice.actions;
 
 export const selectMatches = state => state.auth.matches;
+
+export const selectSeen = state => state.auth.seen;
+
+export const selectInitLogin = state => state.auth.initLogin;
 
 export default authSlice.reducer;

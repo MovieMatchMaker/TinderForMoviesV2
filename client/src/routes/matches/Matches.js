@@ -6,8 +6,9 @@ import "../../styles/loading.css";
 import { animations, AnimateOnChange, AnimateGroup } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAllMatches, deleteSingleMatch, removeMatch } from "../../slices/authSlice";
+import { deleteAllMatches, deleteSingleMatch, removeMatch, deleteAllSeenMovies } from "../../slices/authSlice";
 import Spinner from "../../components/Spinner";
+
 
 var options = {
 	year: "numeric",
@@ -78,9 +79,8 @@ function Matches() {
 					src={`https://image.tmdb.org/t/p/w500${match.poster_path}`}
 					alt=''
 				/>
-				
 				<div className='overlay'>
-					<a href="#" onClick={(e) => handleRemoveItem(e, index)} className="match-delete">
+					<a href="#" id="deletesingle" onClick={(e) => handleRemoveItem(e, index)} className="match-delete">
 						</a>
 					<p className='text-release'> Release date: &nbsp;
 						{new Date(match.release_date).toLocaleDateString(

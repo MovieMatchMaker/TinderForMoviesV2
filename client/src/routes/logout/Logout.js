@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../slices/authSlice";
+import { logoutUser, deleteAllSeenMovies } from "../../slices/authSlice";
 import NavigationBar from "../../components/NavigationBar";
 
 function Logout() {
@@ -17,6 +17,7 @@ function Logout() {
 
   useEffect(() => {
     localStorage.removeItem("token");
+    //dispatch(deleteAllSeenMovies());
   
     if (timeLeft && window.location.pathname !== "/logout") {
       dispatch(logoutUser(null));
