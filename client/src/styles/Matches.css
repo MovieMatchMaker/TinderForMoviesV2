@@ -21,8 +21,8 @@ h1 {
 
 .list {
   list-style: none;
-  /* border: 1px solid whitesmoke; */
-  /* background-color: #90576777; */
+  border: 1px solid whitesmoke; 
+  background-color: #90576777; 
   padding: 20px;
   border-radius: 12px;
 }

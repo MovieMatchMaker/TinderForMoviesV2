@@ -1,11 +1,15 @@
 import { animations, AnimateOnChange } from "react-animation";
 import "react-animation/dist/keyframes.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo} from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../styles/Home.css";
 import NavigationBar from "../../components/NavigationBar";
 import HomeCards from "../../components/HomeCards";
+import {Fade, Zoom} from 'react-reveal';
+import { useInView } from "react-cool-inview";
+import { InView } from "react-cool-inview";
+
 
 
 export default function Home() {
@@ -13,6 +17,16 @@ export default function Home() {
 	const getRandomFrom = (array) =>
 		array[Math.floor(Math.random() * array.length)];
 	const [randomEmoji, setRandomEmoji] = useState(getRandomFrom(emojis));
+
+	const { observe, inView } = useInView({
+	// Stop observe when the target enters the viewport, so the "inView" only triggered once
+	unobserveOnEnter: true,
+	// Shrink the root margin, so the animation will be triggered once the target reach a fixed amount of visible
+	rootMargin: "-100px 0px",
+	});
+
+	
+
 
 	const checkIfLoggedIn = () => {
 		if (localStorage.getItem("token")) {
@@ -24,13 +38,15 @@ export default function Home() {
 
 	const isLoggedIn = checkIfLoggedIn();
 
+
 	useEffect(() => {
+		
+
 		// Every five seconds change the emoji
 		const interval = setInterval(() => {
 			setRandomEmoji(getRandomFrom(emojis));
 		}, 1300);
 		return () => clearInterval(interval);
-
 
 	});
 
@@ -48,8 +64,6 @@ export default function Home() {
 					<span className='ms'>M</span>
 					atch<span className='ms'>M</span>aker
 				</h1>
-
-				
 				
 				<Link to='/swipe'>
 					<div
@@ -72,11 +86,10 @@ export default function Home() {
 		);
 	} else {
 		return (
-			<div className="welcome" style={
-				{
-					height: "3000px",
-				}
-			}>
+	
+			<div className="welcome">
+
+		
 				<span id="splash-overlay" class="splash">
 				
 				<h1
@@ -88,6 +101,34 @@ export default function Home() {
 				</h1>
 
 
+				<div className="intro-text-wrapper">
+					
+
+					<ul className="text-list">
+						<h1 className="top-text" ref={observe}>
+							{inView &&  <Fade bottom>FIND YOUR MATCH</Fade>}
+						</h1>
+
+						<h1 className="mid-text" ref={observe}>
+							{inView &&  <Fade bottom>MovieMatchMaker is a quick and simple way to find a movie. Inspired by the Tinder interface, the system allows you to field potential movie matches, being suggested more and more relevant movies as you go. </Fade>}
+						</h1>
+
+						<h1 className="base-text" ref={observe}>
+							{inView &&  <Fade bottom>Swiping right on a movie tells us that you would like to see similar films. Swiping left tells us you aren`t interested. 
+						</Fade>}
+						</h1>
+
+						<h1 className="bottom-text" ref={observe}>
+							{inView &&  <Fade bottom>Sign up, get swiping, and find your match today.</Fade>}
+						</h1>
+					</ul>
+				
+
+
+				</div>
+				
+
+
 				<Link to='/signup'>
 					<div
 						style={{ animation: animations.fadeInUp }}
@@ -95,7 +136,7 @@ export default function Home() {
 						{" "}
 						<button className='bn632-hover bn27 effect'>
 							{" "}
-							<span style={{ fontSize: "2.4rem" }}>Sign Up!</span>
+							<span style={{ fontSize: "2.4rem" }}>Sign Up</span>
 						</button>
 					</div>
 				</Link>
@@ -107,7 +148,7 @@ export default function Home() {
 						{" "}
 						<button className='bn632-hover bn27 effect'>
 							{" "}
-							<span style={{ fontSize: "2.4rem" }}>Login!</span>
+							<span style={{ fontSize: "2.4rem" }}>Login</span>
 						</button>
 					</div>
 				</Link>
@@ -120,4 +161,7 @@ export default function Home() {
 			</div>
 		);
 	}
+
+
 }
+

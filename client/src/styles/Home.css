@@ -115,7 +115,32 @@ button {
      height: 115%;
 }
 
+.top-text {
+  font-size: 2.0rem;
+margin-left: 80px;
+  margin-right: 80px;
+}
 
+.bottom-text {
+  margin-left: 80px;
+  margin-right: 80px;
+}
+.mid-text {
+  margin-left: 280px;
+  margin-right: 280px;
+}
+.base-text {
+  margin-left: 300px;
+  margin-right: 300px;
+}
+
+.intro-text-wrapper {
+    
+}
+
+.text-list {
+
+}
 
 
 .bn632-hover {
@@ -172,6 +197,7 @@ button {
 }
 
 .welcome .splash {
+  overflow: auto;
   height: 0px;
   padding: 0px;
   /* border: 130em solid #b0dcfb; */

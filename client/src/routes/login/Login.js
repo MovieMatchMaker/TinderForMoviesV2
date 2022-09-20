@@ -44,9 +44,6 @@ const Login = () => {
     dispatch(loginUser({ username, password }))
     dispatch(getUserMatches(username));
     setStatus(auth.loginStatus);
-  };
-
-  useEffect(() => {
     setMessage("");
     if (auth.loginStatus === "success" && auth.username) {
       setMessage(
@@ -64,6 +61,10 @@ const Login = () => {
     } else {
       setMessage(auth.loginError);
     }
+    
+  };
+
+  useEffect(() => {
     setIsLoading(false);
   }, [auth.loginStatus]);
 

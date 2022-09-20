@@ -28,6 +28,7 @@ import { Provider} from "react-redux";
 function TinderMovies() {
 
   let persistor = persistStore(store);
+
   
     return (
       <Provider store={store}>

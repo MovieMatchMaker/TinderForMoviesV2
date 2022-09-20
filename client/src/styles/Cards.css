@@ -52,12 +52,11 @@ h2 {
 }
 
 .cardContainer {
+  display: flex;
+  padding-top: 30px;
   justify-content: center;
-  /* width: 85vw; */
-  /* max-width: 455px; */
-  height: 500px;
-  padding: 140px;
-  /* padding-left: 140px; */
+  align-items: center;
+  height: 200px;
 }
 
 
@@ -98,11 +97,8 @@ h2 {
 }
 
 .buttons {
-  margin: -20px;
-  padding-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  transform: translateY(180%);
 }
 
 .bn39 {

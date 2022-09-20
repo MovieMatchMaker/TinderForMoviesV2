@@ -39,8 +39,8 @@ export default function Signup() {
   };
 
   const handleSignup = (e) => {
-    const { username, password } = user;
     e.preventDefault();
+    const { username, password } = user;
     if (username === "" || password === "") {
       setMessage("Please fill out all fields");
     } else {
@@ -92,18 +92,19 @@ export default function Signup() {
             <div className="card-front">
               <div className="center-wrap">
                 <div className="section text-center">
-                  <form action="/signup" autoComplete="off">
                     <h4 className="mb-4 pb-3">Sign Up</h4>
                     <div className="form-group mt-2">
-                      <input
-                        type="text"
-                        username="logemail"
-                        className="form-style"
-                        onChange={handleChangeU}
-                        placeholder="New Username"
-                        id="logemail2"
-                        autoComplete="off"
-                      ></input>
+                      <form onSubmit={handleSignup}>
+                        <input
+                          type="text"
+                          username="logemail"
+                          className="form-style"
+                          onChange={handleChangeU}
+                          placeholder="New Username"
+                          id="logemail2"
+                          autoComplete="off"
+                          ></input>
+                        </form>
                       <i className="signup-status">
                         {
                           message ? message.replace(/(^\w|\s\w)/g, m => m.toUpperCase()): null
@@ -111,21 +112,22 @@ export default function Signup() {
                       </i>
                     </div>
                     <div className="form-group mt-2">
-                      <input
-                        type="password"
-                        username="logpass"
-                        className="form-style"
-                        onChange={handleChangeP}
-                        placeholder="New Password"
-                        id="logpass2"
-                        autoComplete="off"
-                      ></input>
+                      <form onSubmit={handleSignup}>
+                        <input
+                          type="password"
+                          username="logpass"
+                          className="form-style"
+                          onChange={handleChangeP}
+                          placeholder="New Password"
+                          id="logpass2"
+                          autoComplete="off"
+                          ></input>
+                        </form>
                       <i className="input-icon uil uil-lock-alt"></i>
                     </div>
                     <a id='submit-a-text' onClick={handleSignup} href="#" className="btn mt-4">
                       submit
                     </a>
-                  </form>
                 </div>
               </div>
             </div>
