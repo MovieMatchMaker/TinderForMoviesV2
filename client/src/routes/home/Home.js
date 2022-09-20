@@ -106,7 +106,12 @@ export default function Home() {
 
 					<ul className="text-list">
 						<h1 className="top-text" ref={observe}>
-							{inView &&  <Fade bottom>FIND YOUR MATCH</Fade>}
+							{inView &&  <Fade bottom>FIND YOUR MATCH 
+							<AnimateOnChange
+									animationIn='popIn'
+									animationOut='popOut'>
+									{randomEmoji}
+							</AnimateOnChange> </Fade>}
 						</h1>
 
 						<h1 className="mid-text" ref={observe}>
@@ -119,16 +124,15 @@ export default function Home() {
 						</h1>
 
 						<h1 className="bottom-text" ref={observe}>
-							{inView &&  <Fade bottom>Sign up, get swiping, and find your match today.</Fade>}
+							{inView &&  <Fade bottom>Sign up, get swiping, and find your match today. </Fade>}
 						</h1>
+						
 					</ul>
-				
-
 
 				</div>
 				
 
-
+				<br></br><br></br>
 				<Link to='/signup'>
 					<div
 						style={{ animation: animations.fadeInUp }}

@@ -47,9 +47,9 @@ const Login = () => {
     setMessage("");
     if (auth.loginStatus === "success" && auth.username) {
       setMessage(
-        `Logged in! Welcome back! ${auth.username.replace(/(^\w|\s\w)/g, (m) =>
+        `Logged in! Welcome back, ${auth.username.replace(/(^\w|\s\w)/g, (m) =>
           m.toUpperCase()
-        )}.`
+        )}!`
       );
       setTimeout(() => {
         navigate("/swipe");

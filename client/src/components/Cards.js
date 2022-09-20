@@ -425,6 +425,8 @@ export default function Cards() {
 
 	return  (
 		<div>
+		<br></br><br></br><br></br>
+		<div>
 			<link
 				href='https://fonts.googleapis.com/css?family=Damion&display=swap'
 				rel='stylesheet'
@@ -544,6 +546,7 @@ export default function Cards() {
 					Swipe Right ➡️
 				</button>
 			</div>
+		</div>
 		</div>
 	);
 }
