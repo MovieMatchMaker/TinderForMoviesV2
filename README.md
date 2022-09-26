@@ -97,6 +97,9 @@ You can now run a devlopment environment with Hot Module Replacement by navigati
 ```
 npm run dev
 ```
+
+Or you could just watch a [demo](https://drive.google.com/file/d/1Ml4DUwqGsJUOtaRiTPDloRr0rATGGXKh/view?usp=sharing) of how our app currently works before it's fully ready to be deployed. 🤫
+
 ### Happy Swiping, and Go Beavs! 🦦 
 
 ## License
