@@ -25,10 +25,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 app.use(cors())
-app.use(express.static("public"))
+
+if (process.env.NODE_ENV === 'production') {    
+      app.use(express.static('client/build'));
+      const path = require('path');
+      app.get('*', (req, res) => {
+            res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+      }
+      );
+}
 
 // Set headers for the the requests
-app.use(headers,)
+app.use(headers)
 // Track all the requests in the console
 app.use(tracker)
 // Log the user in, and return a token
