@@ -1,14 +1,9 @@
-import React, {useEffect} from 'react';
-import {
-  BrowserRouter,
-  Route,
-  Routes
-} from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import Login from './routes/login/Login';
 import Home from "./routes/home/Home";
-// import Navbar from './components/Navbar';
 import FourOhFour from './routes/404/FourOhFour';
 import Signup from './routes/signup/Signup';
 import Logout from './routes/logout/Logout';
@@ -22,14 +17,9 @@ import store from './store/store.js';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 import { Provider} from "react-redux";
-// import { loadUser } from "./slices/authSlice";
 
-
-function TinderMovies() {
-
+function MovieMatchMaker() {
   let persistor = persistStore(store);
-
-  
     return (
       <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
@@ -56,7 +46,7 @@ function TinderMovies() {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <TinderMovies />
+    <MovieMatchMaker />
 );
 
 

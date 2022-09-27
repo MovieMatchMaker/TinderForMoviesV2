@@ -1,8 +1,4 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-
-dotenv.config();
-
 const userSchema = new mongoose.Schema({
       matches: [],
       username: {
@@ -22,8 +18,5 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
-
-const _User = User;
-export {
-      _User as User
-};
+const MovieMatchMakerUserSchema = User;
+export {MovieMatchMakerUserSchema as User};

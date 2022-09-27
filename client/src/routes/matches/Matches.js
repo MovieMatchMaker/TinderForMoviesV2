@@ -3,11 +3,10 @@ import React from "react";
 import "../../styles/Matches.css";
 import { useEffect, useState } from "react";
 import "../../styles/loading.css";
-import { animations, AnimateOnChange, AnimateGroup } from "react-animation";
+import { animations, AnimateGroup } from "react-animation";
 import "react-animation/dist/keyframes.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllMatches, deleteSingleMatch, removeMatch } from "../../slices/authSlice";
-import Spinner from "../../components/Spinner";
 
 var options = {
 	year: "numeric",
@@ -20,12 +19,7 @@ function Matches() {
 	const dispatch = useDispatch();
 	const storedMatches = useSelector(state => state.auth.matches);
 	const username = useSelector(state => state.auth.username);
-	const [isActive, setIsActive] = useState(false);
-	const [loading, setLoading] = useState(true);
 
-	const handleClick = event => {
-		setIsActive(current => !current);
-	};
 	
 	const handleRemoveItem = (e, index) => {
 		let request = {};
@@ -33,7 +27,6 @@ function Matches() {
 		request.username = username;
 		e.persist();
 		e.preventDefault();
-		handleClick();
 		setMatches(matches.filter((match, i) => i !== index));
 		dispatch(removeMatch(request.toDelete.id));	
 		dispatch(deleteSingleMatch(request));
@@ -51,7 +44,7 @@ function Matches() {
 		if (text.length < 1){
 			return "No description provided 😢"
 		}
-		let words = text.split(" ");				//should be doing max number of chars, not words
+		let words = text.split(" ");				
 
 		if (words.length < max) {
 			return text;

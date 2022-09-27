@@ -77,8 +77,6 @@ h2 {
   height: 100%;
 }
 
-.swipe:last-of-type {}
-
 .card h3 {
   position: absolute;
   bottom: 0;
@@ -337,7 +335,6 @@ h2 {
   border: none;
   background-size: 300% 100%;
   border-radius: 50px;
-  moz-transition: all .4s ease-in-out;
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;
@@ -345,7 +342,6 @@ h2 {
 
 .bn632-hover:hover {
   background-position: 100% 0;
-  moz-transition: all .4s ease-in-out;
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;

@@ -1,14 +1,11 @@
 import { animations, AnimateOnChange } from "react-animation";
 import "react-animation/dist/keyframes.css";
-import { useState, useEffect, useRef, useMemo} from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import "../../styles/Home.css";
 import NavigationBar from "../../components/NavigationBar";
-import HomeCards from "../../components/HomeCards";
-import {Fade, Zoom} from 'react-reveal';
+import {Fade} from 'react-reveal';
 import { useInView } from "react-cool-inview";
-import { InView } from "react-cool-inview";
 
 
 
@@ -40,8 +37,7 @@ export default function Home() {
 
 
 	useEffect(() => {
-		
-
+		document.body.style.overflow = "scroll";
 		// Every five seconds change the emoji
 		const interval = setInterval(() => {
 			setRandomEmoji(getRandomFrom(emojis));

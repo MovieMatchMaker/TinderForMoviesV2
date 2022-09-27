@@ -16,7 +16,6 @@ const Login = () => {
   const auth = useSelector((state) => state.auth);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState("");
 
   const [user, setUser] = useState({
     username: "",
@@ -43,7 +42,6 @@ const Login = () => {
     setIsLoading(true);
     dispatch(loginUser({ username, password }))
     dispatch(getUserMatches(username));
-    setStatus(auth.loginStatus);
     setMessage("");
     if (auth.loginStatus === "success" && auth.username) {
       setMessage(

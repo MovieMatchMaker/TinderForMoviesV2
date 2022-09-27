@@ -1,40 +1,8 @@
-/* eslint-disable no-script-url */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { animations } from "react-animation";
-import { Link } from 'react-router-dom';
 import "../styles/Navbar.css";
 
 function Nav() {
-  const handleLogout = () => {
-    const token = localStorage.getItem("token");
-    console.log(token);
-    fetch(`/api/logout`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then(() => {
-        localStorage.removeItem("token");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-  }
-
-  const menuRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClick = () => {
-    menuRef.current.classList.toggle("change");
-    setIsOpen(!isOpen);
-  }
-
-
- 
-
   return (
     <div>
 

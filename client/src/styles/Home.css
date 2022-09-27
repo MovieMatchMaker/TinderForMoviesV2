@@ -137,13 +137,6 @@ button {
   margin-right: 300px;
 }
 
-.intro-text-wrapper {
-    
-}
-
-.text-list {
-}
-
 
 .bn632-hover {
   width: 290px;
@@ -157,7 +150,6 @@ button {
   border: none;
   background-size: 300% 100%;
   border-radius: 50px;
-  moz-transition: all .4s ease-in-out;
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;
@@ -165,7 +157,6 @@ button {
 
 .bn632-hover:hover {
   background-position: 100% 0;
-  moz-transition: all .4s ease-in-out;
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;
@@ -186,16 +177,10 @@ button {
   box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
 }
 
-
-
 .bn632-hover.bn27.home {
      position: relative;
      width: max-content;
      padding-left: 70px;
-}
-
-.bn632-hover.bn27.effect {
-  
 }
 
 .welcome .splash {

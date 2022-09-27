@@ -8,13 +8,10 @@ import "react-animation/dist/keyframes.css";
 import Nav from "./NavigationBar";
 import icon from "../utils/icon";
 import { useDispatch, useSelector } from "react-redux";
-import { addMatch, addSeen, saveMatch, selectMatches, setNewSeenMovie, initLogin} from "../slices/authSlice";
+import { addMatch, addSeen, saveMatch, setNewSeenMovie, initLogin} from "../slices/authSlice";
 import ReactCanvasConfetti from "react-canvas-confetti";
 
-
-import { Steps } from 'intro.js-react';
-import 'intro.js/introjs.css';
-import introJs from 'intro.js';
+import introJs from "intro.js";
 
 var intro = introJs();
 
@@ -57,10 +54,6 @@ export default function Cards() {
 	const [currentIndex, setCurrentIndex] = useState(db.length);
 	const currentIndexRef = useRef(currentIndex);
 
-
-	// Redux Stuff
-	const matches = useSelector(selectMatches);
-
 	const dispatch = useDispatch();
 	const username = useSelector((state) => state.auth.username);
 	const initLoginState = useSelector((state) => state.auth.initLogin);
@@ -86,13 +79,6 @@ export default function Cards() {
 		setActive(!isActive);
 	};
 
-	const getAny = async () => {
-		const response = await axios.get("/api")
-		const append = response.data;
-		const newDb = [...db, append];
-		setDb(newDb);
-	};
-
 	const updateCurrentIndex = (val) => {
 		setCurrentIndex(val);
 		currentIndexRef.current = val;
@@ -104,7 +90,6 @@ export default function Cards() {
 	
 
 	const renderCurrentMovie = async (id) => {
-		//document.getElementById("hidden").style.visibility = "hidden";
 		const token = localStorage.getItem("token");
 		if (token === null) {
 			navigate("/logout");
@@ -120,9 +105,7 @@ export default function Cards() {
 					copy.push(response.data)
 					setDb([...copy])
 				} else {
-					// console.error("Error: ", response.data.message);
 					navigate("/logout");
-					// navigate("/logout") or handle this 
 				}
 			})
 			.catch((err) => {
@@ -173,13 +156,9 @@ export default function Cards() {
 	};
 
 	const movies = db;
-	const [lastDirection, setLastDirection] = useState();
 
 	// Swipe w/o buttons.
 	const swiped = async (direction, nameToDelete, index) => {
-
-		setLastDirection(direction);
-		//console.info("Last direction was: " + lastDirection);
 
 		let request = {};
 		request.id = db[index].id
@@ -237,6 +216,7 @@ export default function Cards() {
 	  refAnimationInstance.current = instance;
 	}, []);
     
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const startAnimation = useCallback(() => {
 	  if (!intervalId) {
 		var duration = 10 * 1000;		//animation lasts 10 seconds
@@ -267,7 +247,6 @@ export default function Cards() {
 	}, [intervalId]);
   
 	const swipe = async (dir, index, isMatch) => {
-		setLastDirection(dir);
 		console.info("Last direction was: " + dir);
 
 			
@@ -366,6 +345,7 @@ export default function Cards() {
 	}
 
 	useEffect(() => {
+		window.scrollTo(0,0);
 		renderCurrentMovie();
 		document.body.style.overflow = "hidden";
 
@@ -421,6 +401,7 @@ export default function Cards() {
 			dispatch(initLogin(obj));
 
 		
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
 	return  (
@@ -511,8 +492,8 @@ export default function Cards() {
 			<div className="congrats-container">
 				<div className="congrats">
 					<div className="congrats-text">
-					Congrats, you've matched with the movie! It's been added to your <a className= "matches-hyperlink" href="http://localhost:3000/matches" target="_blank"> collection</a> and
-					you can also watch it here: <a className= "matches-hyperlink" href={`https://nyumatflix.herokuapp.com/movies/${id.value}`} target="_blank"> nyumatflix</a>. 
+					Congrats, you've matched with the movie! It's been added to your <a className= "matches-hyperlink" href="http://localhost:3000/matches" target="_blank" rel="noreferrer"> collection</a> and
+					you can also watch it here: <a className= "matches-hyperlink" href={`https://nyumatflix.herokuapp.com/movies/${id.value}`} target="_blank" rel="noreferrer"> nyumatflix</a>. 
 					</div>
 					<div className="ok-button-container">
 						<button 

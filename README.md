@@ -85,13 +85,15 @@ The server side uses a .env file to project secrets, so create a <b>.env</b> in 
 touch .env
 ```
 
-The .env file should look something like this: **(Don't forget to replace 'xxxx' with your specifications!)**
-```
-PORT=XXXX
-REACT_APP_TMDB_API_KEY=XXXXXXXXXXXXXX
-```
+Grab an API Key from [TheMovieDatabase API](https://developers.themoviedb.org/3/getting-started/introduction) and put it in the created .env file
 
-Finally, grab an API Key from [TheMovieDatabase API](https://developers.themoviedb.org/3/getting-started/introduction) and put it in the created .env file
+The .env file should look something like this:
+```
+PORT=[YOUR LOCALHOSTPORT HERE]
+REACT_APP_TMDB_API_KEY=[YOUR THEMOVIEDB API KEY HERE]
+URI=[YOUR MONGO DB URI HERE]
+JWT_SECRET_KEY=[YOUR JSON WEB TOKEN KEY HERE]
+```
 
 You can now run a devlopment environment with Hot Module Replacement by navigating to the root dir and using:
 ```
