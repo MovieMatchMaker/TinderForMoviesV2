@@ -26,15 +26,9 @@ app.use(bodyParser.json())
 
 app.use(cors())
 
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
-app.use(express.static('client/build'));
-import path from "path";
-app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-	}
-);
-
-
+import { path } from "path";
 // Set headers for the the requests
 app.use(headers)
 // Track all the requests in the console
