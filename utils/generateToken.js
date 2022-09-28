@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 
 const generateAuthToken = (user) => {
-	const jwtSecretKey = process.env.JWT_SECRET_KEY
+	const jwtSecretKey = process.env.REACT_APP_JWT_SECRET_KEY
 	const token = jwt.sign({
 		_id: user._id,
 		matches: user.matches,

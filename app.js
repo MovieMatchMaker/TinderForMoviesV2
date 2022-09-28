@@ -4,6 +4,8 @@ import cors from "cors"
 import express from "express"
 import axios from "axios"
 import mongoose from "mongoose"
+import path, { dirname } from "path";
+import { fileURLToPath } from 'url';
 import matches from "./middleware/matches.js"
 import login from "./routes/login.js"
 import initLogin from "./middleware/initial_login.js"
@@ -26,9 +28,19 @@ app.use(bodyParser.json())
 
 app.use(cors())
 
-app.use(express.static(path.resolve(__dirname, "./client/build")));
 
-import { path } from "path";
+if (process.env.NODE_ENV === 'production') {    
+      app.use(express.static('client/build'));
+      const path = require('path');
+      app.get('*', (req, res) => {
+            const __filename = fileURLToPath(import.meta.url);
+		const __dirname = dirname(__filename);
+		app.use(express.static(path.resolve(__dirname, "./client/build")));
+      	}
+      );
+}
+
+
 // Set headers for the the requests
 app.use(headers)
 // Track all the requests in the console
@@ -72,7 +84,7 @@ app.post("/api/get_movie", (req, res) => {
 		})
 })   
 
-const uri = process.env.URI
+const uri = process.env.REACT_APP_URI
 mongoose
 	.connect(uri, {
 		useNewUrlParser: true,
@@ -81,7 +93,7 @@ mongoose
 	.then(() => console.log("MongoDB connection established..."))
 	.catch((error) => console.error("MongoDB connection failed:", error.message))
 
-const PORT = process.env.PORT
+const PORT = process.env.REACT_APP_PORT
 
 app.listen(PORT, () => {
 	console.log(`Server started on port ${PORT}`)
