@@ -10,11 +10,10 @@ import icon from "../utils/icon";
 import { useDispatch, useSelector } from "react-redux";
 import { addMatch, addSeen, saveMatch, setNewSeenMovie, initLogin} from "../slices/authSlice";
 import ReactCanvasConfetti from "react-canvas-confetti";
-
+import 'intro.js/introjs.css';
 import introJs from "intro.js";
 
 var intro = introJs();
-
 
 function randomInRange(min, max) {
 	return Math.random() * (max - min) + min;
